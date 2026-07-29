@@ -35,9 +35,8 @@
 
 ## 4. Diagrama
 
-Pega tu diagrama en `diagrama.md` (bloque \`\`\`mermaid) o adjunta una
-imagen exportada. Verifica que renderice antes del commit (usa
-[mermaid.live](https://mermaid.live) para validar).
+<img width="1029" height="382" alt="image" src="https://github.com/user-attachments/assets/a58e8124-74fd-4553-ae8b-41ec62f4f2ee" />
+
 
 ## 5. Reflexión — la era agéntica
 
