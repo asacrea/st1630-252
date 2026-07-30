@@ -1,12 +1,24 @@
+---
+title: Equipo 2 — Taller de arquitecturas (S2)
+
+---
+
 # Equipo 2 — Taller de arquitecturas (S2)
 
-Integrantes: _(nombres y correos @eafit.edu.co)_
-Caso asignado: _(1, 2 o 3 — ver ../casos.md)_
+**Integrantes:** 
+- Athina Alejandra Cappelleti García (aacappellg@eafit.edu.co)
+- David Alejandro Gutiérrez Leal (dagutierrl@eafit.edu.co)
+- Emmanuel Álvarez Castrillón (ealvarezc1@eafit.edu.co)
+- Ginna Alejandra Valencia Macuace (gavalencim@eafit.edu.co)
+- Mariamny Del Valle Ramírez Telles (mvramirezt@eafit.edu.co)
+
+
+**Caso asignado:** Equipo 2 - Analítica retail
 
 ## Archivos de esta entrega
 
-- [ ] `arquitectura.md` (copiado y completado desde `../plantillas/`)
-- [ ] `adr.md` (copiado y completado desde `../plantillas/`)
-- [ ] `diagrama.md` (bloque mermaid o imagen exportada)
+- [x] `arquitectura.md` (copiado y completado desde `../plantillas/`)
+- [x] `adr.md` (copiado y completado desde `../plantillas/`)
+- [x] `diagrama.md` (bloque mermaid o imagen exportada)
 
 Abran el Pull Request hacia `main` antes del cierre de la sesión.
