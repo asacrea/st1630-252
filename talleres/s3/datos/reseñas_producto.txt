@@ -1,0 +1,302 @@
+# Dataset sintético de reseñas de producto — ST1630, Semana 3
+# Origen: generado sintéticamente para el laboratorio de WordCount con Spark.
+# No corresponde a datos reales de ninguna tienda ni usuario; su único fin es pedagógico.
+# Contiene reseñas positivas, negativas y neutras, algunas líneas en mayúsculas
+# (para justificar el uso de lower()) y líneas vacías intencionales (para justificar filter()).
+
+
+Terrible experiencia de compra, el reloj inteligente no funciona como se anunciaba.
+No cumple lo prometido, la maleta es de baja calidad y muy ruidoso.
+La entrega tardó más de tres semanas y el ventilador llegó en mal estado.
+Muy buena calidad, la aspiradora llegó antes de lo esperado.
+Estoy feliz con la compra, la cafetera funciona perfecto desde el primer día.
+La entrega llegó a tiempo, la plancha de cabello está bien aunque esperaba un poco más.
+
+El precio de la funda del celular es justo para la calidad que ofrece, nada más.
+Terrible experiencia de compra, el router no funciona como se anunciaba.
+Ni bueno ni malo, la licuadora hace lo que dice aunque nada extraordinario.
+No cumple lo prometido, la silla de oficina es de baja calidad y muy ruidoso.
+El ventilador funciona bien pero el empaque podría mejorar bastante.
+
+Recomiendo mucho la freidora de aire, la relación precio calidad es excelente.
+Ni bueno ni malo, la funda del celular hace lo que dice aunque nada extraordinario.
+ATENCIÓN al cliente excelente, resolvieron mi problema de inmediato.
+No recomiendo el humidificador, la calidad es mala y se dañó a la semana.
+Estoy feliz con la compra, la cafetera funciona perfecto desde el primer día.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+La lámpara es excelente, superó mis expectativas totalmente.
+La entrega llegó a tiempo, la bicicleta estática está bien aunque esperaba un poco más.
+Buena entrega, buen producto, la bicicleta estática superó lo que esperaba por el precio.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+El producto vino defectuoso, el teclado dejó de funcionar en dos días.
+Estoy muy satisfecho, la aspiradora funciona de manera excelente y silenciosa.
+La entrega llegó a tiempo, el cargador está bien aunque esperaba un poco más.
+MUY MALA calidad, no lo recomiendo para NADA, pésima entrega.
+Estoy muy satisfecho, el router funciona de manera excelente y silenciosa.
+Todo perfecto, la entrega llegó a tiempo y la mochila vino en excelente estado.
+Ni bueno ni malo, el teclado hace lo que dice aunque nada extraordinario.
+Estoy feliz con la compra, el audífono funciona perfecto desde el primer día.
+Estoy feliz con la compra, la licuadora funciona perfecto desde el primer día.
+Estoy feliz con la compra, el cable USB funciona perfecto desde el primer día.
+
+Ni bueno ni malo, la lámpara hace lo que dice aunque nada extraordinario.
+Estoy feliz con la compra, el cable USB funciona perfecto desde el primer día.
+El producto vino defectuoso, el monitor dejó de funcionar en dos días.
+Estoy feliz con la compra, la licuadora funciona perfecto desde el primer día.
+La entrega llegó a tiempo, el mouse está bien aunque esperaba un poco más.
+La entrega llegó RÁPIDO pero el producto vino con un DEFECTO visible.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+La entrega fue rápida y el router viene muy bien empacado.
+Estoy feliz con la compra, la mochila funciona perfecto desde el primer día.
+Muy mala experiencia, la lámpara llegó dañado y la entrega se demoró demasiado.
+La entrega tardó más de tres semanas y la lámpara llegó en mal estado.
+No recomiendo la plancha de cabello, la calidad es mala y se dañó a la semana.
+La entrega fue un desastre, la impresora llegó tarde y sin caja original.
+Mala calidad de empaque, la licuadora llegó golpeado y con piezas faltantes.
+El producto es aceptable, el reloj inteligente cumple pero no sobresale en nada especial.
+La CALIDAD es buena pero la ENTREGA se demoró bastante tiempo.
+MUY MALA calidad, no lo recomiendo para NADA, pésima entrega.
+Estoy muy satisfecho, la mochila funciona de manera excelente y silenciosa.
+Muy mala experiencia, la silla de oficina llegó dañado y la entrega se demoró demasiado.
+El precio de el termo es justo para la calidad que ofrece, nada más.
+NO COMPREN este producto, la calidad es MALA y el soporte pésimo.
+Todo perfecto, la entrega llegó a tiempo y el reloj inteligente vino en excelente estado.
+La funda del celular funciona bien pero el empaque podría mejorar bastante.
+Muy mala experiencia, el teclado llegó dañado y la entrega se demoró demasiado.
+Mala calidad de empaque, el monitor llegó golpeado y con piezas faltantes.
+Un producto muy bueno, la funda del celular cumple exactamente lo que promete la descripción.
+Producto correcto, la freidora de aire cumple su función básica sin problemas grandes.
+Todo perfecto, la entrega llegó a tiempo y la licuadora vino en excelente estado.
+El servicio al cliente fue amable y el cargador llegó completo.
+Mala calidad de empaque, la freidora de aire llegó golpeado y con piezas faltantes.
+Estoy feliz con la compra, el reloj inteligente funciona perfecto desde el primer día.
+Calidad media, el cable USB sirve para uso ocasional pero no es tan resistente.
+La silla de oficina funciona bien pero el empaque podría mejorar bastante.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+NO COMPREN este producto, la calidad es MALA y el soporte pésimo.
+Un producto muy bueno, el audífono cumple exactamente lo que promete la descripción.
+La entrega llegó a tiempo, la funda del celular está bien aunque esperaba un poco más.
+
+Recomiendo mucho el parlante, la relación precio calidad es excelente.
+Buena entrega, buen producto, el monitor superó lo que esperaba por el precio.
+Muy buena calidad, la silla de oficina llegó antes de lo esperado.
+Buena entrega, buen producto, la silla de oficina superó lo que esperaba por el precio.
+La entrega llegó RÁPIDO pero el producto vino con un DEFECTO visible.
+El humidificador es excelente, superó mis expectativas totalmente.
+La entrega fue rápida y el reloj inteligente viene muy bien empacado.
+Terrible experiencia de compra, el organizador de closet no funciona como se anunciaba.
+El parlante es excelente, superó mis expectativas totalmente.
+
+Volvería a comprar sin duda, el router es de muy buena calidad.
+Muy buena calidad, el termo llegó antes de lo esperado.
+La entrega tardó más de tres semanas y la impresora llegó en mal estado.
+El producto vino defectuoso, el audífono dejó de funcionar en dos días.
+NO COMPREN este producto, la calidad es MALA y el soporte pésimo.
+NO COMPREN este producto, la calidad es MALA y el soporte pésimo.
+Estoy feliz con la compra, la licuadora funciona perfecto desde el primer día.
+La entrega fue rápida y la funda del celular viene muy bien empacado.
+El servicio al cliente fue amable y la mochila llegó completo.
+Pésimo servicio, la freidora de aire nunca llegó completo y el soporte no respondió.
+Volvería a comprar sin duda, la lámpara es de muy buena calidad.
+La entrega fue un desastre, el organizador de closet llegó tarde y sin caja original.
+Recomiendo mucho el teclado, la relación precio calidad es excelente.
+Pésimo servicio, la plancha de cabello nunca llegó completo y el soporte no respondió.
+Volvería a comprar sin duda, el parlante es de muy buena calidad.
+Todo perfecto, la entrega llegó a tiempo y la plancha de cabello vino en excelente estado.
+La CALIDAD es buena pero la ENTREGA se demoró bastante tiempo.
+La entrega llegó RÁPIDO pero el producto vino con un DEFECTO visible.
+Buena entrega, buen producto, el organizador de closet superó lo que esperaba por el precio.
+Volvería a comprar sin duda, el organizador de closet es de muy buena calidad.
+No recomiendo el mouse, la calidad es mala y se dañó a la semana.
+La entrega tardó más de tres semanas y el ventilador llegó en mal estado.
+Todo perfecto, la entrega llegó a tiempo y el organizador de closet vino en excelente estado.
+Muy mala experiencia, la silla de oficina llegó dañado y la entrega se demoró demasiado.
+La entrega estuvo en el tiempo normal, el router es un producto promedio.
+Muy buena calidad, la cafetera llegó antes de lo esperado.
+El servicio al cliente fue amable y la aspiradora llegó completo.
+Todo perfecto, la entrega llegó a tiempo y el organizador de closet vino en excelente estado.
+La entrega llegó a tiempo, la cafetera está bien aunque esperaba un poco más.
+La entrega tardó más de tres semanas y el ventilador llegó en mal estado.
+Mala calidad de empaque, el humidificador llegó golpeado y con piezas faltantes.
+La entrega tardó más de tres semanas y la impresora llegó en mal estado.
+La calidad de el humidificador es sobresaliente, se nota que es un producto duradero.
+Pésimo servicio, el audífono nunca llegó completo y el soporte no respondió.
+No cumple lo prometido, el cable USB es de baja calidad y muy ruidoso.
+La entrega tardó más de tres semanas y la licuadora llegó en mal estado.
+Buena entrega, buen producto, la freidora de aire superó lo que esperaba por el precio.
+NO COMPREN este producto, la calidad es MALA y el soporte pésimo.
+Recomiendo mucho la licuadora, la relación precio calidad es excelente.
+La calidad de la plancha de cabello es sobresaliente, se nota que es un producto duradero.
+
+Muy decepcionado con el mouse, la calidad no corresponde al precio pagado.
+La calidad de el termo es sobresaliente, se nota que es un producto duradero.
+La entrega tardó más de tres semanas y el humidificador llegó en mal estado.
+La CALIDAD es buena pero la ENTREGA se demoró bastante tiempo.
+Muy buena calidad, el reloj inteligente llegó antes de lo esperado.
+Ni bueno ni malo, la silla de oficina hace lo que dice aunque nada extraordinario.
+El producto es aceptable, la maleta cumple pero no sobresale en nada especial.
+Ni bueno ni malo, el reloj inteligente hace lo que dice aunque nada extraordinario.
+La entrega estuvo en el tiempo normal, el organizador de closet es un producto promedio.
+Buena entrega, buen producto, el teclado superó lo que esperaba por el precio.
+No cumple lo prometido, la lámpara es de baja calidad y muy ruidoso.
+Buena entrega, buen producto, el teclado superó lo que esperaba por el precio.
+Un producto muy bueno, el mouse cumple exactamente lo que promete la descripción.
+La entrega tardó más de tres semanas y el audífono llegó en mal estado.
+La entrega fue rápida y el humidificador viene muy bien empacado.
+No recomiendo el cable USB, la calidad es mala y se dañó a la semana.
+Buena entrega, buen producto, el reloj inteligente superó lo que esperaba por el precio.
+La calidad de el organizador de closet es sobresaliente, se nota que es un producto duradero.
+La calidad de el organizador de closet es sobresaliente, se nota que es un producto duradero.
+Terrible experiencia de compra, el humidificador no funciona como se anunciaba.
+Producto correcto, el organizador de closet cumple su función básica sin problemas grandes.
+Mala calidad de empaque, la freidora de aire llegó golpeado y con piezas faltantes.
+Todo BIEN con la compra, el producto es de BUENA calidad.
+
+La entrega tardó más de tres semanas y la impresora llegó en mal estado.
+Muy mala experiencia, el cable USB llegó dañado y la entrega se demoró demasiado.
+El cable USB es excelente, superó mis expectativas totalmente.
+Estoy muy satisfecho, el ventilador funciona de manera excelente y silenciosa.
+Estoy muy satisfecho, el ventilador funciona de manera excelente y silenciosa.
+Un producto muy bueno, la cafetera cumple exactamente lo que promete la descripción.
+Muy decepcionado con el monitor, la calidad no corresponde al precio pagado.
+Recomiendo mucho el audífono, la relación precio calidad es excelente.
+Muy decepcionado con el mouse, la calidad no corresponde al precio pagado.
+La lámpara funciona bien pero el empaque podría mejorar bastante.
+Muy mala experiencia, la aspiradora llegó dañado y la entrega se demoró demasiado.
+Todo BIEN con la compra, el producto es de BUENA calidad.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+ATENCIÓN al cliente excelente, resolvieron mi problema de inmediato.
+Terrible experiencia de compra, el monitor no funciona como se anunciaba.
+El humidificador funciona bien pero el empaque podría mejorar bastante.
+El servicio al cliente fue amable y el organizador de closet llegó completo.
+MUY MALA calidad, no lo recomiendo para NADA, pésima entrega.
+El servicio al cliente fue amable y el cargador llegó completo.
+La entrega estuvo en el tiempo normal, el cargador es un producto promedio.
+El producto es aceptable, el termo cumple pero no sobresale en nada especial.
+La entrega fue rápida y el teclado viene muy bien empacado.
+La entrega llegó a tiempo, el teclado está bien aunque esperaba un poco más.
+No cumple lo prometido, la maleta es de baja calidad y muy ruidoso.
+La entrega tardó más de tres semanas y el ventilador llegó en mal estado.
+Estoy muy satisfecho, la bicicleta estática funciona de manera excelente y silenciosa.
+Volvería a comprar sin duda, la funda del celular es de muy buena calidad.
+Muy decepcionado con la cafetera, la calidad no corresponde al precio pagado.
+Buena entrega, buen producto, la funda del celular superó lo que esperaba por el precio.
+La entrega fue rápida y la maleta viene muy bien empacado.
+Recomiendo mucho el parlante, la relación precio calidad es excelente.
+
+
+La cafetera es excelente, superó mis expectativas totalmente.
+El teclado es excelente, superó mis expectativas totalmente.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+La entrega fue rápida y el ventilador viene muy bien empacado.
+Terrible experiencia de compra, el organizador de closet no funciona como se anunciaba.
+No recomiendo la cafetera, la calidad es mala y se dañó a la semana.
+Mala calidad de empaque, el mouse llegó golpeado y con piezas faltantes.
+No recomiendo el parlante, la calidad es mala y se dañó a la semana.
+Un producto muy bueno, el termo cumple exactamente lo que promete la descripción.
+No recomiendo el router, la calidad es mala y se dañó a la semana.
+Volvería a comprar sin duda, la freidora de aire es de muy buena calidad.
+Un producto muy bueno, el ventilador cumple exactamente lo que promete la descripción.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+El precio de el cargador es justo para la calidad que ofrece, nada más.
+El precio de el ventilador es justo para la calidad que ofrece, nada más.
+No recomiendo la licuadora, la calidad es mala y se dañó a la semana.
+Mala calidad de empaque, la licuadora llegó golpeado y con piezas faltantes.
+No recomiendo la bicicleta estática, la calidad es mala y se dañó a la semana.
+La lámpara es excelente, superó mis expectativas totalmente.
+Producto correcto, el cargador cumple su función básica sin problemas grandes.
+Todo BIEN con la compra, el producto es de BUENA calidad.
+Estoy muy satisfecho, el termo funciona de manera excelente y silenciosa.
+Todo perfecto, la entrega llegó a tiempo y la plancha de cabello vino en excelente estado.
+Un producto muy bueno, la mochila cumple exactamente lo que promete la descripción.
+La CALIDAD es buena pero la ENTREGA se demoró bastante tiempo.
+Todo BIEN con la compra, el producto es de BUENA calidad.
+La entrega fue un desastre, la silla de oficina llegó tarde y sin caja original.
+Recomiendo mucho el termo, la relación precio calidad es excelente.
+La impresora es excelente, superó mis expectativas totalmente.
+Ni bueno ni malo, la cafetera hace lo que dice aunque nada extraordinario.
+Muy decepcionado con la licuadora, la calidad no corresponde al precio pagado.
+La cafetera es excelente, superó mis expectativas totalmente.
+Producto correcto, el humidificador cumple su función básica sin problemas grandes.
+Ni bueno ni malo, la funda del celular hace lo que dice aunque nada extraordinario.
+La calidad de la plancha de cabello es sobresaliente, se nota que es un producto duradero.
+La entrega tardó más de tres semanas y la lámpara llegó en mal estado.
+Recomiendo mucho la bicicleta estática, la relación precio calidad es excelente.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+Ni bueno ni malo, el cargador hace lo que dice aunque nada extraordinario.
+Terrible experiencia de compra, el monitor no funciona como se anunciaba.
+Todo perfecto, la entrega llegó a tiempo y la impresora vino en excelente estado.
+La entrega fue un desastre, la mochila llegó tarde y sin caja original.
+La entrega fue rápida y el audífono viene muy bien empacado.
+Mala calidad de empaque, la funda del celular llegó golpeado y con piezas faltantes.
+Todo perfecto, la entrega llegó a tiempo y la mochila vino en excelente estado.
+No cumple lo prometido, la plancha de cabello es de baja calidad y muy ruidoso.
+Estoy feliz con la compra, la licuadora funciona perfecto desde el primer día.
+
+Mala calidad de empaque, el organizador de closet llegó golpeado y con piezas faltantes.
+Un producto muy bueno, la licuadora cumple exactamente lo que promete la descripción.
+Calidad media, el organizador de closet sirve para uso ocasional pero no es tan resistente.
+No cumple lo prometido, el monitor es de baja calidad y muy ruidoso.
+Pésimo servicio, la silla de oficina nunca llegó completo y el soporte no respondió.
+Ni bueno ni malo, el parlante hace lo que dice aunque nada extraordinario.
+Buena entrega, buen producto, la freidora de aire superó lo que esperaba por el precio.
+Ni bueno ni malo, el teclado hace lo que dice aunque nada extraordinario.
+
+La entrega llegó a tiempo, la licuadora está bien aunque esperaba un poco más.
+El producto vino defectuoso, la aspiradora dejó de funcionar en dos días.
+Calidad media, la mochila sirve para uso ocasional pero no es tan resistente.
+MUY MALA calidad, no lo recomiendo para NADA, pésima entrega.
+
+Muy decepcionado con el cable USB, la calidad no corresponde al precio pagado.
+La calidad de la funda del celular es sobresaliente, se nota que es un producto duradero.
+La calidad de la freidora de aire es sobresaliente, se nota que es un producto duradero.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+El cable USB es excelente, superó mis expectativas totalmente.
+Mala calidad de empaque, el organizador de closet llegó golpeado y con piezas faltantes.
+Ni bueno ni malo, el reloj inteligente hace lo que dice aunque nada extraordinario.
+La CALIDAD es buena pero la ENTREGA se demoró bastante tiempo.
+Muy buena calidad, el organizador de closet llegó antes de lo esperado.
+El servicio al cliente fue amable y el router llegó completo.
+Muy buena calidad, el humidificador llegó antes de lo esperado.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+El servicio al cliente fue amable y el monitor llegó completo.
+Producto correcto, el router cumple su función básica sin problemas grandes.
+La entrega tardó más de tres semanas y el organizador de closet llegó en mal estado.
+
+Estoy feliz con la compra, la licuadora funciona perfecto desde el primer día.
+Volvería a comprar sin duda, el reloj inteligente es de muy buena calidad.
+Buena entrega, buen producto, el reloj inteligente superó lo que esperaba por el precio.
+Estoy feliz con la compra, la impresora funciona perfecto desde el primer día.
+La cafetera es excelente, superó mis expectativas totalmente.
+El producto vino defectuoso, la plancha de cabello dejó de funcionar en dos días.
+Todo perfecto, la entrega llegó a tiempo y el reloj inteligente vino en excelente estado.
+
+Volvería a comprar sin duda, la plancha de cabello es de muy buena calidad.
+El producto vino defectuoso, el monitor dejó de funcionar en dos días.
+El ventilador funciona bien pero el empaque podría mejorar bastante.
+Buen producto, aunque el EMPAQUE llegó un poco golpeado.
+Muy decepcionado con la mochila, la calidad no corresponde al precio pagado.
+Terrible experiencia de compra, el cable USB no funciona como se anunciaba.
+Producto correcto, la aspiradora cumple su función básica sin problemas grandes.
+La entrega llegó a tiempo, el termo está bien aunque esperaba un poco más.
+EXCELENTE producto, la ENTREGA fue muy rápida y el servicio EXCELENTE.
+El precio de el mouse es justo para la calidad que ofrece, nada más.
+Recomiendo mucho la licuadora, la relación precio calidad es excelente.
+El producto vino defectuoso, el mouse dejó de funcionar en dos días.
+Buena entrega, buen producto, el ventilador superó lo que esperaba por el precio.
+La entrega tardó más de tres semanas y el ventilador llegó en mal estado.
+La entrega estuvo en el tiempo normal, el router es un producto promedio.
+No cumple lo prometido, el ventilador es de baja calidad y muy ruidoso.
+Muy mala experiencia, la aspiradora llegó dañado y la entrega se demoró demasiado.
+Muy decepcionado con la licuadora, la calidad no corresponde al precio pagado.
+Pésimo servicio, el monitor nunca llegó completo y el soporte no respondió.
+
+El producto vino defectuoso, la licuadora dejó de funcionar en dos días.
+La entrega fue rápida y el parlante viene muy bien empacado.
+Todo BIEN con la compra, el producto es de BUENA calidad.
+Ni bueno ni malo, el router hace lo que dice aunque nada extraordinario.
+Estoy feliz con la compra, el termo funciona perfecto desde el primer día.
+El organizador de closet es excelente, superó mis expectativas totalmente.
+Volvería a comprar sin duda, la impresora es de muy buena calidad.
+MUY MALA calidad, no lo recomiendo para NADA, pésima entrega.
+Volvería a comprar sin duda, el reloj inteligente es de muy buena calidad.
