@@ -1,8 +1,14 @@
 # Arquitectura — Lab 1a
 
 **Curso:** ST1630-2026-2 · **Semana:** S4-S5 · **Fecha de ejecución:** 2026-08-13
+
 **Estudiante:** Juan José Díaz Rodríguez — jjdiazr@eafit.edu.co
-**Usuario:** `jjdiazr` · **Cuenta AWS:** `040343073329`
+
+**Estudiante:** Juan Simón Ospina Martínez — jsospinam@eafit.edu.co
+
+**Estudiante:** Sebastián Durán Fernández — sduranf@eafit.edu.co
+
+**Estudiante:** Daniel Arcila Salazar — darcilas1@eafit.edu.co
 
 ## 1. Diagrama de la arquitectura
 
