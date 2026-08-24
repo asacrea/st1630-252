@@ -20,7 +20,7 @@ set -euo pipefail
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR (debe coincidir con setup_s3.sh)
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"      # EDITAR: el mismo valor que usaste en setup_s3.sh
+ESTUDIANTE="nvcardozaa"      # EDITAR: el mismo valor que usaste en setup_s3.sh
 ANIO="2026"                  # EDITAR si tu cohorte no es 2026
 # ─────────────────────────────────────────────────────────────
 

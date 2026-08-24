@@ -30,15 +30,15 @@ set -euo pipefail
 # scripts anteriores; KEY_NAME y SUBNET_ID son obligatorios y no
 # tienen un valor por defecto válido)
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
+ESTUDIANTE="nvcardozaa"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
 ANIO="2026"                    # EDITAR si tu cohorte no es 2026
 REGION="us-east-1"             # EDITAR: la misma región que usaste en setup_s3.sh
-KEY_NAME="EDITAR-nombre-de-tu-keypair"   # EDITAR: el key pair que creaste en la Parte 1
-SUBNET_ID="EDITAR-subnet-xxxxxxxx"       # EDITAR: una subnet de tu VPC por defecto
+KEY_NAME="st1630-lab1a"   # EDITAR: el key pair que creaste en la Parte 1
+SUBNET_ID="subnet-0111a67bd6565df5f"       # EDITAR: una subnet de tu VPC por defecto
 # ─────────────────────────────────────────────────────────────
 
 BUCKET_NAME="st1630-${ESTUDIANTE}-${ANIO}"
-PROFILE_NAME="EMR_EC2_${ESTUDIANTE}_profile"
+PROFILE_NAME="EMR_EC2_DefaultRole"
 CLUSTER_NAME="st1630-${ESTUDIANTE}-emr"
 
 TMP_DIR="$(mktemp -d)"
@@ -73,7 +73,7 @@ CLUSTER_ID=$(aws emr create-cluster \
     --applications Name=Spark Name=Hadoop \
     --instance-type m5.xlarge \
     --instance-count 2 \
-    --use-default-roles \
+    --service-role EMR_DefaultRole \
     --ec2-attributes "KeyName=${KEY_NAME},InstanceProfile=${PROFILE_NAME},SubnetId=${SUBNET_ID}" \
     --log-uri "s3://${BUCKET_NAME}/logs/" \
     --bootstrap-actions "Path=s3://${BUCKET_NAME}/bootstrap/bootstrap.sh,Name=Instalar dependencias Python" \

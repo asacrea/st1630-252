@@ -24,16 +24,14 @@ from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType
 
 spark = SparkSession.builder.appName("ST1630-Lab1b-Bronze").getOrCreate()
-spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
+spark.conf.set("spark.sql.shuffle.partitions", "32") 
 
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-nvcardozaa-2026"
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
-# ─────────────────────────────────────────────────────────────
-
 # ═══════════════════════════════════════════════════════════════
 # TODO 1 · Schema explícito -- TODOS los campos como StringType
 # ═══════════════════════════════════════════════════════════════
@@ -55,7 +53,22 @@ BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 # TODO: construye BRONZE_SCHEMA como un StructType con un
 # StructField(nombre, StringType(), True) por cada una de las 14
 # columnas de arriba, en ese mismo orden.
-BRONZE_SCHEMA = None  # TODO: reemplaza por tu StructType con las 14 columnas
+BRONZE_SCHEMA = StructType([
+    StructField("pedido_id", StringType(), True),
+    StructField("fecha", StringType(), True),
+    StructField("categoria", StringType(), True),
+    StructField("producto", StringType(), True),
+    StructField("cantidad", StringType(), True),
+    StructField("precio_unit", StringType(), True),
+    StructField("total", StringType(), True),
+    StructField("email_cliente", StringType(), True),
+    StructField("metodo_pago", StringType(), True),
+    StructField("devuelto", StringType(), True),
+    StructField("calificacion", StringType(), True),
+    StructField("region", StringType(), True),
+    StructField("canal", StringType(), True),
+    StructField("vendedor_id", StringType(), True),
+])
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 2 · Lectura del CSV con schema explícito
@@ -63,10 +76,9 @@ BRONZE_SCHEMA = None  # TODO: reemplaza por tu StructType con las 14 columnas
 # TODO: usa spark.read, con .option("header", "true"), .schema(BRONZE_SCHEMA)
 # y .csv(RAW) para leer el archivo crudo en df_raw.
 #
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica en un comentario
-# por qué (pista: ¿esta lectura necesita comparar o mover datos entre
-# particiones para poder aplicarle el schema?).
-df_raw = None  # TODO: reemplaza por tu lectura
+# Clasificación: → La lectura del csv con un schema explícito es una operación NARROW, ya que cada partición puede leer sus propias filas de forma independiente sin tener que comunicarse entre particiones.
+
+df_raw = spark.read.option("header", "true").schema(BRONZE_SCHEMA).csv(RAW)
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 3 · Columnas de auditoría
@@ -77,8 +89,11 @@ df_raw = None  # TODO: reemplaza por tu lectura
 #   - "_source_file": de qué archivo físico vino cada fila
 #     (busca la función que expone el nombre del archivo de origen)
 #
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica.
-df_bronze = None  # TODO: reemplaza por df_raw + las 2 columnas nuevas
+# Clasificación: La operación de agregar columnas de auditoría es una transformación
+# simple que no requiere mover datos entre particiones, por lo que se
+# considera NARROW.
+
+df_bronze = df_raw.withColumn("_ingested_at", F.current_timestamp()).withColumn("_source_file", F.input_file_name())
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 4 · Escritura a Delta en modo append
@@ -86,12 +101,9 @@ df_bronze = None  # TODO: reemplaza por df_raw + las 2 columnas nuevas
 # TODO: escribe df_bronze a la ruta BRONZE en formato "delta", modo
 # "append" (NO "overwrite" -- Bronze acumula, nunca reemplaza).
 #
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica, y compara mentalmente
-# contra el MERGE que vas a escribir en 02_silver.py (Parte 3.7): ¿por
-# qué ESTA escritura no necesita comparar contra lo que ya existe en
-# la tabla, y esa sí?
-# (tu código aquí)
+# Clasificación: La escritura en modo append a Delta Lake es una operación NARROW, esto por lo que mencionabamos anteriormente de que cada partición puede escribir sus propios datos sin tener que comunicarse con las demás particiones ni tener que comparar con los datos existentes en la tabla. A diferencia de un MERGE, que requiere comparar los datos entrantes con los existentes para ver si se deben actualizar o insertar, lo que sí implica un movimiento de datos entre particiones y la hace WIDE.
 
+df_bronze.write.format("delta").mode("append").save(BRONZE)
 print(f"Bronze escrito en: {BRONZE}")
 
 # ═══════════════════════════════════════════════════════════════

@@ -21,7 +21,7 @@ set -euo pipefail
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"      # EDITAR: minúsculas, sin espacios ni tildes (ej. "jperezg")
+ESTUDIANTE="nvcardozaa"      # EDITAR: minúsculas, sin espacios ni tildes (ej. "jperezg")
 ANIO="2026"                  # EDITAR si tu cohorte no es 2026
 REGION="us-east-1"           # EDITAR: región donde vive tu cuenta AWS Academy
 # ─────────────────────────────────────────────────────────────

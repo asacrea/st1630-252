@@ -120,6 +120,14 @@ df_num.select(
 # print("\n=== Tipos detectados en 'vendedor_id' ===")
 # df_vend = df.withColumn("tipo_vendedor", ...)  # TODO
 # df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
+df_vend = df.withColumn(     
+    "tipo_vendedor",     
+    F.when(F.col("vendedor_id").rlike(r"^\d+$"), "entero")      
+    .when(F.col("vendedor_id").startswith("VEN-"), "prefijado")      .
+    otherwise("mixto") 
+    ) 
+
+df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
 
 # ── TODO: Validación de email ───────────────────────────────────
 # TODO: define un patrón regex razonable de email (usuario@dominio.tld)
@@ -133,6 +141,14 @@ df_num.select(
 # n_email_invalido = ...  # TODO
 # print(f"Emails nulos: {n_email_nulo:,}")
 # print(f"Emails con formato inválido (no nulos): {n_email_invalido:,}")
+df_email = df.withColumn(
+    "email_valido",     
+    F.when(F.col("email_cliente").rlike(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"), "valido")      
+    .when(F.col("email_cliente").isNull(), "nulo")      
+    .otherwise("invalido") 
+    ) 
+
+df_email.groupBy("email_valido").count().orderBy(F.desc("count")).show(truncate=False)
 
 # ── Muestras de cada tipo de problema ──────────────────────────
 print("\n=== Muestra: 3 filas con pedido_id nulo ===")
