@@ -5,18 +5,8 @@ limpiar ni tipar nada. Bronze es la capa de "verdad del origen" -- si
 algo sale mal en Silver o Gold, siempre puedes volver a Bronze y
 reprocesar, porque Bronze nunca se sobreescribe con datos transformados.
 
-Este script tiene bloques marcados con # TODO -- ESE es tu trabajo.
-Todo lo demás (imports, rutas, la verificación del final) ya está
-resuelto para que puedas concentrarte en las partes que de verdad
-enseñan algo nuevo esta semana.
-
 Uso:
     spark-submit 01_bronze.py
-
-Qué puedes delegar: dudas de sintaxis puntuales si te trabas en un
-TODO (¿cómo se llama el método para X?). Qué NO puedes delegar: por
-qué el schema es 100% string -- tienes que poder explicarlo con tus
-propias palabras (te lo preguntamos en la defensa del lab).
 """
 
 from pyspark.sql import SparkSession
@@ -29,7 +19,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-lemorenog-2026"  # EDITAR: el mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 # ─────────────────────────────────────────────────────────────
@@ -37,67 +27,93 @@ BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 # ═══════════════════════════════════════════════════════════════
 # TODO 1 · Schema explícito -- TODOS los campos como StringType
 # ═══════════════════════════════════════════════════════════════
-# Justificación (esto SÍ te lo damos resuelto -- entiéndelo antes de
-# construir el schema): Bronze recibe el dato tal cual el sistema de
-# origen lo entregó, sin asumir ningún tipo. Si aquí ya castearas
-# 'total' a double, por ejemplo, Spark tendría que decidir qué hacer
-# con un valor corrupto como una celda vacía o con letras -- y esa
-# decisión (¿null? ¿0? ¿falla el job?) es una transformación, no una
-# ingesta. La conversión de tipos es responsabilidad exclusiva de
-# Silver, donde SÍ hay contexto de negocio para decidir cómo tratar
-# cada caso raro.
-#
-# Las columnas del CSV crudo (mismo orden que ../datos/ventas_colombia_raw.csv):
-#   pedido_id, fecha, region, canal, categoria, producto, cantidad,
-#   precio_unit, total, vendedor_id, email_cliente, metodo_pago,
-#   devuelto, calificacion
-#
-# TODO: construye BRONZE_SCHEMA como un StructType con un
-# StructField(nombre, StringType(), True) por cada una de las 14
-# columnas de arriba, en ese mismo orden.
-BRONZE_SCHEMA = None  # TODO: reemplaza por tu StructType con las 14 columnas
+# Bronze recibe el dato tal cual el sistema de origen lo entregó, sin
+# asumir ningún tipo. Castear aquí (p. ej. 'total' a double) obligaría a
+# Spark a decidir qué hacer con las celdas corruptas -- y esa decisión
+# (¿null? ¿0? ¿falla el job?) es una transformación, no una ingesta.
+# Un schema explícito además evita el inferSchema, que gastaría un pase
+# completo sobre el archivo y podría inferir tipos distintos si mañana
+# llega un lote con datos más sucios (esquema no determinista).
+BRONZE_SCHEMA = StructType([
+    # ORDEN REAL del header de ventas_colombia_raw.csv. Con .schema() +
+    # header=true, Spark mapea POR POSICIÓN e ignora los nombres del
+    # archivo: si este orden no calza con el CSV, las columnas quedan
+    # etiquetadas mal en silencio (no falla, solo miente).
+    StructField("pedido_id",     StringType(), True),
+    StructField("fecha",         StringType(), True),
+    StructField("categoria",     StringType(), True),
+    StructField("producto",      StringType(), True),
+    StructField("cantidad",      StringType(), True),
+    StructField("precio_unit",   StringType(), True),
+    StructField("total",         StringType(), True),
+    StructField("email_cliente", StringType(), True),
+    StructField("metodo_pago",   StringType(), True),
+    StructField("devuelto",      StringType(), True),
+    StructField("calificacion",  StringType(), True),
+    StructField("region",        StringType(), True),
+    StructField("canal",         StringType(), True),
+    StructField("vendedor_id",   StringType(), True),
+])
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 2 · Lectura del CSV con schema explícito
 # ═══════════════════════════════════════════════════════════════
-# TODO: usa spark.read, con .option("header", "true"), .schema(BRONZE_SCHEMA)
-# y .csv(RAW) para leer el archivo crudo en df_raw.
-#
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica en un comentario
-# por qué (pista: ¿esta lectura necesita comparar o mover datos entre
-# particiones para poder aplicarle el schema?).
-df_raw = None  # TODO: reemplaza por tu lectura
+# Clasificación: → NARROW ✅
+# Cada split del CSV se lee y se parsea de forma independiente en su
+# propio task: aplicar el schema es una operación fila a fila (partir la
+# línea por comas y etiquetar cada campo), no necesita conocer ninguna
+# otra fila. Ninguna partición tiene que ver lo que hay en las demás, así
+# que no hay Exchange en el plan físico -- solo un FileScan.
+df_raw = (
+    spark.read
+    .option("header", "true")
+    .schema(BRONZE_SCHEMA)
+    .csv(RAW)
+)
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 3 · Columnas de auditoría
 # ═══════════════════════════════════════════════════════════════
-# TODO: a partir de df_raw, agrega dos columnas con withColumn():
-#   - "_ingested_at": el timestamp de cuándo se corrió esta ingesta
-#     (busca la función de pyspark.sql.functions que da la hora actual)
-#   - "_source_file": de qué archivo físico vino cada fila
-#     (busca la función que expone el nombre del archivo de origen)
-#
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica.
-df_bronze = None  # TODO: reemplaza por df_raw + las 2 columnas nuevas
+# Clasificación: → NARROW ✅
+# Son dos proyecciones puras: cada fila de salida se calcula únicamente a
+# partir de esa misma fila de entrada (relación 1:1 entre partición de
+# entrada y de salida). current_timestamp() se evalúa una sola vez por
+# query -- todas las filas del mismo run comparten el timestamp, que es
+# justo lo que quieres para poder decir "este lote entró a esta hora".
+# input_file_name() lo resuelve cada task desde los metadatos de su
+# propio split: tampoco requiere mover datos.
+df_bronze = (
+    df_raw
+    .withColumn("_ingested_at", F.current_timestamp())
+    .withColumn("_source_file", F.input_file_name())
+)
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 4 · Escritura a Delta en modo append
 # ═══════════════════════════════════════════════════════════════
-# TODO: escribe df_bronze a la ruta BRONZE en formato "delta", modo
-# "append" (NO "overwrite" -- Bronze acumula, nunca reemplaza).
+# Clasificación: → NARROW ✅
+# Cada task escribe SU partición como uno o más archivos Parquet nuevos y
+# reporta la lista al driver, que la consolida en un único commit del
+# _delta_log. Los archivos que ya existían no se leen ni se comparan: en
+# append solo se AGREGAN entradas "add" al log, nunca "remove".
 #
-# Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica, y compara mentalmente
-# contra el MERGE que vas a escribir en 02_silver.py (Parte 3.7): ¿por
-# qué ESTA escritura no necesita comparar contra lo que ya existe en
-# la tabla, y esa sí?
-# (tu código aquí)
+# Contraste con el MERGE de 02_silver.py (Parte 3.7): allí Spark tiene
+# que decidir, por cada fila fuente, si ya existe una fila destino con la
+# misma clave -- eso es un join, y para que las dos filas con la misma
+# clave coincidan en el mismo executor hace falta reparticionar ambos
+# lados por esa clave. Ese shuffle (Exchange hashpartitioning) es lo que
+# hace el MERGE WIDE ❌ y el append NARROW ✅.
+(
+    df_bronze.write
+    .format("delta")
+    .mode("append")
+    .save(BRONZE)
+)
 
 print(f"Bronze escrito en: {BRONZE}")
 
 # ═══════════════════════════════════════════════════════════════
 # Verificación: los problemas del raw SÍ deben estar en Bronze
-# (esta parte ya está resuelta -- es tu "examen" automático de que los
-# TODOs de arriba quedaron bien).
 # ═══════════════════════════════════════════════════════════════
 # Si Bronze estuviera limpio en este punto, algo se transformó de más
 # -- eso sería un error de diseño, no una mejora.
@@ -127,11 +143,6 @@ assert n_pedido_null > 0 and n_total_null > 0 and n_dup > 0, (
 )
 
 # ── Inspeccionar el _delta_log ──────────────────────────────────
-# Cada escritura a una tabla Delta genera un archivo JSON de commit en
-# <ruta_tabla>/_delta_log/00000000000000000000.json (el primero),
-# 00000000000000000001.json (el segundo), etc. Ese JSON es la fuente
-# de verdad de Delta Lake: no es un índice derivado, ES la definición
-# de qué archivos Parquet componen la tabla en cada versión.
 print(f"""
 === Cómo inspeccionar el primer commit de _delta_log ===
 aws s3 cp {BRONZE}/_delta_log/00000000000000000000.json - | python3 -m json.tool | head -50

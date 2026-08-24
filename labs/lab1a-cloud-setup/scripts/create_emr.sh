@@ -30,11 +30,11 @@ set -euo pipefail
 # scripts anteriores; KEY_NAME y SUBNET_ID son obligatorios y no
 # tienen un valor por defecto válido)
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
+ESTUDIANTE="lemorenog"         # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
 ANIO="2026"                    # EDITAR si tu cohorte no es 2026
 REGION="us-east-1"             # EDITAR: la misma región que usaste en setup_s3.sh
-KEY_NAME="EDITAR-nombre-de-tu-keypair"   # EDITAR: el key pair que creaste en la Parte 1
-SUBNET_ID="EDITAR-subnet-xxxxxxxx"       # EDITAR: una subnet de tu VPC por defecto
+KEY_NAME="vockey"                        # Key pair preexistente de AWS Academy
+SUBNET_ID="subnet-07c35c19df79d2747"      # EDITAR: una subnet de tu VPC por defecto
 # ─────────────────────────────────────────────────────────────
 
 BUCKET_NAME="st1630-${ESTUDIANTE}-${ANIO}"
