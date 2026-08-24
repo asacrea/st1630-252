@@ -146,8 +146,6 @@ construir un total válido a partir de operandos inválidos.
 
 ## 8. Resumen para ti mismo
 
-Antes de pasar a Silver, resume qué decisiones de limpieza tendrás que
-tomar.
 
 → En Silver eliminaré duplicados usando las columnas de negocio,
 normalizaré los cinco formatos de fecha y consolidaré las 35 variantes
