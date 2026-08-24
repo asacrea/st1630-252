@@ -4,20 +4,20 @@ Bronze -> Silver: limpieza, normalización y la primera escritura ACID
 de verdad del lab (el MERGE). Este es el script central del laboratorio
 -- cada paso está numerado igual que la Parte 3 de ../README.md.
 
-Los bloques marcados con # TODO son tu trabajo. El resto (imports,
-rutas, el helper construir_mapa(), la selección final de columnas, la
-verificación con time travel) ya está resuelto -- concéntrate en los
-TODO, que son justo las decisiones y el código que esta semana busca
-que aprendas a escribir de memoria.
+Versión completada: incluye los cinco formatos de fecha, los mapas de
+las 35 variantes de región y las 20 variantes de canal, la validación
+del total, la normalización de tipos y el MERGE incremental en Delta.
 
-IMPORTANTE -- contratos de nombres de columna: cada TODO especifica
-el nombre EXACTO de columna que debe producir. El código dado más
-abajo (la selección final `df_silver = df_tipos.select(...)`) asume
-esos nombres tal cual -- si los cambias, tendrás que ajustar también
-esa parte.
+IMPORTANTE -- contratos de nombres de columna: la selección final
+`df_silver = df_tipos.select(...)` asume los nombres producidos en
+cada etapa. Si se cambian, también debe ajustarse esa selección.
 
-Uso:
+Uso en un clúster creado con Delta habilitado:
     spark-submit 02_silver.py
+
+Si el clúster de Lab 1a se creó solo con Spark/Hadoop, carga los JAR
+Delta que EMR 6.15 ya instala localmente:
+    spark-submit --jars /usr/share/aws/delta/lib/delta-core.jar,/usr/share/aws/delta/lib/delta-storage.jar 02_silver.py
 
 Qué puedes delegar: sintaxis puntual (¿cómo se llama la función de
 regex en PySpark?). Qué NO puedes delegar: el contenido de
@@ -30,53 +30,92 @@ from delta.tables import DeltaTable
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
-spark = SparkSession.builder.appName("ST1630-Lab1b-Silver").getOrCreate()
-spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
+spark = (
+    SparkSession.builder
+    .appName("ST1630-Lab1b-Silver")
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+    .getOrCreate()
+)
+# Las operaciones WIDE de este script (deduplicación, distinct y MERGE)
+# usan este número de particiones de shuffle. Con 32 se aprovechan los
+# 4 executors x 8 cores del clúster sin generar 200 particiones pequeñas.
+spark.conf.set("spark.sql.shuffle.partitions", "32")
 
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-ssalazarh3-2026"  # EDITAR: el mismo bucket del Lab 1a
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 SILVER = f"s3a://{BUCKET}/silver/pedidos"
 # ─────────────────────────────────────────────────────────────
 
+# Leer Delta garantiza que Spark use únicamente los archivos Parquet
+# activos según `_delta_log`, en vez de listar objetos de S3 sin conocer
+# qué versión lógica de la tabla representan. El scan es NARROW ✅.
 df_bronze = spark.read.format("delta").load(BRONZE)
+
+# count() es una acción: obliga a ejecutar la lectura y combina los
+# conteos parciales para producir un único total en el driver.
 n_bronze = df_bronze.count()
 print(f"Filas en Bronze: {n_bronze:,}")
 
 # ═══════════════════════════════════════════════════════════════
 # 3.1 · Deduplicación (dado)
 # ═══════════════════════════════════════════════════════════════
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica en
-# 1-2 líneas: ¿decidir si dos filas son idénticas requiere que ambas
-# terminen en el mismo executor para compararse? ¿Qué te dice eso
-# sobre si hay un shuffle físico detrás de esta llamada, aunque no
-# haya ningún groupBy ni join explícito en el código?
-df_dedup = df_bronze.dropDuplicates()
+# Las columnas de auditoría cambian entre ingestas, aunque el pedido
+# crudo sea el mismo. Por eso la igualdad se evalúa sobre columnas de
+# negocio y no sobre `_ingested_at`/`_source_file`; así una reejecución
+# accidental de Bronze no duplica lógicamente Silver.
+COLUMNAS_NEGOCIO = [
+    columna
+    for columna in df_bronze.columns
+    if not columna.startswith("_")
+]
+
+# Clasificación: WIDE. Para decidir si dos filas son idénticas,
+# Spark debe reunir en la misma partición las filas con las mismas
+# columnas de negocio. `dropDuplicates()` provoca un shuffle físico,
+# aunque no aparezca explícitamente un groupBy ni un join.
+df_dedup = df_bronze.dropDuplicates(COLUMNAS_NEGOCIO)
 n_dedup = df_dedup.count()
 print(f"3.1 Deduplicación: {n_bronze:,} -> {n_dedup:,} filas (-{n_bronze - n_dedup:,} duplicados)")
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.2 · Fechas -- el reto de los 5 formatos
+# 3.2 · Fechas -- el reto de los 5 formatos
 # ═══════════════════════════════════════════════════════════════
 # En tu data_profiling.md (Pregunta 2) ya identificaste los 5 formatos
 # de fecha del dataset. Vas a necesitar el nombre de patrón de Spark
 # para cada uno -- revisa la documentación de `to_date()` si no
 # recuerdas la sintaxis de los patrones (p. ej. "yyyy-MM-dd").
 #
-# TODO: define FORMATOS_FECHA como una lista de los 5 patrones de
-# fecha, en el ORDEN en que quieres que Spark los intente (piensa en
-# qué pasa si dos formatos son ambiguos entre sí -- ¿cuál debería ir
-# primero?).
-FORMATOS_FECHA = []  # TODO: completa con los 5 patrones, en el orden que decidas
+# Se conserva el orden identificado en el profiling. En los valores
+# ambiguos con día y mes <= 12 se prioriza dd/MM/yyyy sobre MM/dd/yyyy;
+# esta es una decisión explícita porque el texto original, por sí solo,
+# no permite desambiguarlos con certeza.
+FORMATOS_FECHA = [
+    "yyyy-MM-dd",
+    "dd/MM/yyyy",
+    "dd-MM-yyyy",
+    "MM/dd/yyyy",
+    "yyyy/MM/dd",
+]
 
-# TODO: usa F.coalesce(...) combinando un F.to_date(F.col("fecha"), fmt)
-# por cada formato de FORMATOS_FECHA, y guarda el resultado en una
-# columna nueva llamada EXACTAMENTE "fecha_parsed" (withColumn).
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_fechas = df_dedup  # TODO: reemplaza por df_dedup + la columna "fecha_parsed"
+if len(FORMATOS_FECHA) != 5:
+    raise ValueError(
+        "Completa FORMATOS_FECHA con los 5 patrones identificados en tu profiling "
+        "antes de ejecutar Silver."
+    )
+
+# Clasificación: NARROW. Cada fecha se interpreta usando únicamente
+# el valor de su propia fila; no se intercambian datos entre executors.
+# Aquí `F.coalesce` es una expresión SQL que elige el primer parseo no
+# nulo; no debe confundirse con `DataFrame.coalesce()`, que cambia el
+# número de particiones.
+df_fechas = df_dedup.withColumn(
+    "fecha_parsed",
+    F.coalesce(*[F.to_date(F.col("fecha"), formato) for formato in FORMATOS_FECHA]),
+)
 
 n_sin_fecha = df_fechas.filter(F.col("fecha_parsed").isNull()).count()
 print(f"3.2 Fechas: {n_sin_fecha:,} filas sin ningún formato reconocido (se descartan)")
@@ -89,7 +128,7 @@ df_fechas = df_fechas.filter(F.col("fecha_parsed").isNotNull())
 # demuestra que entendiste la limitación).
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.3 · Normalización de región -- el reto principal
+# 3.3 · Normalización de región -- el reto principal
 # ═══════════════════════════════════════════════════════════════
 # Este es el ejercicio de criterio más importante del lab. A partir de
 # tu propio data_profiling.md (Pregunta 3: variantes de "Bogotá", y lo
@@ -100,27 +139,65 @@ df_fechas = df_fechas.filter(F.col("fecha_parsed").isNotNull())
 # "BARRANQUILLA", "BUCARAMANGA", "OTRO" (exactamente así, mayúscula y
 # con tilde donde corresponde).
 #
-# Una entrada de ejemplo por región (identidad + una abreviatura cada
-# una) para que veas el patrón -- te falta completar el resto de las
-# variantes de cada región, más toda la categoría "Otro":
+# Inventario completo de las 35 variantes generadas para las seis
+# categorías canónicas:
 MAPA_REGION = {
-    "Bogotá": "BOGOTÁ",       # ejemplo: la forma "ya correcta" también necesita estar en el mapa
-    "BTA": "BOGOTÁ",           # ejemplo: abreviatura de Bogotá
-    "MDE": "MEDELLÍN",         # ejemplo: abreviatura de Medellín
-    "CLO": "CALI",             # ejemplo: abreviatura de Cali (código de aeropuerto)
-    "BAQ": "BARRANQUILLA",     # ejemplo: abreviatura de Barranquilla (código de aeropuerto)
-    "BGA": "BUCARAMANGA",      # ejemplo: abreviatura de Bucaramanga (código de aeropuerto)
-    # TODO: agrega aquí el resto de las variantes que encontraste en tu
-    # profiling para las 6 regiones -- Bogotá, Medellín, Cali,
-    # Barranquilla, Bucaramanga y Otro. Ojo con los acentos: upper()
-    # NO le quita la tilde a una palabra, así que "BOGOTA" (sin tilde)
-    # y "BOGOTÁ" (con tilde) son dos entradas DISTINTAS que ambas
-    # necesitan estar en el mapa si tu dataset trae las dos formas.
+    # Bogotá (8 variantes)
+    "Bogotá": "BOGOTÁ",
+    "bogota": "BOGOTÁ",
+    "BOGOTÁ": "BOGOTÁ",
+    "Bogota ": "BOGOTÁ",
+    " Bogotá": "BOGOTÁ",
+    "BOGOTA": "BOGOTÁ",
+    "Bta": "BOGOTÁ",
+    "BTA": "BOGOTÁ",
+    # Medellín (6 variantes)
+    "Medellín": "MEDELLÍN",
+    "medellin": "MEDELLÍN",
+    "MEDELLÍN": "MEDELLÍN",
+    "Medellin ": "MEDELLÍN",
+    "MDE": "MEDELLÍN",
+    "medellín": "MEDELLÍN",
+    # Cali (6 variantes)
+    "Cali": "CALI",
+    "CALI": "CALI",
+    "cali": "CALI",
+    "cali ": "CALI",
+    " Cali": "CALI",
+    "CLO": "CALI",
+    # Barranquilla (5 variantes)
+    "Barranquilla": "BARRANQUILLA",
+    "BARRANQUILLA": "BARRANQUILLA",
+    "barranquilla": "BARRANQUILLA",
+    "Bquilla": "BARRANQUILLA",
+    "BAQ": "BARRANQUILLA",
+    # Bucaramanga (5 variantes)
+    "Bucaramanga": "BUCARAMANGA",
+    "BUCARAMANGA": "BUCARAMANGA",
+    "bucaramanga": "BUCARAMANGA",
+    "BGA": "BUCARAMANGA",
+    "Buca": "BUCARAMANGA",
+    # Otros o valores sin una ciudad identificable (5 variantes)
+    "OTRO": "OTRO",
+    "otro": "OTRO",
+    "N/A": "OTRO",
+    "NA": "OTRO",
+    "Desconocido": "OTRO",
 }
+
+# Esta validación falla rápido si alguien reemplaza accidentalmente el
+# inventario completo por los ejemplos mínimos del enunciado.
+if len(MAPA_REGION) <= 6:
+    raise ValueError(
+        "MAPA_REGION todavía contiene solo los ejemplos del enunciado. "
+        "Complétalo a partir de tu profiling antes de ejecutar Silver."
+    )
+
+REGION_POR_DEFECTO = "OTRO"
 
 
 def construir_mapa(col, mapa: dict, valor_por_defecto: str):
-    """NARROW ✅: construye un solo Column expression encadenando
+    """NARROW: construye un solo Column expression encadenando
     when() por cada entrada del mapa -- sigue siendo una transformación
     fila a fila, sin importar cuántos when() tenga la cadena. PASO 1
     (upper+trim) resuelve mayúsculas y espacios; PASO 2 (el propio
@@ -130,117 +207,183 @@ def construir_mapa(col, mapa: dict, valor_por_defecto: str):
     for crudo, canonico in mapa.items():  # PASO 2
         crudo_norm = crudo.strip().upper()
         condicion = col_norm == crudo_norm
-        chain = F.when(condicion, F.lit(canonico)) if chain is None else chain.when(condicion, F.lit(canonico))
+        chain = (
+            F.when(condicion, F.lit(canonico))
+            if chain is None
+            else chain.when(condicion, F.lit(canonico))
+        )
     return chain.otherwise(F.lit(valor_por_defecto))
 
 
-# TODO: usa construir_mapa() para crear la columna "region_silver" a
-# partir de la columna "region" y tu MAPA_REGION.
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (pista:
-# aunque construir_mapa() encadena decenas de when(), ¿cada fila de
-# salida depende de otras filas para resolverse, o solo de sí misma?).
-df_region = df_fechas  # TODO: reemplaza por df_fechas + la columna "region_silver"
+# Clasificación: NARROW. Aunque `construir_mapa()` encadena varios
+# `when`, la región de cada fila se obtiene exclusivamente a partir del
+# valor de esa misma fila, sin shuffle.
+df_region = df_fechas.withColumn(
+    "region_silver",
+    construir_mapa(F.col("region"), MAPA_REGION, REGION_POR_DEFECTO),
+)
 
-# PASO 3 (dado): verificación -- si tu MAPA_REGION está completo, esto
-# debe imprimir exactamente 6.
+# Verificación WIDE: distinct() redistribuye los valores para poder
+# eliminar repetidos. No construye la columna, solo comprueba que el
+# catálogo completo redujo las 35 variantes a 6 valores canónicos.
 n_valores_region = df_region.select("region_silver").distinct().count()
-print(f"3.3 Región: {n_valores_region} valores distintos después de normalizar (debe ser 6)")
+print(
+    "3.3 Región: "
+    f"{n_valores_region} valores distintos después de normalizar "
+    "(debe ser 6)"
+)
 if n_valores_region != 6:
     df_region.select("region_silver").distinct().show(40, truncate=False)
-    print("^ Alguno de estos valores te sobra -- te falta un alias en MAPA_REGION. "
-          "Revisa especialmente las formas sin tilde.")
+    print(
+        "^ Alguno de estos valores te sobra -- te falta un alias en "
+        "MAPA_REGION. Revisa especialmente las formas sin tilde."
+    )
 
-# TODO (documentar, no código): decide y anota en pipeline_analysis.md
-# cómo manejaste 'N/A', 'NA' y 'Desconocido' -- ¿los agrupaste en
-# 'OTRO' o los trataste como nulos? ¿Por qué?
+# Decisión: `N/A`, `NA` y `Desconocido` se agrupan en `OTRO`. Se
+# conservan las filas porque esos valores indican una región no
+# identificada, pero no invalidan por sí mismos el resto del pedido.
+# Una variante verdaderamente nueva también cae en OTRO; en producción
+# convendría registrarla en una tabla de cuarentena y actualizar una
+# dimensión de aliases externa, en vez de ocultarla silenciosamente.
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.4 · Normalización de canal
+# 3.4 · Normalización de canal
 # ═══════════════════════════════════════════════════════════════
 # Mismo patrón que 3.3 (usa construir_mapa() otra vez), pero esta vez
 # el valor canónico de salida es minúscula con guion bajo:
 # "app_movil", "web", "tienda_fisica", "telefono" (así, exactamente).
 #
-# Un ejemplo para que veas el patrón:
+# Inventario completo de las 20 variantes del generador:
 MAPA_CANAL = {
-    "APP_MOVIL": "app_movil",  # ejemplo
-    # TODO: agrega aquí el resto de las variantes que encontraste en tu
-    # profiling (Pregunta 4: variantes de "app_movil", y lo que hayas
-    # visto del resto de canales) para los 4 canales: app_movil, web,
-    # tienda_fisica, telefono.
+    # Aplicación móvil (5 variantes)
+    "App Móvil": "app_movil",
+    "APP_MOVIL": "app_movil",
+    "app movil": "app_movil",
+    "móvil": "app_movil",
+    "APP MOVIL": "app_movil",
+    # Web (5 variantes)
+    "WEB": "web",
+    "Web": "web",
+    "sitio_web": "web",
+    "online": "web",
+    "pagina_web": "web",
+    # Tienda física (5 variantes)
+    "Tienda Física": "tienda_fisica",
+    "TIENDA": "tienda_fisica",
+    "tienda": "tienda_fisica",
+    "físico": "tienda_fisica",
+    "TIENDA FISICA": "tienda_fisica",
+    # Teléfono (5 variantes)
+    "Teléfono": "telefono",
+    "TELEFONO": "telefono",
+    "call_center": "telefono",
+    "tel": "telefono",
+    "llamada": "telefono",
 }
 
-# TODO: usa construir_mapa() para crear la columna "canal_silver" a
-# partir de la columna "canal" y tu MAPA_CANAL. Usa "otro_canal" como
-# valor por defecto (tercer argumento de construir_mapa()).
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (mismo
-# razonamiento que aplicaste para region_silver).
-df_canal = df_region  # TODO: reemplaza por df_region + la columna "canal_silver"
+if len(MAPA_CANAL) <= 1:
+    raise ValueError(
+        "MAPA_CANAL todavía contiene solo el ejemplo del enunciado. "
+        "Complétalo a partir de tu profiling antes de ejecutar Silver."
+    )
 
+# Clasificación: NARROW. El canal normalizado depende únicamente del
+# canal de la misma fila; la transformación no requiere shuffle.
+df_canal = df_region.withColumn(
+    "canal_silver",
+    construir_mapa(F.col("canal"), MAPA_CANAL, "otro_canal"),
+)
+
+# Esta comprobación es WIDE por el distinct. El resultado esperado es
+# cuatro categorías, no las veinte representaciones del origen.
 n_valores_canal = df_canal.select("canal_silver").distinct().count()
-print(f"3.4 Canal: {n_valores_canal} valores distintos después de normalizar (debe ser 4)")
+print(
+    "3.4 Canal: "
+    f"{n_valores_canal} valores distintos después de normalizar "
+    "(debe ser 4)"
+)
 if n_valores_canal != 4:
     df_canal.select("canal_silver").distinct().show(25, truncate=False)
     print("^ Alguno de estos valores te sobra -- te falta un alias en MAPA_CANAL.")
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.5 · Validación y recálculo de total
+# 3.5 · Validación y recálculo de total
 # ═══════════════════════════════════════════════════════════════
 # Regla de negocio: total_correcto = cantidad * precio_unit. El
 # 'total' del raw NO se usa -- es poco confiable (nulos, negativos,
 # error de escala, ver tu propio data_profiling.md Pregunta 5).
 #
-# TODO paso 1: castea "cantidad" y "precio_unit" a double, en columnas
-# nuevas llamadas EXACTAMENTE "cantidad_num" y "precio_num".
-df_cast = df_canal  # TODO: reemplaza por df_canal + "cantidad_num" + "precio_num"
+# Paso 1: convertir los dos operandos a tipo numérico.
+df_cast = (
+    df_canal
+    .withColumn("cantidad_num", F.col("cantidad").cast("double"))
+    .withColumn("precio_num", F.col("precio_unit").cast("double"))
+)
 
-# TODO paso 2: filtra para quedarte solo con las filas donde
-# cantidad_num > 0 AND precio_num > 0 (ambos deben existir con valor
-# válido para que el recálculo tenga sentido de negocio).
-df_validado = df_cast  # TODO: reemplaza por el filtro
+# Paso 2: conservar únicamente operandos existentes y positivos. Las
+# comparaciones también descartan los null, porque no evalúan a true.
+df_validado = df_cast.filter(
+    (F.col("cantidad_num") > 0)
+    & (F.col("precio_num") > 0)
+)
 
-# TODO paso 3: agrega la columna "total_silver" =
-# round(cantidad_num * precio_num, 2).
-#
-# Clasificación de los 3 pasos de arriba: → [tu respuesta: NARROW ✅ o
-# WIDE ❌] -- justifica.
-df_total = df_validado  # TODO: reemplaza por df_validado + "total_silver"
+# Paso 3: recalcular el total confiable sin usar el total del raw.
+# Clasificación de los tres pasos: NARROW. El cast, el filtro y el
+# cálculo trabajan fila por fila y no necesitan mover datos entre
+# particiones.
+df_total = df_validado.withColumn(
+    "total_silver",
+    F.round(F.col("cantidad_num") * F.col("precio_num"), 2),
+)
 
 n_antes_35 = df_canal.count()
 n_despues_35 = df_total.count()
-print(f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras filtrar cantidad/precio inválidos")
+print(
+    f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras "
+    "filtrar cantidad/precio inválidos"
+)
 
 # Cuando termines: responde en pipeline_analysis.md (Pregunta 2)
 # cuántas filas preservaste con esta estrategia vs. si hubieras
 # filtrado directamente por 'total' inválido -- compáralas.
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.6 · Normalización de tipos
+# 3.6 · Normalización de tipos
 # ═══════════════════════════════════════════════════════════════
 # En tu profiling (Pregunta 6) viste que vendedor_id mezcla enteros
 # puros, valores con prefijo "VEN-" y un tercer formato "mixto".
 #
-# TODO: usa F.regexp_extract() para quedarte SOLO con la parte
-# numérica de "vendedor_id", sin importar el formato de entrada.
-# Sobreescribe la columna "vendedor_id" con el resultado.
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_vendedor = df_total  # TODO: reemplaza por df_total con "vendedor_id" limpio
+# Clasificación: NARROW. La expresión regular se aplica de forma
+# independiente al identificador de cada fila. Se conserva solo la
+# secuencia numérica para unificar `9240`, `VEN-9240` y `v9240`.
+df_vendedor = df_total.withColumn(
+    "vendedor_id",
+    F.regexp_extract(F.col("vendedor_id"), r"(\d+)", 1),
+)
 
-# TODO: valida "email_cliente" con una expresión regular de email
-# razonable (usuario@dominio.tld) usando F.rlike(). Crea una columna
-# booleana nueva llamada "email_valido". NO elimines ni pongas en null
-# los emails inválidos -- solo márcalos.
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_tipos = df_vendedor  # TODO: reemplaza por df_vendedor + "email_valido"
+# Clasificación: NARROW. Cada correo se valida usando solo el texto
+# almacenado en su propia fila. Se marca en lugar de eliminarse porque
+# un email incorrecto no invalida necesariamente la transacción y la
+# bandera permite medir calidad o corregirlo posteriormente.
+EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+
+df_tipos = df_vendedor.withColumn(
+    "email_valido",
+    F.col("email_cliente").isNotNull()
+    & F.col("email_cliente").rlike(EMAIL_PATTERN),
+)
 
 # ═══════════════════════════════════════════════════════════════
 # Selección final de columnas de Silver (dado -- asume los nombres de
-# columna exactos especificados en cada TODO de arriba)
+# columna exactos producidos por las etapas anteriores)
 # ═══════════════════════════════════════════════════════════════
+# select, alias, cast y el filtro de pedido_id son NARROW. Además de
+# cantidad y precio, aquí se materializan los tipos que Gold necesita:
+# `devuelto` como boolean para calcular una tasa y `calificacion` como
+# entero para obtener promedios sin depender de casts implícitos.
+#
+# La clave nula sí se descarta porque un MERGE no puede identificar de
+# forma determinista qué registro debe actualizar.
 df_silver = df_tipos.select(
     "pedido_id",
     F.col("fecha_parsed").alias("fecha"),
@@ -255,12 +398,12 @@ df_silver = df_tipos.select(
     "email_cliente",
     "email_valido",
     "metodo_pago",
-    "devuelto",
-    "calificacion",
+    F.col("devuelto").cast("boolean").alias("devuelto"),
+    F.col("calificacion").cast("int").alias("calificacion"),
 ).filter(F.col("pedido_id").isNotNull())  # el MERGE necesita una clave no nula
 
 # ═══════════════════════════════════════════════════════════════
-# TODO 3.7 · MERGE a Silver -- ingesta incremental ACID
+# 3.7 · MERGE a Silver -- ingesta incremental ACID
 # ═══════════════════════════════════════════════════════════════
 # Este es el syntax nuevo de esta semana. La forma general de un MERGE
 # con la API de Delta en Python es:
@@ -270,27 +413,34 @@ df_silver = df_tipos.select(
 #       "<condición de join sobre la clave de negocio>"
 #   ).whenMatchedUpdateAll().whenNotMatchedInsertAll().execute()
 #
-# TODO: completa la rama `if` de abajo usando ese patrón. La clave de
-# negocio del MERGE es pedido_id (compara "s.pedido_id" contra
-# "n.pedido_id"). El DataFrame nuevo es df_silver.
-#
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica en
-# términos de qué hace Spark internamente para poder decidir, fila por
-# fila, si es un UPDATE o un INSERT.
+# Clasificación: WIDE. El MERGE debe comparar las claves de la tabla
+# existente con las del DataFrame nuevo. Internamente realiza una
+# operación equivalente a un join y puede requerir Exchange/shuffle
+# para decidir qué filas actualizar y cuáles insertar.
 if DeltaTable.isDeltaTable(spark, SILVER):
     print("3.7 Tabla Silver existe -- ejecutando MERGE")
     silver_table = DeltaTable.forPath(spark, SILVER)
-    # TODO: tu código de MERGE aquí (silver_table.alias("s").merge(...)....execute())
+    (
+        silver_table.alias("s")
+        .merge(df_silver.alias("n"), "s.pedido_id = n.pedido_id")
+        .whenMatchedUpdateAll()
+        .whenNotMatchedInsertAll()
+        .execute()
+    )
 else:
     # Primera ejecución -- no hay tabla Silver todavía contra la cual
-    # comparar, así que no hay MERGE la primera vez (dado).
+    # comparar, así que no hay MERGE la primera vez. `overwrite` es
+    # apropiado únicamente para crear esta tabla derivada inicial.
     print("3.7 Primera ejecución -- creando tabla Silver")
     df_silver.write.format("delta").mode("overwrite").save(SILVER)
 
 df_silver_final = spark.read.format("delta").load(SILVER)
 print(f"Filas en Silver tras el MERGE: {df_silver_final.count():,}")
 
-# ── Verificación con time travel: versión 0 vs versión actual (dado) ──
+# ── Verificación con time travel: versión 0 vs versión actual ──────
+# Delta conserva un historial transaccional. `versionAsOf=0` reconstruye
+# la instantánea inicial usando el log, sin necesitar una copia manual
+# completa de la tabla.
 silver_table = DeltaTable.forPath(spark, SILVER)
 historial = silver_table.history().select("version", "timestamp", "operation")
 print("\n=== Historial de versiones de Silver ===")
@@ -303,12 +453,12 @@ print(f"Versión actual: {df_silver_final.count():,} filas")
 # ═══════════════════════════════════════════════════════════════
 # 3.8 · Plan físico -- dónde están los Exchange del MERGE (dado)
 # ═══════════════════════════════════════════════════════════════
-# .explain(mode="formatted") imprime el plan físico completo. Busca
-# los bloques que empiezan con "Exchange" -- cada uno es un shuffle
-# real. Complementa esto con la inspección visual en Spark UI (Parte
-# 3.8 de ../README.md) -- el plan de texto y el DAG visual muestran la
-# misma información en dos formatos.
-print("\n=== Plan físico de la escritura a Silver (busca 'Exchange') ===")
+# `df_silver.explain()` muestra la línea de transformaciones que produjo
+# el DataFrame de entrada a la escritura, incluida la deduplicación. El
+# MERGE ya fue ejecutado por Delta y su plan completo se inspecciona en
+# la pestaña SQL de Spark UI. En ambos casos, un nodo `Exchange` señala
+# una frontera de shuffle (shuffle write + shuffle read).
+print("\n=== Plan físico de las transformaciones Silver (busca 'Exchange') ===")
 df_silver.explain(mode="formatted")
 
 spark.stop()

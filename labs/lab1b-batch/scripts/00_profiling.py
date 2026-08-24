@@ -18,28 +18,45 @@ ayuda de sintaxis si algún método de PySpark no lo recuerdas.
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
+# SparkSession es el punto de entrada a la ejecución distribuida. Este
+# script no habilita Delta porque solo lee el CSV crudo y genera
+# estadísticas; todavía no escribe ninguna tabla medallion.
 spark = SparkSession.builder.appName("ST1630-Lab1b-Profiling").getOrCreate()
-spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
+
+# Los groupBy, distinct y agregados del profiling generan shuffles. Se
+# usan 32 particiones porque el clúster del curso tiene 4 executors x 8
+# cores: hay paralelismo suficiente sin crear 200 tareas diminutas para
+# un dataset de apenas 101.500 filas.
+spark.conf.set("spark.sql.shuffle.partitions", "32")
 
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-ssalazarh3-2026"  # EDITAR: el mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 # Local (si corres contra una copia descargada, sin EMR):
 # RAW = "../datos/ventas_colombia_raw.csv"
 # ─────────────────────────────────────────────────────────────
 
-# Todo como string -- el profiling no debe asumir tipos todavía; ver
-# la misma justificación en 01_bronze.py.
+# Todo se lee como string: el profiling debe observar la representación
+# original antes de decidir qué valores son válidos o cómo convertirlos.
+# Permitir inferSchema aquí podría ocultar problemas al transformar
+# automáticamente celdas vacías o valores incompatibles en null.
+#
+# La lectura es NARROW: cada partición puede interpretar sus propias
+# líneas del CSV sin comparar filas ni intercambiar datos con otras.
 df = spark.read.option("header", "true").csv(RAW)
+
+# El DataFrame se reutiliza en muchas acciones (`count`, `groupBy`,
+# muestras). cache() evita volver a descargar y parsear el mismo CSV de
+# S3 para cada una. La primera acción, `count()`, materializa el caché.
 df.cache()
 
 n_total = df.count()
 print(f"\n=== Filas totales: {n_total:,} ===")
 
 # ── Duplicados exactos ────────────────────────────────────────
-# WIDE ❌ Exchange: dropDuplicates() sobre todas las columnas necesita
+# WIDE Exchange: dropDuplicates() sobre todas las columnas necesita
 # que Spark calcule el hash de la fila completa y reparticione por ese
 # hash, para que dos filas idénticas -- que pueden venir de particiones
 # distintas del archivo original -- terminen comparándose en el mismo
@@ -49,15 +66,27 @@ n_unicas = df.dropDuplicates().count()
 print(f"Duplicados exactos: {n_total - n_unicas:,} ({(n_total - n_unicas) / n_total:.2%})")
 
 # ── Nulos por columna ──────────────────────────────────────────
+# Las expresiones when se evalúan fila a fila (NARROW), pero collect()
+# necesita combinar las sumas parciales de todas las particiones en un
+# único resultado global; esa reducción final introduce un Exchange.
 print("\n=== Nulos por columna ===")
-exprs = [F.sum(F.when(F.col(c).isNull() | (F.col(c) == ""), 1).otherwise(0)).alias(c) for c in df.columns]
+exprs = [
+    F.sum(
+        F.when(F.col(c).isNull() | (F.col(c) == ""), 1).otherwise(0)
+    ).alias(c)
+    for c in df.columns
+]
 nulos = df.select(exprs).collect()[0].asDict()
 for col, cnt in sorted(nulos.items(), key=lambda kv: -kv[1]):
     print(f"  {col:<20} {cnt:>8,}  ({cnt / n_total:.2%})")
 
 # ── Formatos de fecha ──────────────────────────────────────────
-# Clasificación por regex -- no intenta parsear, solo agrupar por
-# "forma". La lista de formatos reales se arma en la Parte 3.2 del lab.
+# La clasificación por regex es NARROW: cada fecha se compara con
+# patrones usando únicamente el contenido de su fila. No se parsea aún
+# porque el objetivo es descubrir la variedad del dato, no limpiarlo.
+#
+# El groupBy + count posterior es WIDE: Spark redistribuye las filas
+# por `patron_fecha` para reunir todos los registros del mismo formato.
 print("\n=== Formatos de fecha detectados (top 10 por patrón) ===")
 df_fecha = df.withColumn(
     "patron_fecha",
@@ -70,16 +99,25 @@ df_fecha = df.withColumn(
 df_fecha.groupBy("patron_fecha").count().orderBy(F.desc("count")).show(10, truncate=False)
 
 # ── Distribución de región (las 35 variantes deben aparecer aquí) ──
+# WIDE: groupBy necesita un shuffle por el valor crudo de `region`.
+# El orderBy puede añadir ordenamiento global. Esto permite detectar
+# diferencias invisibles a simple vista, como mayúsculas o espacios.
 print("\n=== Valores únicos de 'region' (ordenados por frecuencia) ===")
 df.groupBy("region").count().orderBy(F.desc("count")).show(40, truncate=False)
 print(f"Total de valores distintos en 'region': {df.select('region').distinct().count()}")
 
 # ── Distribución de canal ──────────────────────────────────────
+# También es WIDE por el groupBy. El inventario resultante será la
+# evidencia para construir MAPA_CANAL en Silver.
 print("\n=== Valores únicos de 'canal' (ordenados por frecuencia) ===")
 df.groupBy("canal").count().orderBy(F.desc("count")).show(25, truncate=False)
 print(f"Total de valores distintos en 'canal': {df.select('canal').distinct().count()}")
 
 # ── Estadísticas de total / precio_unit / cantidad ─────────────
+# Los cast son NARROW ✅: convierten cada celda de forma independiente.
+# Un texto no convertible queda como null, lo cual permite contarlo sin
+# detener el profiling. Los min/max/avg/sum posteriores son agregados
+# globales y, por tanto, requieren combinar resultados parciales.
 df_num = df.withColumn("total_num", F.col("total").cast("double")) \
            .withColumn("precio_num", F.col("precio_unit").cast("double")) \
            .withColumn("cantidad_num", F.col("cantidad").cast("double"))
@@ -108,33 +146,59 @@ df_num.select(
     F.sum(F.when(F.col("cantidad_num") <= 0, 1).otherwise(0)).alias("cero_o_negativo"),
 ).show(truncate=False)
 
-# ── TODO: vendedor_id -- clasificación de tipos ─────────────────
-# Vas a necesitar exactamente esta misma lógica en 02_silver.py
-# (Parte 3.6), así que vale la pena resolverla bien aquí primero.
-#
-# TODO: usando F.when()/otherwise(), crea una columna "tipo_vendedor"
-# que clasifique cada fila en:
-#   - "entero"    si vendedor_id son solo dígitos (rlike r"^\d+$")
-#   - "prefijado" si empieza con "VEN-" (startswith)
-#   - "mixto"     cualquier otro caso (otherwise)
-# print("\n=== Tipos detectados en 'vendedor_id' ===")
-# df_vend = df.withColumn("tipo_vendedor", ...)  # TODO
-# df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
+# ── vendedor_id: clasificación de representaciones ─────────────
+# El objetivo no es decidir todavía el formato definitivo, sino medir
+# cuántas convenciones distintas usa el origen. El withColumn es
+# NARROW; el groupBy es WIDE porque reúne las tres clases.
+print("\n=== Tipos detectados en 'vendedor_id' ===")
+df_vend = df.withColumn(
+    "tipo_vendedor",
+    F.when(F.col("vendedor_id").rlike(r"^\d+$"), "entero")
+    .when(F.col("vendedor_id").startswith("VEN-"), "prefijado")
+    .otherwise("mixto"),
+)
+df_vend.groupBy("tipo_vendedor").count().orderBy(
+    F.desc("count")
+).show(truncate=False)
 
-# ── TODO: Validación de email ───────────────────────────────────
-# TODO: define un patrón regex razonable de email (usuario@dominio.tld)
-# y cuenta cuántos emails son nulos vs. cuántos tienen formato
-# inválido (no nulos, pero no calzan el patrón). La misma expresión te
-# sirve para la columna "email_valido" que vas a construir en
-# 02_silver.py (Parte 3.6).
-# print("\n=== Validación de 'email_cliente' ===")
-# email_valido_pattern = r"..."  # TODO
-# n_email_nulo = ...      # TODO
-# n_email_invalido = ...  # TODO
-# print(f"Emails nulos: {n_email_nulo:,}")
-# print(f"Emails con formato inválido (no nulos): {n_email_invalido:,}")
+# ── Validación exploratoria de email ───────────────────────────
+# Este regex comprueba la estructura mínima usuario@dominio.tld. No
+# pretende implementar todo el estándar RFC 5322: para calidad de datos
+# es preferible una regla entendible que identifique los errores
+# evidentes del dataset.
+EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+
+# Las condiciones se calculan fila a fila, pero agg combina los
+# conteos parciales y produce un resultado global (Exchange).
+print("\n=== Validación de 'email_cliente' ===")
+email_stats = df.select(
+    F.sum(
+        F.when(
+            F.col("email_cliente").isNull()
+            | (F.col("email_cliente") == ""),
+            1,
+        ).otherwise(0)
+    ).alias("nulos"),
+    F.sum(
+        F.when(
+            F.col("email_cliente").isNotNull()
+            & (F.col("email_cliente") != "")
+            & ~F.col("email_cliente").rlike(EMAIL_PATTERN),
+            1,
+        ).otherwise(0)
+    ).alias("invalidos_no_nulos"),
+).collect()[0]
+
+print(f"Emails nulos: {email_stats['nulos']:,}")
+print(
+    "Emails con formato inválido (no nulos): "
+    f"{email_stats['invalidos_no_nulos']:,}"
+)
 
 # ── Muestras de cada tipo de problema ──────────────────────────
+# filter es NARROW y show es una acción. Estas muestras sirven como
+# evidencia cualitativa: los conteos dicen cuánto ocurre y las filas
+# permiten verificar cómo se ve realmente cada problema.
 print("\n=== Muestra: 3 filas con pedido_id nulo ===")
 df.filter(F.col("pedido_id").isNull()).show(3, truncate=False)
 
@@ -160,6 +224,10 @@ transformarlos" de ../README.md para el detalle de cada pregunta)
 7. ¿Qué regla de negocio permite detectar errores en 'total'?
 """)
 
+# Libera los bloques almacenados antes de cerrar la aplicación. Aunque
+# spark.stop() también termina los recursos, explicitarlo documenta que
+# el caché solo era necesario durante este profiling.
+df.unpersist()
 spark.stop()
 
 # ### Cuando termines: no olvides apagar el clúster EMR si ya no lo
