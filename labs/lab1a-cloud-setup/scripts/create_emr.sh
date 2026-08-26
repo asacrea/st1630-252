@@ -30,26 +30,23 @@ set -euo pipefail
 # scripts anteriores; KEY_NAME y SUBNET_ID son obligatorios y no
 # tienen un valor por defecto válido)
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
-ANIO="2026"                    # EDITAR si tu cohorte no es 2026
+ESTUDIANTE="samedinac"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
+ANIO="2023"                    # EDITAR si tu cohorte no es 2026
 REGION="us-east-1"             # EDITAR: la misma región que usaste en setup_s3.sh
-KEY_NAME="EDITAR-nombre-de-tu-keypair"   # EDITAR: el key pair que creaste en la Parte 1
-SUBNET_ID="EDITAR-subnet-xxxxxxxx"       # EDITAR: una subnet de tu VPC por defecto
+KEY_NAME="st1630-lab1a"   # EDITAR: el key pair que creaste en la Parte 1
+SUBNET_ID="subnet-06b81c6da3d161a97"       # EDITAR: una subnet de tu VPC por defecto
 # ─────────────────────────────────────────────────────────────
 
 BUCKET_NAME="st1630-${ESTUDIANTE}-${ANIO}"
-PROFILE_NAME="EMR_EC2_${ESTUDIANTE}_profile"
+PROFILE_NAME="EMR_EC2_DefaultRole"
 CLUSTER_NAME="st1630-${ESTUDIANTE}-emr"
 
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "${TMP_DIR}"' EXIT
 
 # 1. Asegurar que existan los roles de servicio por defecto de EMR
-#    (EMR_DefaultRole). Esto es distinto del rol EC2 con mínimo
-#    privilegio que ya creaste en setup_iam.sh: EMR_DefaultRole es el
-#    rol con el que el SERVICIO EMR administra el clúster (arrancar y
-#    apagar instancias, etc.), no el rol con el que los nodos acceden a
-#    tus datos en S3. Ese segundo rol sí es el tuyo (${PROFILE_NAME}).
+#    (EMR_DefaultRole). Esto es distinto del rol EC2 que usarán los nodos
+#    para acceder a tus datos en S3 (${PROFILE_NAME}).
 echo "Verificando roles de servicio por defecto de EMR..."
 aws emr create-default-roles >/dev/null 2>&1 || true
 
@@ -73,7 +70,7 @@ CLUSTER_ID=$(aws emr create-cluster \
     --applications Name=Spark Name=Hadoop \
     --instance-type m5.xlarge \
     --instance-count 2 \
-    --use-default-roles \
+    --service-role EMR_DefaultRole \
     --ec2-attributes "KeyName=${KEY_NAME},InstanceProfile=${PROFILE_NAME},SubnetId=${SUBNET_ID}" \
     --log-uri "s3://${BUCKET_NAME}/logs/" \
     --bootstrap-actions "Path=s3://${BUCKET_NAME}/bootstrap/bootstrap.sh,Name=Instalar dependencias Python" \

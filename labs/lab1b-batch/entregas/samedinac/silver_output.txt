@@ -1,0 +1,66 @@
+Filas en Bronze: 101,500
+3.1 Deduplicación: 101,500 -> 100,000 filas (-1,500 duplicados)
+3.2 Fechas: 0 filas sin ningún formato reconocido (se descartan)
+3.3 Región: 6 valores distintos después de normalizar (debe ser 6)
+3.4 Canal: 4 valores distintos después de normalizar (debe ser 4)
+3.5 Total: 100,000 -> 98,763 filas tras filtrar cantidad/precio inválidos
+3.7 Primera ejecución -- creando tabla Silver
+Filas en Silver tras el MERGE: 98,565
+
+=== Historial de versiones de Silver ===
++-------+-------------------+---------+
+|version|timestamp          |operation|
++-------+-------------------+---------+
+|0      |2026-08-24 03:53:29|WRITE    |
++-------+-------------------+---------+
+
+Versión 0: 98,565 filas
+Versión actual: 98,565 filas
+
+=== Plan físico de la escritura a Silver (busca 'Exchange') ===
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- Project (6)
+   +- HashAggregate (5)
+      +- Exchange (4)
+         +- HashAggregate (3)
+            +- Filter (2)
+               +- Scan parquet  (1)
+
+
+(1) Scan parquet
+Output [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Batched: true
+Location: PreparedDeltaFileIndex [s3a://st1630-samedinac-2023/bronze/pedidos]
+PushedFilters: [IsNotNull(cantidad), IsNotNull(precio_unit), IsNotNull(pedido_id)]
+ReadSchema: struct<pedido_id:string,fecha:string,categoria:string,producto:string,cantidad:string,precio_unit:string,total:string,email_cliente:string,metodo_pago:string,devuelto:string,calificacion:string,region:string,canal:string,vendedor_id:string,_ingested_at:timestamp,_source_file:string>
+
+(2) Filter
+Input [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Condition : (((((isnotnull(cantidad#41) AND isnotnull(precio_unit#42)) AND isnotnull(coalesce(cast(gettimestamp(fecha#38, yyyy-MM-dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, yyyy/MM/dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd-MM-yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd/MM/yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, MM/dd/yyyy, TimestampType, Some(UTC), false) as date)))) AND (cast(cantidad#41 as double) > 0.0)) AND (cast(precio_unit#42 as double) > 0.0)) AND isnotnull(pedido_id#37))
+
+(3) HashAggregate
+Input [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Keys [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Functions: []
+Aggregate Attributes: []
+Results [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+
+(4) Exchange
+Input [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Arguments: hashpartitioning(calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40, 32), ENSURE_REQUIREMENTS, [plan_id=1418]
+
+(5) HashAggregate
+Input [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Keys [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Functions: []
+Aggregate Attributes: []
+Results [13]: [pedido_id#37, categoria#39, producto#40, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, vendedor_id#50, coalesce(cast(gettimestamp(fecha#38, yyyy-MM-dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, yyyy/MM/dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd-MM-yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd/MM/yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, MM/dd/yyyy, TimestampType, Some(UTC), false) as date)) AS fecha_parsed#621, CASE WHEN (upper(trim(region#48, None)) = BOGOTÁ) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = MDE) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = CLO) THEN CALI WHEN (upper(trim(region#48, None)) = BAQ) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BOGOTÁ) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLIN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLIN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = OTRO) THEN OTRO WHEN (upper(trim(region#48, None)) = OTRO) THEN OTRO WHEN (upper(trim(region#48, None)) = N/A) THEN OTRO WHEN (upper(trim(region#48, None)) = NA) THEN OTRO WHEN (upper(trim(region#48, None)) = DESCONOCIDO) THEN OTRO ELSE OTRO END AS region_silver#745, CASE WHEN (upper(trim(canal#49, None)) = APP_MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP MÓVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = MÓVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = ONLINE) THEN web WHEN (upper(trim(canal#49, None)) = PAGINA_WEB) THEN web WHEN (upper(trim(canal#49, None)) = WEB) THEN web WHEN (upper(trim(canal#49, None)) = SITIO_WEB) THEN web WHEN (upper(trim(canal#49, None)) = WEB) THEN web WHEN (upper(trim(canal#49, None)) = TIENDA FISICA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA FÍSICA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = FÍSICO) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = CALL_CENTER) THEN telefono WHEN (upper(trim(canal#49, None)) = LLAMADA) THEN telefono WHEN (upper(trim(canal#49, None)) = TELEFONO) THEN telefono WHEN (upper(trim(canal#49, None)) = TEL) THEN telefono WHEN (upper(trim(canal#49, None)) = TELÉFONO) THEN telefono ELSE otro_canal END AS canal_silver#856, cast(cantidad#41 as double) AS cantidad_num#968, cast(precio_unit#42 as double) AS precio_num#989]
+
+(6) Project
+Output [15]: [pedido_id#37, fecha_parsed#621 AS fecha#1300, region_silver#745 AS region#1301, canal_silver#856 AS canal#1302, categoria#39, producto#40, cast(cantidad_num#968 as int) AS cantidad#1303, precio_num#989 AS precio_unit#1304, round((cantidad_num#968 * precio_num#989), 2) AS total_silver#1011, regexp_extract(vendedor_id#50, (\d+), 1) AS vendedor_id#1253, email_cliente#44, RLIKE(email_cliente#44, ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$) AS email_valido#1276, metodo_pago#45, devuelto#46, calificacion#47]
+Input [13]: [pedido_id#37, categoria#39, producto#40, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, vendedor_id#50, fecha_parsed#621, region_silver#745, canal_silver#856, cantidad_num#968, precio_num#989]
+
+(7) AdaptiveSparkPlan
+Output [15]: [pedido_id#37, fecha#1300, region#1301, canal#1302, categoria#39, producto#40, cantidad#1303, precio_unit#1304, total_silver#1011, vendedor_id#1253, email_cliente#44, email_valido#1276, metodo_pago#45, devuelto#46, calificacion#47]
+Arguments: isFinalPlan=false

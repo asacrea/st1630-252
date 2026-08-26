@@ -36,7 +36,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-samedinac-2023"  # EDITAR: el mismo bucket del Lab 1a
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 SILVER = f"s3a://{BUCKET}/silver/pedidos"
 # ─────────────────────────────────────────────────────────────
@@ -48,11 +48,10 @@ print(f"Filas en Bronze: {n_bronze:,}")
 # ═══════════════════════════════════════════════════════════════
 # 3.1 · Deduplicación (dado)
 # ═══════════════════════════════════════════════════════════════
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica en
-# 1-2 líneas: ¿decidir si dos filas son idénticas requiere que ambas
-# terminen en el mismo executor para compararse? ¿Qué te dice eso
-# sobre si hay un shuffle físico detrás de esta llamada, aunque no
-# haya ningún groupBy ni join explícito en el código?
+# Clasificación: → WIDE ❌ -- dropDuplicates() hashea la fila completa y
+# reparticiona por ese hash (Exchange) para que dos filas idénticas,
+# que pudieron llegar en particiones distintas, se comparen en el
+# mismo executor. Hay shuffle físico aunque no haya groupBy ni join.
 df_dedup = df_bronze.dropDuplicates()
 n_dedup = df_dedup.count()
 print(f"3.1 Deduplicación: {n_bronze:,} -> {n_dedup:,} filas (-{n_bronze - n_dedup:,} duplicados)")
@@ -69,14 +68,25 @@ print(f"3.1 Deduplicación: {n_bronze:,} -> {n_dedup:,} filas (-{n_bronze - n_de
 # fecha, en el ORDEN en que quieres que Spark los intente (piensa en
 # qué pasa si dos formatos son ambiguos entre sí -- ¿cuál debería ir
 # primero?).
-FORMATOS_FECHA = []  # TODO: completa con los 5 patrones, en el orden que decidas
+FORMATOS_FECHA = [
+    "yyyy-MM-dd",
+    "yyyy/MM/dd",
+    "dd-MM-yyyy",
+    "dd/MM/yyyy",  # Colombia: gana en fechas ambiguas (04/11 = 4 de noviembre)
+    "MM/dd/yyyy",  # fallback US (p. ej. 01/20/2026, día 20 imposible en dd/MM)
+]
 
 # TODO: usa F.coalesce(...) combinando un F.to_date(F.col("fecha"), fmt)
 # por cada formato de FORMATOS_FECHA, y guarda el resultado en una
 # columna nueva llamada EXACTAMENTE "fecha_parsed" (withColumn).
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_fechas = df_dedup  # TODO: reemplaza por df_dedup + la columna "fecha_parsed"
+# Clasificación: → NARROW ✅ -- to_date/coalesce son fila a fila; un
+# parseo que falla devuelve null y el siguiente formato se intenta en
+# la misma partición, sin shuffle.
+df_fechas = df_dedup.withColumn(
+    "fecha_parsed",
+    F.coalesce(*[F.to_date(F.col("fecha"), fmt) for fmt in FORMATOS_FECHA]),
+)
 
 n_sin_fecha = df_fechas.filter(F.col("fecha_parsed").isNull()).count()
 print(f"3.2 Fechas: {n_sin_fecha:,} filas sin ningún formato reconocido (se descartan)")
@@ -116,6 +126,32 @@ MAPA_REGION = {
     # NO le quita la tilde a una palabra, así que "BOGOTA" (sin tilde)
     # y "BOGOTÁ" (con tilde) son dos entradas DISTINTAS que ambas
     # necesitan estar en el mapa si tu dataset trae las dos formas.
+    "BOGOTÁ": "BOGOTÁ",
+    "Bogota": "BOGOTÁ",
+    "bogota": "BOGOTÁ",
+    "BOGOTA": "BOGOTÁ",
+    "Bta": "BOGOTÁ",
+    "Medellín": "MEDELLÍN",
+    "MEDELLÍN": "MEDELLÍN",
+    "medellín": "MEDELLÍN",
+    "medellin": "MEDELLÍN",
+    "Medellin": "MEDELLÍN",
+    "CALI": "CALI",
+    "Cali": "CALI",
+    "cali": "CALI",
+    "BARRANQUILLA": "BARRANQUILLA",
+    "Barranquilla": "BARRANQUILLA",
+    "barranquilla": "BARRANQUILLA",
+    "Bquilla": "BARRANQUILLA",
+    "BUCARAMANGA": "BUCARAMANGA",
+    "Bucaramanga": "BUCARAMANGA",
+    "bucaramanga": "BUCARAMANGA",
+    "Buca": "BUCARAMANGA",
+    "OTRO": "OTRO",
+    "otro": "OTRO",
+    "N/A": "OTRO",
+    "NA": "OTRO",
+    "Desconocido": "OTRO",
 }
 
 
@@ -137,10 +173,12 @@ def construir_mapa(col, mapa: dict, valor_por_defecto: str):
 # TODO: usa construir_mapa() para crear la columna "region_silver" a
 # partir de la columna "region" y tu MAPA_REGION.
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (pista:
-# aunque construir_mapa() encadena decenas de when(), ¿cada fila de
-# salida depende de otras filas para resolverse, o solo de sí misma?).
-df_region = df_fechas  # TODO: reemplaza por df_fechas + la columna "region_silver"
+# Clasificación: → NARROW ✅ -- cada fila se resuelve sola con upper+trim
+# y la cadena de when(); más when() no implica shuffle.
+df_region = df_fechas.withColumn(
+    "region_silver",
+    construir_mapa(F.col("region"), MAPA_REGION, "OTRO"),
+)
 
 # PASO 3 (dado): verificación -- si tu MAPA_REGION está completo, esto
 # debe imprimir exactamente 6.
@@ -169,15 +207,37 @@ MAPA_CANAL = {
     # profiling (Pregunta 4: variantes de "app_movil", y lo que hayas
     # visto del resto de canales) para los 4 canales: app_movil, web,
     # tienda_fisica, telefono.
+    "App Móvil": "app_movil",
+    "móvil": "app_movil",
+    "app movil": "app_movil",
+    "APP MOVIL": "app_movil",
+    "online": "web",
+    "pagina_web": "web",
+    "WEB": "web",
+    "sitio_web": "web",
+    "Web": "web",
+    "TIENDA FISICA": "tienda_fisica",
+    "Tienda Física": "tienda_fisica",
+    "tienda": "tienda_fisica",
+    "TIENDA": "tienda_fisica",
+    "físico": "tienda_fisica",
+    "call_center": "telefono",
+    "llamada": "telefono",
+    "TELEFONO": "telefono",
+    "tel": "telefono",
+    "Teléfono": "telefono",
 }
 
 # TODO: usa construir_mapa() para crear la columna "canal_silver" a
 # partir de la columna "canal" y tu MAPA_CANAL. Usa "otro_canal" como
 # valor por defecto (tercer argumento de construir_mapa()).
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (mismo
-# razonamiento que aplicaste para region_silver).
-df_canal = df_region  # TODO: reemplaza por df_region + la columna "canal_silver"
+# Clasificación: → NARROW ✅ -- mismo razonamiento que region_silver:
+# mapeo fila a fila, sin Exchange.
+df_canal = df_region.withColumn(
+    "canal_silver",
+    construir_mapa(F.col("canal"), MAPA_CANAL, "otro_canal"),
+)
 
 n_valores_canal = df_canal.select("canal_silver").distinct().count()
 print(f"3.4 Canal: {n_valores_canal} valores distintos después de normalizar (debe ser 4)")
@@ -194,19 +254,27 @@ if n_valores_canal != 4:
 #
 # TODO paso 1: castea "cantidad" y "precio_unit" a double, en columnas
 # nuevas llamadas EXACTAMENTE "cantidad_num" y "precio_num".
-df_cast = df_canal  # TODO: reemplaza por df_canal + "cantidad_num" + "precio_num"
+df_cast = (
+    df_canal
+    .withColumn("cantidad_num", F.col("cantidad").cast("double"))
+    .withColumn("precio_num", F.col("precio_unit").cast("double"))
+)
 
 # TODO paso 2: filtra para quedarte solo con las filas donde
 # cantidad_num > 0 AND precio_num > 0 (ambos deben existir con valor
 # válido para que el recálculo tenga sentido de negocio).
-df_validado = df_cast  # TODO: reemplaza por el filtro
+df_validado = df_cast.filter((F.col("cantidad_num") > 0) & (F.col("precio_num") > 0))
 
 # TODO paso 3: agrega la columna "total_silver" =
 # round(cantidad_num * precio_num, 2).
 #
-# Clasificación de los 3 pasos de arriba: → [tu respuesta: NARROW ✅ o
-# WIDE ❌] -- justifica.
-df_total = df_validado  # TODO: reemplaza por df_validado + "total_silver"
+# Clasificación de los 3 pasos de arriba: → NARROW ✅ -- cast, filter y
+# round son predicados/aritmética por fila; el filtro no reune filas
+# entre executors.
+df_total = df_validado.withColumn(
+    "total_silver",
+    F.round(F.col("cantidad_num") * F.col("precio_num"), 2),
+)
 
 n_antes_35 = df_canal.count()
 n_despues_35 = df_total.count()
@@ -226,16 +294,23 @@ print(f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras filtrar cantida
 # numérica de "vendedor_id", sin importar el formato de entrada.
 # Sobreescribe la columna "vendedor_id" con el resultado.
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_vendedor = df_total  # TODO: reemplaza por df_total con "vendedor_id" limpio
+# Clasificación: → NARROW ✅ -- regexp_extract opera sobre el string de
+# cada fila; no necesita datos de otras particiones.
+df_vendedor = df_total.withColumn(
+    "vendedor_id",
+    F.regexp_extract(F.col("vendedor_id"), r"(\d+)", 1),
+)
 
 # TODO: valida "email_cliente" con una expresión regular de email
 # razonable (usuario@dominio.tld) usando F.rlike(). Crea una columna
 # booleana nueva llamada "email_valido". NO elimines ni pongas en null
 # los emails inválidos -- solo márcalos.
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_tipos = df_vendedor  # TODO: reemplaza por df_vendedor + "email_valido"
+# Clasificación: → NARROW ✅ -- rlike es una predicado por fila.
+df_tipos = df_vendedor.withColumn(
+    "email_valido",
+    F.col("email_cliente").rlike(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"),
+)
 
 # ═══════════════════════════════════════════════════════════════
 # Selección final de columnas de Silver (dado -- asume los nombres de
@@ -274,13 +349,16 @@ df_silver = df_tipos.select(
 # negocio del MERGE es pedido_id (compara "s.pedido_id" contra
 # "n.pedido_id"). El DataFrame nuevo es df_silver.
 #
-# Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica en
-# términos de qué hace Spark internamente para poder decidir, fila por
-# fila, si es un UPDATE o un INSERT.
+# Clasificación: → WIDE ❌ -- el MERGE compara df_silver contra la tabla
+# existente por pedido_id; Spark tiene que shufflear ambas partes por
+# esa clave (Exchange) para decidir UPDATE vs INSERT.
 if DeltaTable.isDeltaTable(spark, SILVER):
     print("3.7 Tabla Silver existe -- ejecutando MERGE")
     silver_table = DeltaTable.forPath(spark, SILVER)
-    # TODO: tu código de MERGE aquí (silver_table.alias("s").merge(...)....execute())
+    silver_table.alias("s").merge(
+        df_silver.alias("n"),
+        "s.pedido_id = n.pedido_id",
+    ).whenMatchedUpdateAll().whenNotMatchedInsertAll().execute()
 else:
     # Primera ejecución -- no hay tabla Silver todavía contra la cual
     # comparar, así que no hay MERGE la primera vez (dado).

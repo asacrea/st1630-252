@@ -20,12 +20,12 @@ from pyspark.sql import functions as F
 
 spark = SparkSession.builder.appName("ST1630-Lab1b-Profiling").getOrCreate()
 spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
-
+spark.sparkContext.setLogLevel("WARN")
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
-RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
+BUCKET = "st1630-samedinac-2023"  # EDITAR: el mismo bucket del Lab 1a
+RAW = f"s3://{BUCKET}/raw/ventas_colombia_raw.csv"
 # Local (si corres contra una copia descargada, sin EMR):
 # RAW = "../datos/ventas_colombia_raw.csv"
 # ─────────────────────────────────────────────────────────────

@@ -1,0 +1,152 @@
+=== Filas totales: 101,500 ===
+Duplicados exactos: 1,500 (1.48%)
+
+=== Nulos por columna ===
+  total                   2,571  (2.53%)
+  pedido_id                 208  (0.20%)
+  email_cliente             144  (0.14%)
+  fecha                       0  (0.00%)
+  categoria                   0  (0.00%)
+  producto                    0  (0.00%)
+  cantidad                    0  (0.00%)
+  precio_unit                 0  (0.00%)
+  metodo_pago                 0  (0.00%)
+  devuelto                    0  (0.00%)
+  calificacion                0  (0.00%)
+  region                      0  (0.00%)
+  canal                       0  (0.00%)
+  vendedor_id                 0  (0.00%)
+
+=== Formatos de fecha detectados (top 10 por patrón) ===
++---------------------------------+-----+
+|patron_fecha                     |count|
++---------------------------------+-----+
+|dd/MM/yyyy o MM/dd/yyyy (ambiguo)|40644|
+|yyyy/MM/dd                       |20293|
+|yyyy-MM-dd                       |20284|
+|dd-MM-yyyy                       |20279|
++---------------------------------+-----+
+
+
+=== Valores únicos de 'region' (ordenados por frecuencia) ===
++------------+-----+
+|region      |count|
++------------+-----+
+|BOGOTÁ      |5017 |
+|Bogota      |4956 |
+|bogota      |4894 |
+|BTA         |4803 |
+|Bta         |4796 |
+|BOGOTA      |4759 |
+| Bogotá     |4701 |
+|Bogotá      |4677 |
+|Medellín    |3487 |
+|MEDELLÍN    |3444 |
+|medellin    |3425 |
+|Medellin    |3392 |
+|MDE         |3332 |
+|medellín    |3316 |
+|CALI        |2598 |
+|Cali        |2579 |
+| Cali       |2570 |
+|CLO         |2550 |
+|cali        |2487 |
+|cali        |2473 |
+|BARRANQUILLA|2042 |
+|Bquilla     |2018 |
+|Barranquilla|2015 |
+|BAQ         |2015 |
+|barranquilla|1912 |
+|BGA         |1869 |
+|Bucaramanga |1842 |
+|Buca        |1837 |
+|bucaramanga |1830 |
+|BUCARAMANGA |1734 |
+|Desconocido |1665 |
+|otro        |1634 |
+|N/A         |1632 |
+|NA          |1615 |
+|OTRO        |1584 |
++------------+-----+
+
+Total de valores distintos en 'region': 35
+
+=== Valores únicos de 'canal' (ordenados por frecuencia) ===
++-------------+-----+
+|canal        |count|
++-------------+-----+
+|App Móvil    |7198 |
+|móvil        |7158 |
+|app movil    |7121 |
+|APP MOVIL    |7090 |
+|APP_MOVIL    |7004 |
+|online       |6112 |
+|pagina_web   |6111 |
+|WEB          |6083 |
+|sitio_web    |6082 |
+|Web          |6036 |
+|TIENDA FISICA|5118 |
+|Tienda Física|5105 |
+|tienda       |5065 |
+|TIENDA       |4977 |
+|físico       |4893 |
+|call_center  |2181 |
+|llamada      |2076 |
+|TELEFONO     |2054 |
+|tel          |2020 |
+|Teléfono     |2016 |
++-------------+-----+
+
+Total de valores distintos en 'canal': 20
+
+=== Estadísticas de 'total' ===
++------------------+-------+----------------+-----+---------+-----+
+|min               |max    |mean            |nulos|negativos|ceros|
++------------------+-------+----------------+-----+---------+-----+
+|-49989.55707293571|3.893E9|3986873.59396779|2571 |926      |462  |
++------------------+-------+----------------+-----+---------+-----+
+
+=== Estadísticas de 'precio_unit' ===
++---------+--------+---------+
+|min      |max     |negativos|
++---------+--------+---------+
+|-741400.0|799900.0|641      |
++---------+--------+---------+
+
+=== Estadísticas de 'cantidad' ===
++----+---+---------------+
+|min |max|cero_o_negativo|
++----+---+---------------+
+|-5.0|5.0|622            |
++----+---+---------------+
+
+
+=== Muestra: 3 filas con pedido_id nulo ===
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+|pedido_id|fecha     |categoria|producto|cantidad|precio_unit|total   |email_cliente              |metodo_pago    |devuelto|calificacion|region      |canal    |vendedor_id|
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+|null     |04/11/2025|Alimentos|Aceite  |1.0     |5400.0     |5400.0  |sara.castro393@outlook.com |efectivo       |False   |3           | Bogotá     |físico   |VEN-3019   |
+|null     |2025/11/20|Hogar    |Cafetera|2.0     |249900.0   |499800.0|andres.lopez878@yahoo.com  |tarjeta_debito |False   |4           |bogota      |APP MOVIL|7315       |
+|null     |29/10/2025|Alimentos|Aceite  |2.0     |15900.0    |31800.0 |santiago.gomez740@yahoo.com|tarjeta_credito|False   |3           |barranquilla|App Móvil|3324       |
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+only showing top 3 rows
+
+=== Muestra: 3 filas con total nulo ===
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+|pedido_id |fecha     |categoria|producto        |cantidad|precio_unit|total|email_cliente                 |metodo_pago   |devuelto|calificacion|region   |canal        |vendedor_id|
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+|PED-033396|08-06-2026|Deportes |Maleta deportiva|1.0     |34200.0    |null |laura.ramirez532@hotmail.com  |tarjeta_debito|False   |4           |MEDELLÍN |APP_MOVIL    |6003       |
+|PED-015714|01/20/2026|Alimentos|Aceite          |2.0     |10900.0    |null |valentina.castro60@hotmail.com|efectivo      |False   |4           |Medellin |TIENDA FISICA|6807       |
+|PED-028620|22-05-2025|Ropa     |Gorra           |2.0     |85200.0    |null |laura.ramirez505@yahoo.com    |PSE           |True    |5           |Cali     |online       |2743       |
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+only showing top 3 rows
+
+=== Muestra: 3 filas con precio_unit negativo ===
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+|pedido_id |fecha     |categoria|producto     |cantidad|precio_unit|total   |email_cliente             |metodo_pago    |devuelto|calificacion|region |canal    |vendedor_id|total_num|precio_num|cantidad_num|
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+|PED-025040|06/02/2025|Ropa     |Pantalón     |2.0     |-52100.0   |104200.0|mateo.garcia775@yahoo.com |tarjeta_credito|False   |5           |MDE    |WEB      |VEN-1755   |104200.0 |-52100.0  |2.0         |
+|PED-049796|12-08-2025|Deportes |Tenis running|2.0     |-252400.0  |504800.0|david.lopez163@hotmail.com|nequi          |False   |2           |Bogota |móvil    |7931       |504800.0 |-252400.0 |2.0         |
+|PED-087729|2026/02/13|Deportes |Bicicleta    |5.0     |-115400.0  |577000.0|camila.torres94@yahoo.com |efectivo       |False   |4           |BTA    |APP_MOVIL|7101       |577000.0 |-115400.0 |5.0         |
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+only showing top 3 rows
