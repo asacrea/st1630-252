@@ -448,6 +448,7 @@ lab y qué aplica por defecto:
 | Escribir las justificaciones de `architecture.md` | **No** | Debe reflejar tu propio razonamiento, no el de un agente |
 | Interpretar los resultados de Spark (benchmark, DAG) | **No** | Es evidencia empírica de tu propia ejecución — un agente no tiene acceso a tu Spark UI real |
 
+
 ## Troubleshooting
 
 | # | Error / síntoma | Causa probable | Solución |
