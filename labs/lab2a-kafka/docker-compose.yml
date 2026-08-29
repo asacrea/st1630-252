@@ -1,0 +1,93 @@
+# Lab 2a — Kafka en KRaft (ST1630-2026-2, S6-S7)
+#
+# Un solo broker haciendo doble rol (broker + controller) vía KRaft --
+# coordinación de clúster completamente integrada en el propio broker,
+# sin ningún servicio externo adicional (ver ../README.md para la
+# comparación completa con el modelo anterior de coordinación externa).
+# Corre con:
+#   docker-compose up -d
+#
+# No necesitas modificar este archivo para hacer el lab. La única pieza
+# que falta a propósito es el topic "pedidos-ventas": no se crea solo
+# (KAFKA_AUTO_CREATE_TOPICS_ENABLE=false) porque crearlo a mano es la
+# Pregunta 1 de la Parte 0 del lab -- ver ../README.md.
+
+services:
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    hostname: kafka
+    container_name: st1630-lab2a-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      # CLUSTER_ID es lo que el entrypoint del contenedor usa para
+      # formatear el almacenamiento en modo KRaft la primera vez que
+      # arranca (equivalente a `kafka-storage format`). Es un ID
+      # arbitrario -- cualquier string fijo sirve, no tiene que ser
+      # único fuera de este lab.
+      CLUSTER_ID: "st1630lab2aKRaftClusterID"
+
+      # ── KRaft: coordinación de clúster integrada en el broker ───
+      # Este broker cumple los dos roles (broker + controller) del
+      # Raft Quorum -- por eso KAFKA_PROCESS_ROLES tiene ambos valores.
+      # En un clúster de producción normalmente se separan en nodos
+      # distintos (o al menos se listan varios controllers en
+      # KAFKA_CONTROLLER_QUORUM_VOTERS para tolerar fallos).
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+
+      # ── Listeners ────────────────────────────────────────────────
+      # PLAINTEXT (29092): tráfico broker-a-broker y broker-a-cliente
+      #   DENTRO de la red de Docker (lo usa kafka-ui, por ejemplo).
+      # CONTROLLER (29093): tráfico interno del Raft Quorum -- nunca
+      #   lo toca un cliente ni un producer/consumer.
+      # EXTERNAL (9092): lo que tus scripts en el host (fuera de
+      #   Docker) usan como bootstrap_servers=['localhost:9092'].
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,EXTERNAL://0.0.0.0:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,EXTERNAL://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+
+      # ── Comportamiento del clúster ───────────────────────────────
+      # false a propósito: ver la nota al inicio de este archivo.
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      # Con 1 solo broker, un factor de replicación mayor a 1 haría
+      # que Kafka nunca pudiera satisfacerlo (no hay dónde replicar) --
+      # __consumer_offsets también vive en este único broker.
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      # Evita la espera de rebalanceo por defecto (3s) la primera vez
+      # que tu consumer group se une -- feedback más rápido en un lab.
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      KAFKA_LOG_DIRS: "/var/lib/kafka/data"
+
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: st1630-lab2a-kafka-ui
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      # Kafka UI corre DENTRO de la red de Docker -- usa el listener
+      # PLAINTEXT (29092), no el EXTERNAL que usan tus scripts locales.
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:29092"
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+volumes:
+  kafka-data:
