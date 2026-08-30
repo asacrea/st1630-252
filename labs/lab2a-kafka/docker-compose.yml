@@ -25,7 +25,7 @@ services:
       # arranca (equivalente a `kafka-storage format`). Es un ID
       # arbitrario -- cualquier string fijo sirve, no tiene que ser
       # único fuera de este lab.
-      CLUSTER_ID: "st1630lab2aKRaftClusterID"
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
 
       # ── KRaft: coordinación de clúster integrada en el broker ───
       # Este broker cumple los dos roles (broker + controller) del
@@ -46,7 +46,7 @@ services:
       # EXTERNAL (9092): lo que tus scripts en el host (fuera de
       #   Docker) usan como bootstrap_servers=['localhost:9092'].
       KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,EXTERNAL://0.0.0.0:9092"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,EXTERNAL://localhost:9092"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,EXTERNAL://127.0.0.1:9092"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT"
       KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
 
@@ -79,7 +79,7 @@ services:
     image: provectuslabs/kafka-ui:latest
     container_name: st1630-lab2a-kafka-ui
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: "local"
       # Kafka UI corre DENTRO de la red de Docker -- usa el listener

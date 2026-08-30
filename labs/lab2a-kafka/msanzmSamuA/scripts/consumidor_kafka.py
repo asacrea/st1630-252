@@ -48,38 +48,6 @@ spark = (
 # ═══════════════════════════════════════════════════════════════
 # TODO 2.1 · Configuración del KafkaConsumer
 # ═══════════════════════════════════════════════════════════════
-# group_id="analytics-group": le da nombre a este consumer group. Sin
-# group_id, Kafka no puede rastrear offsets consistentemente para tu
-# aplicación -- y un nombre distinto te permitiría tener OTRO grupo
-# leyendo el mismo topic de forma completamente independiente (p. ej.
-# un grupo "fraude-group" leyendo los mismos mensajes para otro fin).
-#
-# auto_offset_reset="earliest": el productor YA envió sus 1.000
-# mensajes antes de que existiera este consumer group -- si usaras
-# "latest", tu consumer solo vería mensajes NUEVOS a partir de ahora y
-# no leería nada de lo que el productor ya publicó.
-#
-# enable_auto_commit=False -- LA DECISIÓN MÁS IMPORTANTE de este
-# script. Si la dejaras en True (el default), Kafka commitearía el
-# offset automáticamente cada 5 segundos SIN IMPORTAR si ya
-# terminaste de procesar ese mensaje. Si tu consumidor se cae justo
-# entre ese auto-commit y el MERGE a Bronze, Kafka ya "olvidó" ese
-# mensaje -- al reiniciar, retomarías DESPUÉS de él, y ese pedido se
-# pierde para siempre. Eso es at-most-once silencioso: nunca te
-# enteras de que perdiste datos. Con enable_auto_commit=False, TÚ
-# controlas exactamente cuándo Kafka considera "leído" un mensaje --
-# y en este script, eso pasa solo después de que el MERGE fue exitoso.
-#
-# TODO: crea el KafkaConsumer con:
-#   - TOPIC como primer argumento posicional
-#   - bootstrap_servers=[KAFKA_BOOTSTRAP]
-#   - group_id=GROUP_ID
-#   - auto_offset_reset="earliest"
-#   - enable_auto_commit=False
-#   - value_deserializer: función que reciba bytes y devuelva un dict
-#     (json.loads(v.decode("utf-8")))
-#   - key_deserializer: función que reciba bytes (o None) y devuelva
-#     un string (o None)
 consumer = KafkaConsumer(
     TOPIC,
     bootstrap_servers=[KAFKA_BOOTSTRAP],
