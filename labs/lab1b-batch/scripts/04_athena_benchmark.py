@@ -31,7 +31,7 @@ import boto3
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
 REGION = "us-east-1"                     # EDITAR si tu región es otra
-BUCKET = "st1630-tu-usuario"              # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-samedinac-2023"              # EDITAR: el mismo bucket del Lab 1a
 ATHENA_DATABASE = "default"               # EDITAR si registraste las tablas en otra base
 ATHENA_OUTPUT = f"s3://{BUCKET}/athena-results/"
 CSV_10K_LOCATION = f"s3://{BUCKET}/benchmark/csv_10k/"  # ver Parte 5.2 del README
@@ -99,7 +99,14 @@ def main() -> None:
     # de Presto: date_add('month', -3, current_date), GROUP BY, ORDER
     # BY ... DESC, LIMIT.
     query_negocio = """
-        -- TODO: tu query aquí
+        SELECT 
+            region, 
+            SUM(ventas_totales) AS ventas_trimestre
+        FROM gold_ventas_region_fecha
+        WHERE CAST(fecha AS DATE) >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_trimestre DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_negocio, "5.1 Top 5 regiones (Gold Parquet, Z-ordered)"))
 
@@ -128,7 +135,14 @@ def main() -> None:
     # -- tienes `total_silver` fila por fila, así que necesitas
     # SUM(total_silver) en vez de SUM(ventas_totales).
     query_csv = """
-        -- TODO: tu query aquí
+        SELECT 
+            region, 
+            SUM(total_silver) AS ventas_trimestre
+        FROM benchmark_csv_10k
+        WHERE CAST(fecha AS DATE) >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_trimestre DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_csv, "5.2 Misma query (CSV sin particionar)"))
 

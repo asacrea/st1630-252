@@ -25,7 +25,7 @@ services:
       # arranca (equivalente a `kafka-storage format`). Es un ID
       # arbitrario -- cualquier string fijo sirve, no tiene que ser
       # único fuera de este lab.
-      CLUSTER_ID: "st1630lab2aKRaftClusterID"
+      CLUSTER_ID: "Wv-GZPSCT2CSht0e0MPrKQ"
 
       # ── KRaft: coordinación de clúster integrada en el broker ───
       # Este broker cumple los dos roles (broker + controller) del
