@@ -22,3 +22,9 @@ Thumbs.db
 *.csv
 *.parquet
 data/local/
+
+# Material solo para el profesor -- hojas de respuestas / ejemplos
+# resueltos que no deben llegar al repo que ven los estudiantes
+labs/lab1b-batch/datos/data_quality_report.md
+labs/lab1b-batch/ejemplos/
+labs/lab2a-kafka/ejemplos/
