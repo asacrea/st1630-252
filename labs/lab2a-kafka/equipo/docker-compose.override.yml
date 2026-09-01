@@ -1,0 +1,28 @@
+# Override del docker-compose.yml del lab — Lab 2a (entrega del equipo)
+#
+# POR QUÉ EXISTE ESTE ARCHIVO
+# El docker-compose.yml original trae CLUSTER_ID: "st1630lab2aKRaftClusterID".
+# En modo KRaft el broker no acepta un string arbitrario como cluster id:
+# tiene que ser un UUID de 128 bits codificado en base64 sin padding, es
+# decir exactamente 22 caracteres. El valor original tiene 25, así que el
+# preflight del contenedor aborta antes de formatear el almacenamiento:
+#
+#   Cluster ID string st1630lab2aKRaftClusterID does not appear to be a
+#   valid UUID: Input string with prefix `st1630lab2aKRaftClusterI` is
+#   too long to be decoded as a base64 UUID
+#
+# El README del lab pide no modificar el docker-compose.yml, así que en vez
+# de editarlo se sobreescribe solo esa variable desde aquí. El UUID de abajo
+# lo generó el propio Kafka con:
+#
+#   docker run --rm confluentinc/cp-kafka:7.6.0 kafka-storage random-uuid
+#
+# CÓMO LEVANTAR EL CLÚSTER
+#   docker compose -f docker-compose.yml -f equipo/docker-compose.override.yml up -d
+#
+# (ejecutado desde labs/lab2a-kafka/)
+
+services:
+  kafka:
+    environment:
+      CLUSTER_ID: "OOiHFDxNTKunDxTBeHYiRg"
