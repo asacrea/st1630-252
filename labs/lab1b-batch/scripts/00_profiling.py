@@ -24,7 +24,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-jjdiazr-2026"  # EDITAR: el mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 # Local (si corres contra una copia descargada, sin EMR):
 # RAW = "../datos/ventas_colombia_raw.csv"
@@ -112,14 +112,16 @@ df_num.select(
 # Vas a necesitar exactamente esta misma lógica en 02_silver.py
 # (Parte 3.6), así que vale la pena resolverla bien aquí primero.
 #
-# TODO: usando F.when()/otherwise(), crea una columna "tipo_vendedor"
-# que clasifique cada fila en:
-#   - "entero"    si vendedor_id son solo dígitos (rlike r"^\d+$")
-#   - "prefijado" si empieza con "VEN-" (startswith)
-#   - "mixto"     cualquier otro caso (otherwise)
-# print("\n=== Tipos detectados en 'vendedor_id' ===")
-# df_vend = df.withColumn("tipo_vendedor", ...)  # TODO
-# df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
+# NARROW ✅ el withColumn es fila a fila; el groupBy que viene después
+# sí es WIDE (necesita juntar todas las filas de un mismo tipo).
+print("\n=== Tipos detectados en 'vendedor_id' ===")
+df_vend = df.withColumn(
+    "tipo_vendedor",
+    F.when(F.col("vendedor_id").rlike(r"^\d+$"), "entero")
+     .when(F.col("vendedor_id").startswith("VEN-"), "prefijado")
+     .otherwise("mixto"),
+)
+df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
 
 # ── TODO: Validación de email ───────────────────────────────────
 # TODO: define un patrón regex razonable de email (usuario@dominio.tld)
@@ -127,12 +129,18 @@ df_num.select(
 # inválido (no nulos, pero no calzan el patrón). La misma expresión te
 # sirve para la columna "email_valido" que vas a construir en
 # 02_silver.py (Parte 3.6).
-# print("\n=== Validación de 'email_cliente' ===")
-# email_valido_pattern = r"..."  # TODO
-# n_email_nulo = ...      # TODO
-# n_email_invalido = ...  # TODO
-# print(f"Emails nulos: {n_email_nulo:,}")
-# print(f"Emails con formato inválido (no nulos): {n_email_invalido:,}")
+print("\n=== Validación de 'email_cliente' ===")
+# usuario@dominio.tld -- el {2,} final es lo que atrapa los "sin TLD"
+# (juan.gomez@dominio), y el ^...$ lo que atrapa los "@" reemplazado
+# por " en " y los que perdieron el arroba del todo.
+email_valido_pattern = r"^[\w\.\-\+]+@[\w\-]+\.[a-zA-Z]{2,}$"
+n_email_nulo = df.filter(F.col("email_cliente").isNull()).count()
+n_email_invalido = df.filter(
+    F.col("email_cliente").isNotNull()
+    & ~F.col("email_cliente").rlike(email_valido_pattern)
+).count()
+print(f"Emails nulos: {n_email_nulo:,}")
+print(f"Emails con formato inválido (no nulos): {n_email_invalido:,}")
 
 # ── Muestras de cada tipo de problema ──────────────────────────
 print("\n=== Muestra: 3 filas con pedido_id nulo ===")

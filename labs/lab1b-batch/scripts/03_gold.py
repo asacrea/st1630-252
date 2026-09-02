@@ -26,7 +26,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-jjdiazr-2026"  # EDITAR: el mismo bucket del Lab 1a
 SILVER = f"s3a://{BUCKET}/silver/pedidos"
 GOLD = f"s3a://{BUCKET}/gold/kpis"
 # ─────────────────────────────────────────────────────────────
@@ -48,7 +48,27 @@ print(f"Filas en Silver: {df_silver.count():,}")
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica: ¿por
 # qué un groupBy + agg necesita mover filas entre executors?
-kpi_ventas = None  # TODO: reemplaza por tu groupBy + agg
+# TU RESPUESTA: WIDE ❌ -- las filas de una misma combinación región-fecha
+# están repartidas por varias particiones, y no se puede sumar un grupo
+# sin tenerlo completo. Spark redistribuye con
+# hashpartitioning(region, fecha, 32) para que todas las filas de
+# ("BOGOTÁ", 2026-03-03) queden juntas antes de agregar.
+#
+# En el plan hay una agregación parcial ANTES del Exchange: cada executor
+# pre-suma lo que ya tiene y solo manda esos parciales por red, en vez de
+# las filas crudas. Eso reduce el volumen del shuffle, pero no lo elimina.
+# OJO: 'devuelto' y 'calificacion' siguen siendo STRING en Silver
+# (vienen de Bronze, que es 100% string, y la selección final de
+# 02_silver.py no los castea). Un .cast("double") directo sobre el
+# string "True" da NULL, no 1.0 -- por eso 'devuelto' pasa primero por
+# boolean. Sin esto, tasa_devolucion saldría toda en null.
+kpi_ventas = df_silver.groupBy("region", "fecha").agg(
+    F.sum("total_silver").alias("ventas_totales"),
+    F.count("pedido_id").alias("num_pedidos"),
+    F.avg("total_silver").alias("ticket_promedio"),
+    F.avg(F.col("devuelto").cast("boolean").cast("double")).alias("tasa_devolucion"),
+    F.avg(F.col("calificacion").cast("double")).alias("calificacion_promedio"),
+)
 print(f"4.1 KPI ventas por región/fecha: {kpi_ventas.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -58,7 +78,13 @@ print(f"4.1 KPI ventas por región/fecha: {kpi_ventas.count():,} filas")
 # total_silver en una columna llamada "ventas_producto".
 #
 # Clasificación: → [tu respuesta] -- justifica.
-ventas_por_producto = None  # TODO: reemplaza por tu groupBy + agg
+# TU RESPUESTA: WIDE ❌ -- mismo razonamiento que 4.1 con otra clave: las
+# ventas de un mismo producto están repartidas en varias particiones y hay
+# que juntarlas para sumarlas. Clave del shuffle:
+# hashpartitioning(categoria, producto, 32).
+ventas_por_producto = df_silver.groupBy("categoria", "producto").agg(
+    F.sum("total_silver").alias("ventas_producto")
+)
 
 # TODO paso 2: usando pyspark.sql.window.Window, define una ventana
 # particionada por "categoria" y ordenada descendentemente por
@@ -68,7 +94,28 @@ ventas_por_producto = None  # TODO: reemplaza por tu groupBy + agg
 # Clasificación: → [tu respuesta] -- justifica (pista: ¿por qué esta
 # Window necesita OTRO shuffle además del que ya hizo el groupBy del
 # paso 1, si la clave de partición es distinta?).
-kpi_top_productos = None  # TODO: reemplaza por tu Window + rank + filter + drop
+# TU RESPUESTA: WIDE ❌, y necesita un Exchange PROPIO porque el
+# particionamiento del paso 1 no le sirve. Con hash(categoria, producto),
+# "Audífonos" y "Teclado" -- ambos de Electrónica -- caen en particiones
+# distintas, porque el hash se calculó sobre la PAREJA y no sobre la
+# categoría sola. Para rankear los 3 mejores productos de Electrónica hay
+# que tener todos sus productos juntos, así que Spark vuelve a
+# redistribuir con hashpartitioning(categoria, 32).
+#
+# La lección: que dos pasos "agrupen por categoría" no significa que
+# compartan particionamiento. Lo que determina dónde cae una fila es la
+# clave COMPLETA del hash, y hash(a, b) != hash(a).
+#
+# Confirmado en el plan físico del KPI 2, que tiene dos Exchange:
+#     (4) hashpartitioning(categoria, producto, 32)   <- groupBy
+#     (6) hashpartitioning(categoria, 32)             <- Window
+ventana_categoria = Window.partitionBy("categoria").orderBy(F.desc("ventas_producto"))
+kpi_top_productos = (
+    ventas_por_producto
+    .withColumn("rank", F.rank().over(ventana_categoria))
+    .filter(F.col("rank") <= 3)
+    .drop("rank")
+)
 print(f"4.2 KPI top 3 productos por categoría: {kpi_top_productos.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -86,7 +133,34 @@ print(f"4.2 KPI top 3 productos por categoría: {kpi_top_productos.count():,} fi
 #
 # Clasificación: → [tu respuesta] -- cualquier groupBy/agg que uses
 # aquí, justifica por qué es NARROW o WIDE.
-kpi_cohortes = None  # TODO: tu diseño completo aquí (groupBy + agg + lo que necesites)
+#
+# TU RESPUESTA: WIDE ❌ -- el groupBy("categoria","canal") es el mismo caso
+# que 4.1 y 4.2: los pedidos de una cohorte categoría-canal están
+# repartidos en varias particiones y hay que juntarlos para promediar.
+# Clave: hashpartitioning(categoria, canal, 32). Un solo Exchange, porque
+# las cuatro métricas se calculan en la misma agregación.
+#
+# Los cast() de devuelto y calificacion son NARROW: se resuelven fila a
+# fila antes del shuffle.
+# TU DISEÑO:
+# Pregunta de negocio: ¿hay categorías de producto que decepcionan
+# según el canal por el que se compran? La hipótesis es que los
+# productos que uno querría ver o probar antes de comprar (ropa,
+# deportes) califican peor cuando se compran a ciegas por app o web
+# que cuando se compran en tienda física.
+#
+# Dimensiones: categoria x canal  -> 5 x 4 = 20 cohortes
+# Métrica principal: calificacion_promedio (satisfacción, 1-5)
+# Métricas de apoyo: num_pedidos (para saber si el promedio es
+#   confiable o son 3 pedidos), y tasa_devolucion (una calificación
+#   baja debería venir acompañada de más devoluciones -- si las dos
+#   señales coinciden, la conclusión es más sólida).
+kpi_cohortes = df_silver.groupBy("categoria", "canal").agg(
+    F.avg(F.col("calificacion").cast("double")).alias("calificacion_promedio"),
+    F.count("pedido_id").alias("num_pedidos"),
+    F.avg(F.col("devuelto").cast("boolean").cast("double")).alias("tasa_devolucion"),
+    F.avg("total_silver").alias("ticket_promedio"),
+)
 print(f"4.3 KPI cohortes: {kpi_cohortes.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -120,7 +194,11 @@ print(f"4.3 KPI cohortes: {kpi_cohortes.count():,} filas")
 # más se va a filtrar en Athena (pista: ¿qué WHERE usa la query de
 # negocio de la Parte 5.1 del lab?).
 #
-# (tu código aquí)
+# TU RESPUESTA -- revisa el orden de las columnas antes de correr:
+# la query de 5.1 filtra por rango de FECHA (últimos 3 meses) y agrupa
+# por región, así que 'fecha' va primero por ser la del WHERE. Si
+# decides otro orden, justifícalo en pipeline_analysis.md.
+spark.sql(f"OPTIMIZE delta.`{GOLD}/ventas_region_fecha` ZORDER BY (fecha, region)")
 
 print("4.4 OPTIMIZE + ZORDER BY aplicado sobre ventas_region_fecha")
 
@@ -136,7 +214,18 @@ spark.sql(f"""
 # TODO: registra las otras dos tablas Gold en Glue Catalog con el
 # mismo patrón que el ejemplo de arriba, con nombres
 # "gold_top_productos_categoria" y "gold_cohortes_canal_pago".
-# (tu código aquí)
+# TU RESPUESTA:
+spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS gold_top_productos_categoria
+    USING DELTA
+    LOCATION '{GOLD}/top_productos_categoria'
+""")
+
+spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS gold_cohortes_canal_pago
+    USING DELTA
+    LOCATION '{GOLD}/cohortes_canal_pago'
+""")
 
 print("4.5 Tablas registradas en Glue Catalog -- listas para consultar desde Athena")
 

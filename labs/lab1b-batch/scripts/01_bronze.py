@@ -29,7 +29,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-jjdiazr-2026"  # EDITAR: el mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 # ─────────────────────────────────────────────────────────────
@@ -47,15 +47,32 @@ BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 # Silver, donde SÍ hay contexto de negocio para decidir cómo tratar
 # cada caso raro.
 #
-# Las columnas del CSV crudo (mismo orden que ../datos/ventas_colombia_raw.csv):
-#   pedido_id, fecha, region, canal, categoria, producto, cantidad,
-#   precio_unit, total, vendedor_id, email_cliente, metodo_pago,
-#   devuelto, calificacion
+# ⚠️ OJO -- el orden que documenta el README de este TODO NO es el orden
+# real del CSV. `gen_dataset.py` elimina y vuelve a agregar `region`,
+# `canal` y `vendedor_id` (líneas 182-184 y 225-226), lo que los empuja
+# al FINAL del DataFrame. El header real, verificado con
+# `head -1 ../datos/ventas_colombia_raw.csv`, es el de abajo.
 #
-# TODO: construye BRONZE_SCHEMA como un StructType con un
-# StructField(nombre, StringType(), True) por cada una de las 14
-# columnas de arriba, en ese mismo orden.
-BRONZE_SCHEMA = None  # TODO: reemplaza por tu StructType con las 14 columnas
+# Esto importa porque .schema() asigna los tipos POR POSICIÓN, ignorando
+# los nombres del header: con el orden del README, `region` se llenaría
+# con valores de `categoria`. Y como todo es StringType, no fallaría --
+# se corrompería en silencio hasta Silver.
+BRONZE_SCHEMA = StructType([
+    StructField("pedido_id",     StringType(), True),
+    StructField("fecha",         StringType(), True),
+    StructField("categoria",     StringType(), True),
+    StructField("producto",      StringType(), True),
+    StructField("cantidad",      StringType(), True),
+    StructField("precio_unit",   StringType(), True),
+    StructField("total",         StringType(), True),
+    StructField("email_cliente", StringType(), True),
+    StructField("metodo_pago",   StringType(), True),
+    StructField("devuelto",      StringType(), True),
+    StructField("calificacion",  StringType(), True),
+    StructField("region",        StringType(), True),
+    StructField("canal",         StringType(), True),
+    StructField("vendedor_id",   StringType(), True),
+])
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 2 · Lectura del CSV con schema explícito
@@ -66,7 +83,16 @@ BRONZE_SCHEMA = None  # TODO: reemplaza por tu StructType con las 14 columnas
 # Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica en un comentario
 # por qué (pista: ¿esta lectura necesita comparar o mover datos entre
 # particiones para poder aplicarle el schema?).
-df_raw = None  # TODO: reemplaza por tu lectura
+# TU RESPUESTA: NARROW ✅ -- aplicar un schema es decirle a Spark cómo
+# interpretar los bytes de cada fila, y eso se resuelve fila a fila. Cada
+# tarea lee su bloque del CSV y lo tipa sin necesitar nada de las demás
+# particiones. El schema es metadato, no dato que haya que comparar.
+df_raw = (
+    spark.read
+         .option("header", "true")
+         .schema(BRONZE_SCHEMA)
+         .csv(RAW)
+)
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 3 · Columnas de auditoría
@@ -78,7 +104,16 @@ df_raw = None  # TODO: reemplaza por tu lectura
 #     (busca la función que expone el nombre del archivo de origen)
 #
 # Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica.
-df_bronze = None  # TODO: reemplaza por df_raw + las 2 columnas nuevas
+# TU RESPUESTA: NARROW ✅ -- para calcular _ingested_at una fila no
+# necesita saber nada de las otras: es el mismo timestamp para todas.
+# _source_file lo sabe la propia tarea, que conoce qué archivo está
+# leyendo. Ninguna de las dos columnas depende del contenido de otra
+# fila, así que no hay nada que mover entre particiones.
+df_bronze = (
+    df_raw
+    .withColumn("_ingested_at", F.current_timestamp())
+    .withColumn("_source_file", F.input_file_name())
+)
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 4 · Escritura a Delta en modo append
@@ -90,7 +125,23 @@ df_bronze = None  # TODO: reemplaza por df_raw + las 2 columnas nuevas
 # contra el MERGE que vas a escribir en 02_silver.py (Parte 3.7): ¿por
 # qué ESTA escritura no necesita comparar contra lo que ya existe en
 # la tabla, y esa sí?
-# (tu código aquí)
+# TU RESPUESTA: NARROW ✅ -- en modo append cada tarea escribe su
+# partición como un archivo Parquet nuevo y Delta solo registra esos
+# archivos en el _delta_log. No hay que consultar qué había antes: se
+# agrega y ya.
+#
+# El contraste con el MERGE de 02_silver.py (3.7) es justo ese. El MERGE
+# tiene que decidir, para cada fila, si es UPDATE o INSERT, y para eso
+# necesita saber si su pedido_id ya existe en la tabla. Esa fila
+# existente puede estar en cualquier partición, así que Delta redistribuye
+# ambos lados por pedido_id -- igual que un join. El append no pregunta
+# nada, por eso es NARROW; el MERGE pregunta, por eso es WIDE.
+(
+    df_bronze.write
+             .format("delta")
+             .mode("append")
+             .save(BRONZE)
+)
 
 print(f"Bronze escrito en: {BRONZE}")
 
