@@ -14,6 +14,13 @@ coreografía de cuándo commitear el offset.
 Uso:
     python3 consumidor_kafka.py
 
+Prerequisito de entorno: pip install pyspark delta-spark kafka-python
+(sin fijar versión de delta-spark aquí -- este script corre local
+contra /tmp/lake/, no contra el cluster EMR del Lab 1a/1b, así que usa
+la versión de delta-spark que corresponda a la versión de pyspark que
+`pip` te instale; revisa la tabla de compatibilidad en
+https://docs.delta.io/latest/releases.html si tienes dudas).
+
 Qué puedes delegar: boilerplate de kafka-python/PySpark si te trabas
 en la sintaxis. Qué NO puedes delegar: enable_auto_commit=False y el
 commit manual DESPUÉS del MERGE -- es el objetivo 3 de esta sesión, y
@@ -25,6 +32,7 @@ import json
 import os
 from datetime import datetime, timezone
 
+from delta import configure_spark_with_delta_pip
 from delta.tables import DeltaTable
 from kafka import KafkaConsumer
 from pyspark.sql import Row, SparkSession
@@ -38,12 +46,16 @@ BRONZE_PATH = os.environ.get("BRONZE_PATH", "/tmp/lake/bronze/pedidos")
 TOPIC = "pedidos-ventas"
 GROUP_ID = "analytics-group"
 
-spark = (
+_builder = (
     SparkSession.builder.appName("ST1630-Lab2a-Consumidor")
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-    .getOrCreate()
 )
+# configure_spark_with_delta_pip lee la versión de delta-spark que
+# tengas instalada y le dice a Spark dónde encontrar su JAR -- sin
+# esto, cualquier .format("delta") falla con
+# "Failed to find the data source: delta".
+spark = configure_spark_with_delta_pip(_builder).getOrCreate()
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 2.1 · Configuración del KafkaConsumer
