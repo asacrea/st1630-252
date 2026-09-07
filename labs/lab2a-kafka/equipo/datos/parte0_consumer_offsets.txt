@@ -1,0 +1,19 @@
+================================================================================
+Lab 2a · Parte 0, paso 2 — El topic interno __consumer_offsets
+Estudiantes: Juan José Díaz Rodríguez (jjdiazr) · Juan Simón Ospina Martínez (jsospinam)
+             Sebastián Durán Fernández (sduranf) · Daniel Arcila Salazar (darcilas1)
+================================================================================
+
+Verificacion hecha DESPUES de que analytics-group commiteo su primer offset.
+
+$ docker exec st1630-lab2a-kafka kafka-topics --bootstrap-server localhost:9092 --list
+__consumer_offsets
+pedidos-ventas
+
+$ ... --describe --topic __consumer_offsets  (primeras lineas)
+Topic: __consumer_offsets	TopicId: XAgCQnmYRg25XvDFverfpQ	PartitionCount: 50	ReplicationFactor: 1	Configs: compression.type=producer,cleanup.policy=compact,segment.bytes=104857600
+	Topic: __consumer_offsets	Partition: 0	Leader: 1	Replicas: 1	Isr: 1
+	Topic: __consumer_offsets	Partition: 1	Leader: 1	Replicas: 1	Isr: 1
+
+$ ... --describe --topic __consumer_offsets | grep -c 'Partition:'
+50

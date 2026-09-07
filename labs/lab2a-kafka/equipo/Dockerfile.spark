@@ -1,0 +1,28 @@
+# Entorno de ejecución para consumidor_kafka.py — Lab 2a (entrega del equipo)
+#
+# POR QUÉ EXISTE
+# El consumidor necesita PySpark + Delta Lake. En Windows, PySpark exige
+# winutils.exe/hadoop.dll para el acceso nativo al filesystem; con los JARs
+# de Hadoop 3.3.4 que trae PySpark 3.5.6 la carga nativa falla con
+#   java.lang.UnsatisfiedLinkError: NativeIO$Windows.access0
+# En vez de depender de binarios de terceros no oficiales, el consumidor
+# corre en Linux dentro de este contenedor. El productor (que solo usa
+# kafka-python, sin Spark) sí corre nativo en Windows sin problema.
+#
+# Versiones fijadas a propósito: delta-spark 3.3.0 es la que corresponde a
+# Spark 3.5.x (Scala 2.12); Java 17 es el runtime soportado por Spark 3.5.
+
+FROM python:3.11-slim-bookworm
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openjdk-17-jre-headless procps \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+RUN pip install --no-cache-dir \
+      pyspark==3.5.6 \
+      delta-spark==3.3.0 \
+      kafka-python==3.0.11
+
+WORKDIR /work
