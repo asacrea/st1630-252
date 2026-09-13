@@ -1,0 +1,1329 @@
+:: loading settings :: url = jar:file:/usr/lib/spark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/hadoop/.ivy2/cache
+The jars for the packages stored in: /home/hadoop/.ivy2/jars
+io.delta#delta-core_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-7bf0af45-52bb-4f4e-a91c-8a5c573300de;1.0
+	confs: [default]
+	found io.delta#delta-core_2.12;2.4.0 in central
+	found io.delta#delta-storage;2.4.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 175ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-core_2.12;2.4.0 from central in [default]
+	io.delta#delta-storage;2.4.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-7bf0af45-52bb-4f4e-a91c-8a5c573300de
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+26/08/21 00:37:11 INFO SparkContext: Running Spark version 3.4.1-amzn-2
+26/08/21 00:37:11 INFO ResourceUtils: ==============================================================
+26/08/21 00:37:11 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/08/21 00:37:11 INFO ResourceUtils: ==============================================================
+26/08/21 00:37:11 INFO SparkContext: Submitted application: ST1630-Lab1b-Bronze
+26/08/21 00:37:11 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 2, script: , vendor: , memory -> name: memory, amount: 4743, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/08/21 00:37:11 INFO ResourceProfile: Limiting resource is cpus at 2 tasks per executor
+26/08/21 00:37:11 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/08/21 00:37:11 INFO SecurityManager: Changing view acls to: hadoop
+26/08/21 00:37:11 INFO SecurityManager: Changing modify acls to: hadoop
+26/08/21 00:37:11 INFO SecurityManager: Changing view acls groups to: 
+26/08/21 00:37:11 INFO SecurityManager: Changing modify acls groups to: 
+26/08/21 00:37:11 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: hadoop; groups with view permissions: EMPTY; users with modify permissions: hadoop; groups with modify permissions: EMPTY
+26/08/21 00:37:11 INFO Utils: Successfully started service 'sparkDriver' on port 44255.
+26/08/21 00:37:11 INFO SparkEnv: Registering MapOutputTracker
+26/08/21 00:37:11 INFO SparkEnv: Registering BlockManagerMaster
+26/08/21 00:37:12 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/08/21 00:37:12 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/08/21 00:37:12 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/08/21 00:37:12 INFO DiskBlockManager: Created local directory at /mnt/tmp/blockmgr-731a7ddf-df76-4015-9fc2-e96c8f69bc06
+26/08/21 00:37:12 INFO MemoryStore: MemoryStore started with capacity 912.3 MiB
+26/08/21 00:37:12 INFO SparkEnv: Registering OutputCommitCoordinator
+26/08/21 00:37:12 INFO SubResultCacheManager: Sub-result caches are disabled.
+26/08/21 00:37:12 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/08/21 00:37:12 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/08/21 00:37:13 INFO Utils: Using 100 preallocated executors (minExecutors: 0). Set spark.dynamicAllocation.preallocateExecutors to `false` disable executor preallocation.
+26/08/21 00:37:13 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at ip-172-31-28-207.ec2.internal/172.31.28.207:8032
+26/08/21 00:37:13 INFO Configuration: resource-types.xml not found
+26/08/21 00:37:13 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/08/21 00:37:13 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (12288 MB per container)
+26/08/21 00:37:13 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/08/21 00:37:13 INFO Client: Setting up container launch context for our AM
+26/08/21 00:37:13 INFO Client: Setting up the launch environment for our AM container
+26/08/21 00:37:13 INFO Client: Preparing resources for our AM container
+26/08/21 00:37:14 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/08/21 00:37:16 INFO Client: Uploading resource file:/mnt/tmp/spark-4112fb71-8c9c-4fbd-bbfa-5970258d37b0/__spark_libs__3327367773954324584.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/__spark_libs__3327367773954324584.zip
+26/08/21 00:37:17 INFO Client: Uploading resource file:/home/hadoop/.ivy2/jars/io.delta_delta-core_2.12-2.4.0.jar -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/io.delta_delta-core_2.12-2.4.0.jar
+26/08/21 00:37:17 INFO Client: Uploading resource file:/home/hadoop/.ivy2/jars/io.delta_delta-storage-2.4.0.jar -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/io.delta_delta-storage-2.4.0.jar
+26/08/21 00:37:17 INFO Client: Uploading resource file:/home/hadoop/.ivy2/jars/org.antlr_antlr4-runtime-4.9.3.jar -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/org.antlr_antlr4-runtime-4.9.3.jar
+26/08/21 00:37:17 INFO Client: Uploading resource file:/etc/hudi/conf.dist/hudi-defaults.conf -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/hudi-defaults.conf
+26/08/21 00:37:17 INFO Client: Uploading resource file:/usr/lib/spark/python/lib/pyspark.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/pyspark.zip
+26/08/21 00:37:17 INFO Client: Uploading resource file:/usr/lib/spark/python/lib/py4j-0.10.9.7-src.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/py4j-0.10.9.7-src.zip
+26/08/21 00:37:17 WARN Client: Same path resource file:///home/hadoop/.ivy2/jars/io.delta_delta-core_2.12-2.4.0.jar added multiple times to distributed cache.
+26/08/21 00:37:17 WARN Client: Same path resource file:///home/hadoop/.ivy2/jars/io.delta_delta-storage-2.4.0.jar added multiple times to distributed cache.
+26/08/21 00:37:17 WARN Client: Same path resource file:///home/hadoop/.ivy2/jars/org.antlr_antlr4-runtime-4.9.3.jar added multiple times to distributed cache.
+26/08/21 00:37:17 INFO Client: Uploading resource file:/mnt/tmp/spark-4112fb71-8c9c-4fbd-bbfa-5970258d37b0/__spark_conf__4562552818450144742.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0010/__spark_conf__.zip
+26/08/21 00:37:17 INFO SecurityManager: Changing view acls to: hadoop
+26/08/21 00:37:17 INFO SecurityManager: Changing modify acls to: hadoop
+26/08/21 00:37:17 INFO SecurityManager: Changing view acls groups to: 
+26/08/21 00:37:17 INFO SecurityManager: Changing modify acls groups to: 
+26/08/21 00:37:17 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: hadoop; groups with view permissions: EMPTY; users with modify permissions: hadoop; groups with modify permissions: EMPTY
+26/08/21 00:37:18 INFO Client: Submitting application application_1787267597390_0010 to ResourceManager
+26/08/21 00:37:18 INFO YarnClientImpl: Submitted application application_1787267597390_0010
+26/08/21 00:37:19 INFO Client: Application report for application_1787267597390_0010 (state: ACCEPTED)
+26/08/21 00:37:19 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1787272638027
+	 final status: UNDEFINED
+	 tracking URL: http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0010/
+	 user: hadoop
+26/08/21 00:37:20 INFO Client: Application report for application_1787267597390_0010 (state: ACCEPTED)
+26/08/21 00:37:21 INFO Client: Application report for application_1787267597390_0010 (state: ACCEPTED)
+26/08/21 00:37:22 INFO Client: Application report for application_1787267597390_0010 (state: ACCEPTED)
+26/08/21 00:37:23 INFO Client: Application report for application_1787267597390_0010 (state: ACCEPTED)
+26/08/21 00:37:23 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> ip-172-31-28-207.ec2.internal, PROXY_URI_BASES -> http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0010), /proxy/application_1787267597390_0010
+26/08/21 00:37:23 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/08/21 00:37:24 INFO Client: Application report for application_1787267597390_0010 (state: RUNNING)
+26/08/21 00:37:24 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 172.31.16.42
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1787272638027
+	 final status: UNDEFINED
+	 tracking URL: http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0010/
+	 user: hadoop
+26/08/21 00:37:24 INFO YarnClientSchedulerBackend: Application application_1787267597390_0010 has started running.
+26/08/21 00:37:24 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 46727.
+26/08/21 00:37:24 INFO NettyBlockTransferService: Server created on ip-172-31-28-207.ec2.internal:46727
+26/08/21 00:37:24 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/08/21 00:37:24 INFO BlockManager: external shuffle service port = 7337
+26/08/21 00:37:24 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 46727, None)
+26/08/21 00:37:24 INFO BlockManagerMasterEndpoint: Registering block manager ip-172-31-28-207.ec2.internal:46727 with 912.3 MiB RAM, BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 46727, None)
+26/08/21 00:37:24 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 46727, None)
+26/08/21 00:37:24 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 46727, None)
+26/08/21 00:37:24 INFO SingleEventLogFileWriter: Logging events to hdfs:/var/log/spark/apps/application_1787267597390_0010.inprogress
+26/08/21 00:37:24 INFO Utils: Using 100 preallocated executors (minExecutors: 0). Set spark.dynamicAllocation.preallocateExecutors to `false` disable executor preallocation.
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:24 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+26/08/21 00:37:25 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/08/21 00:37:25 INFO SharedState: Warehouse path is 'hdfs://ip-172-31-28-207.ec2.internal:8020/user/spark/warehouse'.
+26/08/21 00:37:25 INFO ServerInfo: Adding filter to /SQL: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:25 INFO ServerInfo: Adding filter to /SQL/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:25 INFO ServerInfo: Adding filter to /SQL/execution: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:25 INFO ServerInfo: Adding filter to /SQL/execution/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:25 INFO ServerInfo: Adding filter to /static/sql: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/21 00:37:26 INFO MetricsConfig: Loaded properties from hadoop-metrics2.properties
+26/08/21 00:37:26 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 300 second(s).
+26/08/21 00:37:26 INFO MetricsSystemImpl: s3a-file-system metrics system started
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+26/08/21 00:37:26 WARN S3AFileSystem: Getting region for bucket st1630-efcortesr-2026 from S3, this will slow down FS initialisation. To avoid this, set the region using property fs.s3a.bucket.st1630-efcortesr-2026.endpoint.region
+26/08/21 00:37:27 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.16.42:35874) with ID 1,  ResourceProfileId 0
+26/08/21 00:37:27 INFO ExecutorMonitor: New executor 1 has registered (new total is 1)
+26/08/21 00:37:27 INFO BlockManagerMasterEndpoint: Registering block manager ip-172-31-16-42.ec2.internal:35385 with 4.8 GiB RAM, BlockManagerId(1, ip-172-31-16-42.ec2.internal, 35385, None)
+26/08/21 00:37:28 INFO InMemoryFileIndex: It took 72 ms to list leaf files for 1 paths.
+26/08/21 00:37:31 INFO DelegatingLogStore: LogStore `LogStoreAdapter(io.delta.storage.S3SingleDriverLogStore)` is used for scheme `s3a`
+26/08/21 00:37:31 INFO DeltaLog: Creating initial snapshot without metadata, because the directory is empty
+26/08/21 00:37:31 INFO InitialSnapshot: [tableId=e238df88-22eb-494e-b788-948b82334cc2] Created snapshot InitialSnapshot(path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log, version=-1, metadata=Metadata(06212886-5e45-4f0b-8dcf-a68a6c66c85f,null,null,Format(parquet,Map()),null,List(),Map(),Some(1787272651947)), logSegment=LogSegment(s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log,-1,List(),None,-1), checksumOpt=None)
+26/08/21 00:37:32 INFO DeltaLog: No delta log found for the Delta table at s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log
+26/08/21 00:37:32 INFO InitialSnapshot: [tableId=06212886-5e45-4f0b-8dcf-a68a6c66c85f] Created snapshot InitialSnapshot(path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log, version=-1, metadata=Metadata(21e29e6e-e321-43a7-91cc-8efdefdb487d,null,null,Format(parquet,Map()),null,List(),Map(),Some(1787272652108)), logSegment=LogSegment(s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log,-1,List(),None,-1), checksumOpt=None)
+26/08/21 00:37:32 INFO OptimisticTransaction: [tableId=21e29e6e,txnId=93a75ab6] Updated metadata from - to Metadata(7da33e88-e66b-4349-8bca-749701f591ba,null,null,Format(parquet,Map()),{"type":"struct","fields":[{"name":"pedido_id","type":"string","nullable":true,"metadata":{}},{"name":"fecha","type":"string","nullable":true,"metadata":{}},{"name":"categoria","type":"string","nullable":true,"metadata":{}},{"name":"producto","type":"string","nullable":true,"metadata":{}},{"name":"cantidad","type":"string","nullable":true,"metadata":{}},{"name":"precio_unit","type":"string","nullable":true,"metadata":{}},{"name":"total","type":"string","nullable":true,"metadata":{}},{"name":"email_cliente","type":"string","nullable":true,"metadata":{}},{"name":"metodo_pago","type":"string","nullable":true,"metadata":{}},{"name":"devuelto","type":"string","nullable":true,"metadata":{}},{"name":"calificacion","type":"string","nullable":true,"metadata":{}},{"name":"region","type":"string","nullable":true,"metadata":{}},{"name":"canal","type":"string","nullable":true,"metadata":{}},{"name":"vendedor_id","type":"string","nullable":true,"metadata":{}},{"name":"_ingested_at","type":"timestamp","nullable":true,"metadata":{}},{"name":"_source_file","type":"string","nullable":true,"metadata":{}}]},List(),Map(),Some(1787272652180))
+26/08/21 00:37:32 INFO FileSourceStrategy: Pushed Filters: 
+26/08/21 00:37:32 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/21 00:37:33 INFO ParquetUtils: Using user defined output committer for Parquet: com.amazon.emr.committer.EmrOptimizedSparkSqlParquetOutputCommitter
+26/08/21 00:37:33 INFO CodeGenerator: Code generated in 260.626662 ms
+26/08/21 00:37:33 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 424.7 KiB, free 911.9 MiB)
+26/08/21 00:37:33 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 43.4 KiB, free 911.8 MiB)
+26/08/21 00:37:33 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 43.4 KiB, free: 912.3 MiB)
+26/08/21 00:37:33 INFO SparkContext: Created broadcast 0 from save at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:33 INFO GPLNativeCodeLoader: Loaded native gpl library
+26/08/21 00:37:33 INFO LzoCodec: Successfully loaded & initialized native-lzo library [hadoop-lzo rev 049362b7cf53ff5f739d6b1532457f2c6cd495e8]
+26/08/21 00:37:33 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4375541 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: false
+26/08/21 00:37:33 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/21 00:37:34 INFO SparkContext: Starting job: save at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:34 INFO DAGScheduler: Got job 0 (save at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/21 00:37:34 INFO DAGScheduler: Final stage: ResultStage 0 (save at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:34 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:34 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:34 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[2] at save at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:34 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 421.7 KiB, free 911.4 MiB)
+26/08/21 00:37:34 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 154.4 KiB, free 911.3 MiB)
+26/08/21 00:37:34 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 154.4 KiB, free: 912.1 MiB)
+26/08/21 00:37:34 INFO SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:34 INFO DAGScheduler: Submitting 4 missing tasks from ResultStage 0 (MapPartitionsRDD[2] at save at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/21 00:37:34 INFO YarnScheduler: Adding task set 0.0 with 4 tasks resource profile 0
+26/08/21 00:37:34 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8057 bytes) 
+26/08/21 00:37:34 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8057 bytes) 
+26/08/21 00:37:34 INFO TaskSetManager: Starting task 2.0 in stage 0.0 (TID 2) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8057 bytes) 
+26/08/21 00:37:34 INFO TaskSetManager: Starting task 3.0 in stage 0.0 (TID 3) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8057 bytes) 
+26/08/21 00:37:34 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 154.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:36 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 43.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:43 INFO TaskSetManager: Finished task 3.0 in stage 0.0 (TID 3) in 9496 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/21 00:37:43 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 9503 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/21 00:37:43 INFO TaskSetManager: Finished task 2.0 in stage 0.0 (TID 2) in 9503 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/21 00:37:43 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 9543 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/21 00:37:43 INFO YarnScheduler: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/08/21 00:37:43 INFO DAGScheduler: ResultStage 0 (save at NativeMethodAccessorImpl.java:0) finished in 9.805 s
+26/08/21 00:37:43 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:43 INFO YarnScheduler: Killing all running tasks in stage 0: Stage finished
+26/08/21 00:37:43 INFO DAGScheduler: Job 0 finished: save at NativeMethodAccessorImpl.java:0, took 9.859518 s
+26/08/21 00:37:43 INFO FileFormatWriter: Start to commit write Job 442c91ad-4c7d-4fbf-9b0c-65e4d0f3ff53.
+26/08/21 00:37:43 INFO FileFormatWriter: Write Job 442c91ad-4c7d-4fbf-9b0c-65e4d0f3ff53 committed. Elapsed time: 1 ms.
+26/08/21 00:37:43 INFO FileFormatWriter: Finished processing stats for write job 442c91ad-4c7d-4fbf-9b0c-65e4d0f3ff53.
+26/08/21 00:37:44 INFO OptimisticTransaction: [tableId=21e29e6e,txnId=93a75ab6] Attempting to commit version 0 with 7 actions with Serializable isolation level
+26/08/21 00:37:44 INFO DeltaLog: Creating a new snapshot v0 for commit version 0
+26/08/21 00:37:44 INFO DeltaLog: Loading version 0.
+26/08/21 00:37:45 INFO DeltaLogFileIndex: Created DeltaLogFileIndex(JSON, numFilesInSegment: 1, totalFileSize: 7820)
+26/08/21 00:37:45 INFO FileSourceStrategy: Pushed Filters: 
+26/08/21 00:37:45 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/21 00:37:46 INFO CodeGenerator: Code generated in 385.45646 ms
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 425.0 KiB, free 910.9 MiB)
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 43.4 KiB, free 910.8 MiB)
+26/08/21 00:37:46 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 43.4 KiB, free: 912.1 MiB)
+26/08/21 00:37:46 INFO SparkContext: Created broadcast 2 from toString at String.java:2994
+26/08/21 00:37:46 INFO BlockManagerInfo: Removed broadcast_1_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 154.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:46 INFO BlockManagerInfo: Removed broadcast_1_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 154.4 KiB, free: 912.2 MiB)
+26/08/21 00:37:46 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 1, prefetch: false
+26/08/21 00:37:46 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,1))
+26/08/21 00:37:46 INFO SparkContext: Starting job: toString at String.java:2994
+26/08/21 00:37:46 INFO DAGScheduler: Got job 1 (toString at String.java:2994) with 1 output partitions
+26/08/21 00:37:46 INFO DAGScheduler: Final stage: ResultStage 1 (toString at String.java:2994)
+26/08/21 00:37:46 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:46 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:46 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[6] at toString at String.java:2994), which has no missing parents
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 53.4 KiB, free 911.3 MiB)
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 17.4 KiB, free 911.3 MiB)
+26/08/21 00:37:46 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 17.4 KiB, free: 912.2 MiB)
+26/08/21 00:37:46 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:46 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 1 (MapPartitionsRDD[6] at toString at String.java:2994) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:46 INFO YarnScheduler: Adding task set 1.0 with 1 tasks resource profile 0
+26/08/21 00:37:46 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 4) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8081 bytes) 
+26/08/21 00:37:46 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 17.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:46 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 43.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:46 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 4) in 372 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:46 INFO YarnScheduler: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/08/21 00:37:46 INFO DAGScheduler: ResultStage 1 (toString at String.java:2994) finished in 0.398 s
+26/08/21 00:37:46 INFO DAGScheduler: Job 1 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:46 INFO YarnScheduler: Killing all running tasks in stage 1: Stage finished
+26/08/21 00:37:46 INFO DAGScheduler: Job 1 finished: toString at String.java:2994, took 0.409402 s
+26/08/21 00:37:46 INFO CodeGenerator: Code generated in 121.043772 ms
+26/08/21 00:37:46 INFO Snapshot: [tableId=21e29e6e-e321-43a7-91cc-8efdefdb487d] Created snapshot Snapshot(path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log, version=0, metadata=Metadata(7da33e88-e66b-4349-8bca-749701f591ba,null,null,Format(parquet,Map()),{"type":"struct","fields":[{"name":"pedido_id","type":"string","nullable":true,"metadata":{}},{"name":"fecha","type":"string","nullable":true,"metadata":{}},{"name":"categoria","type":"string","nullable":true,"metadata":{}},{"name":"producto","type":"string","nullable":true,"metadata":{}},{"name":"cantidad","type":"string","nullable":true,"metadata":{}},{"name":"precio_unit","type":"string","nullable":true,"metadata":{}},{"name":"total","type":"string","nullable":true,"metadata":{}},{"name":"email_cliente","type":"string","nullable":true,"metadata":{}},{"name":"metodo_pago","type":"string","nullable":true,"metadata":{}},{"name":"devuelto","type":"string","nullable":true,"metadata":{}},{"name":"calificacion","type":"string","nullable":true,"metadata":{}},{"name":"region","type":"string","nullable":true,"metadata":{}},{"name":"canal","type":"string","nullable":true,"metadata":{}},{"name":"vendedor_id","type":"string","nullable":true,"metadata":{}},{"name":"_ingested_at","type":"timestamp","nullable":true,"metadata":{}},{"name":"_source_file","type":"string","nullable":true,"metadata":{}}]},List(),Map(),Some(1787272652180)), logSegment=LogSegment(s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log,0,WrappedArray(S3AFileStatus{path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log/00000000000000000000.json; isDirectory=false; length=7820; replication=1; blocksize=33554432; modification_time=1787272665000; access_time=0; owner=hadoop; group=hadoop; permission=rw-rw-rw-; isSymlink=false; hasAcl=false; isEncrypted=true; isErasureCoded=false; metadata={}} isEmptyDirectory=FALSE eTag="97aa67b4afbf29271cdd5127feaabe96" versionId=null),None,1787272665000), checksumOpt=None)
+26/08/21 00:37:46 INFO DeltaLog: Updated snapshot to Snapshot(path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log, version=0, metadata=Metadata(7da33e88-e66b-4349-8bca-749701f591ba,null,null,Format(parquet,Map()),{"type":"struct","fields":[{"name":"pedido_id","type":"string","nullable":true,"metadata":{}},{"name":"fecha","type":"string","nullable":true,"metadata":{}},{"name":"categoria","type":"string","nullable":true,"metadata":{}},{"name":"producto","type":"string","nullable":true,"metadata":{}},{"name":"cantidad","type":"string","nullable":true,"metadata":{}},{"name":"precio_unit","type":"string","nullable":true,"metadata":{}},{"name":"total","type":"string","nullable":true,"metadata":{}},{"name":"email_cliente","type":"string","nullable":true,"metadata":{}},{"name":"metodo_pago","type":"string","nullable":true,"metadata":{}},{"name":"devuelto","type":"string","nullable":true,"metadata":{}},{"name":"calificacion","type":"string","nullable":true,"metadata":{}},{"name":"region","type":"string","nullable":true,"metadata":{}},{"name":"canal","type":"string","nullable":true,"metadata":{}},{"name":"vendedor_id","type":"string","nullable":true,"metadata":{}},{"name":"_ingested_at","type":"timestamp","nullable":true,"metadata":{}},{"name":"_source_file","type":"string","nullable":true,"metadata":{}}]},List(),Map(),Some(1787272652180)), logSegment=LogSegment(s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log,0,WrappedArray(S3AFileStatus{path=s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log/00000000000000000000.json; isDirectory=false; length=7820; replication=1; blocksize=33554432; modification_time=1787272665000; access_time=0; owner=hadoop; group=hadoop; permission=rw-rw-rw-; isSymlink=false; hasAcl=false; isEncrypted=true; isErasureCoded=false; metadata={}} isEmptyDirectory=FALSE eTag="97aa67b4afbf29271cdd5127feaabe96" versionId=null),None,1787272665000), checksumOpt=None)
+26/08/21 00:37:46 INFO Snapshot: [tableId=7da33e88-e66b-4349-8bca-749701f591ba] DELTA: Compute snapshot for version: 0
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 419.6 KiB, free 910.9 MiB)
+26/08/21 00:37:46 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 43.2 KiB, free 910.9 MiB)
+26/08/21 00:37:46 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 43.2 KiB, free: 912.2 MiB)
+26/08/21 00:37:46 INFO SparkContext: Created broadcast 4 from $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:47 WARN package: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+26/08/21 00:37:47 INFO FileSourceStrategy: Pushed Filters: 
+26/08/21 00:37:47 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/21 00:37:48 INFO CodeGenerator: Code generated in 247.228147 ms
+26/08/21 00:37:48 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 425.0 KiB, free 910.4 MiB)
+26/08/21 00:37:48 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 43.4 KiB, free 910.4 MiB)
+26/08/21 00:37:48 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 43.4 KiB, free: 912.1 MiB)
+26/08/21 00:37:48 INFO SparkContext: Created broadcast 5 from $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:48 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4194304 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 1, prefetch: false
+26/08/21 00:37:48 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,1))
+26/08/21 00:37:48 INFO DAGScheduler: Registering RDD 10 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) as input to shuffle 0
+26/08/21 00:37:48 INFO DAGScheduler: Got map stage job 2 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 1 output partitions
+26/08/21 00:37:48 INFO DAGScheduler: Final stage: ShuffleMapStage 2 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:48 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:48 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:48 INFO DAGScheduler: Submitting ShuffleMapStage 2 (MapPartitionsRDD[10] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:48 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 142.2 KiB, free 910.3 MiB)
+26/08/21 00:37:48 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 40.6 KiB, free 910.2 MiB)
+26/08/21 00:37:48 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 40.6 KiB, free: 912.1 MiB)
+26/08/21 00:37:48 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:48 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 2 (MapPartitionsRDD[10] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:48 INFO YarnScheduler: Adding task set 2.0 with 1 tasks resource profile 0
+26/08/21 00:37:48 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 5) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8070 bytes) 
+26/08/21 00:37:48 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 40.6 KiB, free: 4.8 GiB)
+26/08/21 00:37:49 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 43.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:49 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 5) in 531 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:49 INFO YarnScheduler: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+26/08/21 00:37:49 INFO DAGScheduler: ShuffleMapStage 2 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 0.580 s
+26/08/21 00:37:49 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:37:49 INFO DAGScheduler: running: Set()
+26/08/21 00:37:49 INFO DAGScheduler: waiting: Set()
+26/08/21 00:37:49 INFO DAGScheduler: failed: Set()
+26/08/21 00:37:49 INFO CodeGenerator: Generated method too long to be JIT compiled: org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIteratorForCodegenStage3.serializefromobject_doConsume_0$ is 19938 bytes
+26/08/21 00:37:49 INFO CodeGenerator: Code generated in 201.346905 ms
+26/08/21 00:37:49 INFO CodeGenerator: Code generated in 57.746629 ms
+26/08/21 00:37:49 INFO BlockManagerInfo: Removed broadcast_3_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 17.4 KiB, free: 912.1 MiB)
+26/08/21 00:37:49 INFO BlockManagerInfo: Removed broadcast_3_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 17.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:50 INFO BlockManagerInfo: Removed broadcast_6_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 40.6 KiB, free: 4.8 GiB)
+26/08/21 00:37:50 INFO BlockManagerInfo: Removed broadcast_6_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 40.6 KiB, free: 912.1 MiB)
+26/08/21 00:37:50 INFO BlockManagerInfo: Removed broadcast_2_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 43.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:50 INFO BlockManagerInfo: Removed broadcast_2_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 43.4 KiB, free: 912.2 MiB)
+26/08/21 00:37:50 INFO CodeGenerator: Code generated in 53.197 ms
+26/08/21 00:37:50 INFO DAGScheduler: Registering RDD 20 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) as input to shuffle 1
+26/08/21 00:37:50 INFO DAGScheduler: Got map stage job 3 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 50 output partitions
+26/08/21 00:37:50 INFO DAGScheduler: Final stage: ShuffleMapStage 4 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:50 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 3)
+26/08/21 00:37:50 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:50 INFO DAGScheduler: Submitting ShuffleMapStage 4 (MapPartitionsRDD[20] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:50 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 523.7 KiB, free 910.4 MiB)
+26/08/21 00:37:50 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 125.8 KiB, free 910.3 MiB)
+26/08/21 00:37:50 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 125.8 KiB, free: 912.1 MiB)
+26/08/21 00:37:50 INFO SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:50 INFO DAGScheduler: Submitting 50 missing tasks from ShuffleMapStage 4 (MapPartitionsRDD[20] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/08/21 00:37:50 INFO YarnScheduler: Adding task set 4.0 with 50 tasks resource profile 0
+26/08/21 00:37:50 INFO TaskSetManager: Starting task 13.0 in stage 4.0 (TID 6) (ip-172-31-16-42.ec2.internal, executor 1, partition 13, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:37:50 INFO TaskSetManager: Starting task 28.0 in stage 4.0 (TID 7) (ip-172-31-16-42.ec2.internal, executor 1, partition 28, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:37:50 INFO TaskSetManager: Starting task 35.0 in stage 4.0 (TID 8) (ip-172-31-16-42.ec2.internal, executor 1, partition 35, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:37:50 INFO TaskSetManager: Starting task 42.0 in stage 4.0 (TID 9) (ip-172-31-16-42.ec2.internal, executor 1, partition 42, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:37:50 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 125.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:50 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 0 to 172.31.16.42:35874
+26/08/21 00:37:51 INFO ExecutorAllocationManager: Requesting 2 new executors because tasks are backlogged (new desired total will be 2 for resource profile id: 0)
+26/08/21 00:37:51 INFO BlockManagerInfo: Added rdd_17_35 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 994.0 B, free: 4.8 GiB)
+26/08/21 00:37:51 INFO BlockManagerInfo: Added rdd_17_42 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 656.0 B, free: 4.8 GiB)
+26/08/21 00:37:51 INFO BlockManagerInfo: Added rdd_17_13 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 1004.0 B, free: 4.8 GiB)
+26/08/21 00:37:51 INFO BlockManagerInfo: Added rdd_17_28 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 993.0 B, free: 4.8 GiB)
+26/08/21 00:37:51 INFO TaskSetManager: Starting task 46.0 in stage 4.0 (TID 10) (ip-172-31-16-42.ec2.internal, executor 1, partition 46, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:37:51 INFO TaskSetManager: Finished task 35.0 in stage 4.0 (TID 8) in 1310 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/50)
+26/08/21 00:37:51 INFO TaskSetManager: Finished task 28.0 in stage 4.0 (TID 7) in 1313 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/50)
+26/08/21 00:37:51 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 11) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:51 INFO TaskSetManager: Starting task 1.0 in stage 4.0 (TID 12) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:51 INFO TaskSetManager: Finished task 42.0 in stage 4.0 (TID 9) in 1319 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/50)
+26/08/21 00:37:51 INFO TaskSetManager: Finished task 13.0 in stage 4.0 (TID 6) in 1324 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/50)
+26/08/21 00:37:51 INFO TaskSetManager: Starting task 2.0 in stage 4.0 (TID 13) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:51 INFO BlockManagerInfo: Added rdd_17_1 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 3.0 in stage 4.0 (TID 14) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 1.0 in stage 4.0 (TID 12) in 175 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_2 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_46 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 990.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 4.0 in stage 4.0 (TID 15) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 2.0 in stage 4.0 (TID 13) in 285 ms on ip-172-31-16-42.ec2.internal (executor 1) (6/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 5.0 in stage 4.0 (TID 16) (ip-172-31-16-42.ec2.internal, executor 1, partition 5, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 46.0 in stage 4.0 (TID 10) in 316 ms on ip-172-31-16-42.ec2.internal (executor 1) (7/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 6.0 in stage 4.0 (TID 17) (ip-172-31-16-42.ec2.internal, executor 1, partition 6, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 11) in 323 ms on ip-172-31-16-42.ec2.internal (executor 1) (8/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_3 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_4 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 7.0 in stage 4.0 (TID 18) (ip-172-31-16-42.ec2.internal, executor 1, partition 7, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 3.0 in stage 4.0 (TID 14) in 237 ms on ip-172-31-16-42.ec2.internal (executor 1) (9/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_5 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_6 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 8.0 in stage 4.0 (TID 19) (ip-172-31-16-42.ec2.internal, executor 1, partition 8, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 4.0 in stage 4.0 (TID 15) in 142 ms on ip-172-31-16-42.ec2.internal (executor 1) (10/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 9.0 in stage 4.0 (TID 20) (ip-172-31-16-42.ec2.internal, executor 1, partition 9, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 5.0 in stage 4.0 (TID 16) in 156 ms on ip-172-31-16-42.ec2.internal (executor 1) (11/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_7 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 10.0 in stage 4.0 (TID 21) (ip-172-31-16-42.ec2.internal, executor 1, partition 10, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 6.0 in stage 4.0 (TID 17) in 178 ms on ip-172-31-16-42.ec2.internal (executor 1) (12/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_8 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 11.0 in stage 4.0 (TID 22) (ip-172-31-16-42.ec2.internal, executor 1, partition 11, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 7.0 in stage 4.0 (TID 18) in 135 ms on ip-172-31-16-42.ec2.internal (executor 1) (13/50)
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 8.0 in stage 4.0 (TID 19) in 122 ms on ip-172-31-16-42.ec2.internal (executor 1) (14/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 12.0 in stage 4.0 (TID 23) (ip-172-31-16-42.ec2.internal, executor 1, partition 12, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_9 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_10 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 14.0 in stage 4.0 (TID 24) (ip-172-31-16-42.ec2.internal, executor 1, partition 14, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 9.0 in stage 4.0 (TID 20) in 145 ms on ip-172-31-16-42.ec2.internal (executor 1) (15/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 15.0 in stage 4.0 (TID 25) (ip-172-31-16-42.ec2.internal, executor 1, partition 15, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 10.0 in stage 4.0 (TID 21) in 129 ms on ip-172-31-16-42.ec2.internal (executor 1) (16/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_11 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_12 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 16.0 in stage 4.0 (TID 26) (ip-172-31-16-42.ec2.internal, executor 1, partition 16, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 12.0 in stage 4.0 (TID 23) in 116 ms on ip-172-31-16-42.ec2.internal (executor 1) (17/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 17.0 in stage 4.0 (TID 27) (ip-172-31-16-42.ec2.internal, executor 1, partition 17, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 11.0 in stage 4.0 (TID 22) in 128 ms on ip-172-31-16-42.ec2.internal (executor 1) (18/50)
+26/08/21 00:37:52 INFO ExecutorAllocationManager: Requesting 1 new executor because tasks are backlogged (new desired total will be 3 for resource profile id: 0)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_15 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_14 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 18.0 in stage 4.0 (TID 28) (ip-172-31-16-42.ec2.internal, executor 1, partition 18, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 14.0 in stage 4.0 (TID 24) in 141 ms on ip-172-31-16-42.ec2.internal (executor 1) (19/50)
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 15.0 in stage 4.0 (TID 25) in 120 ms on ip-172-31-16-42.ec2.internal (executor 1) (20/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 19.0 in stage 4.0 (TID 29) (ip-172-31-16-42.ec2.internal, executor 1, partition 19, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_17 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_16 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 20.0 in stage 4.0 (TID 30) (ip-172-31-16-42.ec2.internal, executor 1, partition 20, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 17.0 in stage 4.0 (TID 27) in 99 ms on ip-172-31-16-42.ec2.internal (executor 1) (21/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 21.0 in stage 4.0 (TID 31) (ip-172-31-16-42.ec2.internal, executor 1, partition 21, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 16.0 in stage 4.0 (TID 26) in 117 ms on ip-172-31-16-42.ec2.internal (executor 1) (22/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_19 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_20 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_18 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_21 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 22.0 in stage 4.0 (TID 32) (ip-172-31-16-42.ec2.internal, executor 1, partition 22, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 19.0 in stage 4.0 (TID 29) in 130 ms on ip-172-31-16-42.ec2.internal (executor 1) (23/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 23.0 in stage 4.0 (TID 33) (ip-172-31-16-42.ec2.internal, executor 1, partition 23, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 20.0 in stage 4.0 (TID 30) in 107 ms on ip-172-31-16-42.ec2.internal (executor 1) (24/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 24.0 in stage 4.0 (TID 34) (ip-172-31-16-42.ec2.internal, executor 1, partition 24, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 18.0 in stage 4.0 (TID 28) in 138 ms on ip-172-31-16-42.ec2.internal (executor 1) (25/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 25.0 in stage 4.0 (TID 35) (ip-172-31-16-42.ec2.internal, executor 1, partition 25, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 21.0 in stage 4.0 (TID 31) in 151 ms on ip-172-31-16-42.ec2.internal (executor 1) (26/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_23 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_24 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_22 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 26.0 in stage 4.0 (TID 36) (ip-172-31-16-42.ec2.internal, executor 1, partition 26, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 23.0 in stage 4.0 (TID 33) in 135 ms on ip-172-31-16-42.ec2.internal (executor 1) (27/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 27.0 in stage 4.0 (TID 37) (ip-172-31-16-42.ec2.internal, executor 1, partition 27, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 22.0 in stage 4.0 (TID 32) in 153 ms on ip-172-31-16-42.ec2.internal (executor 1) (28/50)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 29.0 in stage 4.0 (TID 38) (ip-172-31-16-42.ec2.internal, executor 1, partition 29, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 24.0 in stage 4.0 (TID 34) in 155 ms on ip-172-31-16-42.ec2.internal (executor 1) (29/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_25 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO TaskSetManager: Starting task 30.0 in stage 4.0 (TID 39) (ip-172-31-16-42.ec2.internal, executor 1, partition 30, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:52 INFO TaskSetManager: Finished task 25.0 in stage 4.0 (TID 35) in 154 ms on ip-172-31-16-42.ec2.internal (executor 1) (30/50)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_29 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_26 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:52 INFO BlockManagerInfo: Added rdd_17_27 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 31.0 in stage 4.0 (TID 40) (ip-172-31-16-42.ec2.internal, executor 1, partition 31, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 26.0 in stage 4.0 (TID 36) in 132 ms on ip-172-31-16-42.ec2.internal (executor 1) (31/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 32.0 in stage 4.0 (TID 41) (ip-172-31-16-42.ec2.internal, executor 1, partition 32, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 29.0 in stage 4.0 (TID 38) in 112 ms on ip-172-31-16-42.ec2.internal (executor 1) (32/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 33.0 in stage 4.0 (TID 42) (ip-172-31-16-42.ec2.internal, executor 1, partition 33, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 27.0 in stage 4.0 (TID 37) in 129 ms on ip-172-31-16-42.ec2.internal (executor 1) (33/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_30 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 34.0 in stage 4.0 (TID 43) (ip-172-31-16-42.ec2.internal, executor 1, partition 34, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 30.0 in stage 4.0 (TID 39) in 128 ms on ip-172-31-16-42.ec2.internal (executor 1) (34/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_32 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_31 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_33 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 36.0 in stage 4.0 (TID 44) (ip-172-31-16-42.ec2.internal, executor 1, partition 36, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 32.0 in stage 4.0 (TID 41) in 96 ms on ip-172-31-16-42.ec2.internal (executor 1) (35/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 37.0 in stage 4.0 (TID 45) (ip-172-31-16-42.ec2.internal, executor 1, partition 37, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 33.0 in stage 4.0 (TID 42) in 98 ms on ip-172-31-16-42.ec2.internal (executor 1) (36/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 38.0 in stage 4.0 (TID 46) (ip-172-31-16-42.ec2.internal, executor 1, partition 38, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 31.0 in stage 4.0 (TID 40) in 128 ms on ip-172-31-16-42.ec2.internal (executor 1) (37/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_36 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_34 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 39.0 in stage 4.0 (TID 47) (ip-172-31-16-42.ec2.internal, executor 1, partition 39, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 36.0 in stage 4.0 (TID 44) in 89 ms on ip-172-31-16-42.ec2.internal (executor 1) (38/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_37 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 40.0 in stage 4.0 (TID 48) (ip-172-31-16-42.ec2.internal, executor 1, partition 40, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 34.0 in stage 4.0 (TID 43) in 125 ms on ip-172-31-16-42.ec2.internal (executor 1) (39/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_38 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 41.0 in stage 4.0 (TID 49) (ip-172-31-16-42.ec2.internal, executor 1, partition 41, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 37.0 in stage 4.0 (TID 45) in 120 ms on ip-172-31-16-42.ec2.internal (executor 1) (40/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 43.0 in stage 4.0 (TID 50) (ip-172-31-16-42.ec2.internal, executor 1, partition 43, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 38.0 in stage 4.0 (TID 46) in 110 ms on ip-172-31-16-42.ec2.internal (executor 1) (41/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_40 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_39 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_41 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_43 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 44.0 in stage 4.0 (TID 51) (ip-172-31-16-42.ec2.internal, executor 1, partition 44, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 40.0 in stage 4.0 (TID 48) in 114 ms on ip-172-31-16-42.ec2.internal (executor 1) (42/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 45.0 in stage 4.0 (TID 52) (ip-172-31-16-42.ec2.internal, executor 1, partition 45, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 39.0 in stage 4.0 (TID 47) in 129 ms on ip-172-31-16-42.ec2.internal (executor 1) (43/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 47.0 in stage 4.0 (TID 53) (ip-172-31-16-42.ec2.internal, executor 1, partition 47, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 43.0 in stage 4.0 (TID 50) in 95 ms on ip-172-31-16-42.ec2.internal (executor 1) (44/50)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 48.0 in stage 4.0 (TID 54) (ip-172-31-16-42.ec2.internal, executor 1, partition 48, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 41.0 in stage 4.0 (TID 49) in 109 ms on ip-172-31-16-42.ec2.internal (executor 1) (45/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_45 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_44 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_48 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 49.0 in stage 4.0 (TID 55) (ip-172-31-16-42.ec2.internal, executor 1, partition 49, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 45.0 in stage 4.0 (TID 52) in 122 ms on ip-172-31-16-42.ec2.internal (executor 1) (46/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_47 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 48.0 in stage 4.0 (TID 54) in 119 ms on ip-172-31-16-42.ec2.internal (executor 1) (47/50)
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 44.0 in stage 4.0 (TID 51) in 146 ms on ip-172-31-16-42.ec2.internal (executor 1) (48/50)
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 47.0 in stage 4.0 (TID 53) in 140 ms on ip-172-31-16-42.ec2.internal (executor 1) (49/50)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added rdd_17_49 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 49.0 in stage 4.0 (TID 55) in 78 ms on ip-172-31-16-42.ec2.internal (executor 1) (50/50)
+26/08/21 00:37:53 INFO YarnScheduler: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+26/08/21 00:37:53 INFO DAGScheduler: ShuffleMapStage 4 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 3.098 s
+26/08/21 00:37:53 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:37:53 INFO DAGScheduler: running: Set()
+26/08/21 00:37:53 INFO DAGScheduler: waiting: Set()
+26/08/21 00:37:53 INFO DAGScheduler: failed: Set()
+26/08/21 00:37:53 INFO SparkContext: Starting job: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:53 INFO DAGScheduler: Got job 4 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 1 output partitions
+26/08/21 00:37:53 INFO DAGScheduler: Final stage: ResultStage 7 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:53 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 6)
+26/08/21 00:37:53 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:53 INFO DAGScheduler: Submitting ResultStage 7 (MapPartitionsRDD[23] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:53 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 461.5 KiB, free 909.8 MiB)
+26/08/21 00:37:53 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 111.8 KiB, free 909.7 MiB)
+26/08/21 00:37:53 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 111.8 KiB, free: 911.9 MiB)
+26/08/21 00:37:53 INFO SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:53 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 7 (MapPartitionsRDD[23] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:53 INFO YarnScheduler: Adding task set 7.0 with 1 tasks resource profile 0
+26/08/21 00:37:53 INFO TaskSetManager: Starting task 0.0 in stage 7.0 (TID 56) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/21 00:37:53 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 111.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:53 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 1 to 172.31.16.42:35874
+26/08/21 00:37:53 INFO TaskSetManager: Finished task 0.0 in stage 7.0 (TID 56) in 105 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:53 INFO YarnScheduler: Removed TaskSet 7.0, whose tasks have all completed, from pool 
+26/08/21 00:37:53 INFO DAGScheduler: ResultStage 7 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 0.122 s
+26/08/21 00:37:53 INFO DAGScheduler: Job 4 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:53 INFO YarnScheduler: Killing all running tasks in stage 7: Stage finished
+26/08/21 00:37:53 INFO DAGScheduler: Job 4 finished: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128, took 0.129689 s
+26/08/21 00:37:53 INFO CodeGenerator: Code generated in 40.709866 ms
+26/08/21 00:37:53 INFO Snapshot: [tableId=7da33e88-e66b-4349-8bca-749701f591ba] DELTA: Done
+26/08/21 00:37:53 INFO OptimisticTransaction: [tableId=21e29e6e,txnId=93a75ab6] Committed delta #0 to s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log
+Bronze escrito en: s3a://st1630-efcortesr-2026/bronze/pedidos
+26/08/21 00:37:54 INFO CodeGenerator: Code generated in 121.946834 ms
+26/08/21 00:37:54 INFO CodeGenerator: Code generated in 20.303653 ms
+26/08/21 00:37:54 INFO DAGScheduler: Registering RDD 29 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 2
+26/08/21 00:37:54 INFO DAGScheduler: Got map stage job 5 (count at NativeMethodAccessorImpl.java:0) with 50 output partitions
+26/08/21 00:37:54 INFO DAGScheduler: Final stage: ShuffleMapStage 9 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:54 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 8)
+26/08/21 00:37:54 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:54 INFO DAGScheduler: Submitting ShuffleMapStage 9 (MapPartitionsRDD[29] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:54 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 640.4 KiB, free 909.1 MiB)
+26/08/21 00:37:54 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 153.9 KiB, free 909.0 MiB)
+26/08/21 00:37:54 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 153.9 KiB, free: 911.8 MiB)
+26/08/21 00:37:54 INFO SparkContext: Created broadcast 9 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:54 INFO DAGScheduler: Submitting 50 missing tasks from ShuffleMapStage 9 (MapPartitionsRDD[29] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/08/21 00:37:54 INFO YarnScheduler: Adding task set 9.0 with 50 tasks resource profile 0
+26/08/21 00:37:54 INFO TaskSetManager: Starting task 0.0 in stage 9.0 (TID 57) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:54 INFO TaskSetManager: Starting task 1.0 in stage 9.0 (TID 58) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:54 INFO TaskSetManager: Starting task 2.0 in stage 9.0 (TID 59) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:54 INFO TaskSetManager: Starting task 3.0 in stage 9.0 (TID 60) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:54 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 153.9 KiB, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_3 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_2 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_1 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 4.0 in stage 9.0 (TID 61) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 3.0 in stage 9.0 (TID 60) in 381 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 5.0 in stage 9.0 (TID 62) (ip-172-31-16-42.ec2.internal, executor 1, partition 5, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 1.0 in stage 9.0 (TID 58) in 385 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 6.0 in stage 9.0 (TID 63) (ip-172-31-16-42.ec2.internal, executor 1, partition 6, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 2.0 in stage 9.0 (TID 59) in 386 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 0.0 in stage 9.0 (TID 57) in 391 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 7.0 in stage 9.0 (TID 64) (ip-172-31-16-42.ec2.internal, executor 1, partition 7, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_6 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_4 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_7 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 8.0 in stage 9.0 (TID 65) (ip-172-31-16-42.ec2.internal, executor 1, partition 8, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 6.0 in stage 9.0 (TID 63) in 51 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 9.0 in stage 9.0 (TID 66) (ip-172-31-16-42.ec2.internal, executor 1, partition 9, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 4.0 in stage 9.0 (TID 61) in 58 ms on ip-172-31-16-42.ec2.internal (executor 1) (6/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_5 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 10.0 in stage 9.0 (TID 67) (ip-172-31-16-42.ec2.internal, executor 1, partition 10, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 7.0 in stage 9.0 (TID 64) in 55 ms on ip-172-31-16-42.ec2.internal (executor 1) (7/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 11.0 in stage 9.0 (TID 68) (ip-172-31-16-42.ec2.internal, executor 1, partition 11, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 5.0 in stage 9.0 (TID 62) in 75 ms on ip-172-31-16-42.ec2.internal (executor 1) (8/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_8 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 8.0 in stage 9.0 (TID 65) in 46 ms on ip-172-31-16-42.ec2.internal (executor 1) (9/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 12.0 in stage 9.0 (TID 69) (ip-172-31-16-42.ec2.internal, executor 1, partition 12, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_10 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 13.0 in stage 9.0 (TID 70) (ip-172-31-16-42.ec2.internal, executor 1, partition 13, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 10.0 in stage 9.0 (TID 67) in 70 ms on ip-172-31-16-42.ec2.internal (executor 1) (10/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_9 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 14.0 in stage 9.0 (TID 71) (ip-172-31-16-42.ec2.internal, executor 1, partition 14, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 9.0 in stage 9.0 (TID 66) in 87 ms on ip-172-31-16-42.ec2.internal (executor 1) (11/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_11 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_12 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 15.0 in stage 9.0 (TID 72) (ip-172-31-16-42.ec2.internal, executor 1, partition 15, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 11.0 in stage 9.0 (TID 68) in 86 ms on ip-172-31-16-42.ec2.internal (executor 1) (12/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_13 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 897.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 16.0 in stage 9.0 (TID 73) (ip-172-31-16-42.ec2.internal, executor 1, partition 16, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 12.0 in stage 9.0 (TID 69) in 81 ms on ip-172-31-16-42.ec2.internal (executor 1) (13/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_14 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 17.0 in stage 9.0 (TID 74) (ip-172-31-16-42.ec2.internal, executor 1, partition 17, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 14.0 in stage 9.0 (TID 71) in 46 ms on ip-172-31-16-42.ec2.internal (executor 1) (14/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 18.0 in stage 9.0 (TID 75) (ip-172-31-16-42.ec2.internal, executor 1, partition 18, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 13.0 in stage 9.0 (TID 70) in 70 ms on ip-172-31-16-42.ec2.internal (executor 1) (15/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_15 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 19.0 in stage 9.0 (TID 76) (ip-172-31-16-42.ec2.internal, executor 1, partition 19, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 15.0 in stage 9.0 (TID 72) in 48 ms on ip-172-31-16-42.ec2.internal (executor 1) (16/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_16 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 20.0 in stage 9.0 (TID 77) (ip-172-31-16-42.ec2.internal, executor 1, partition 20, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_17 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 16.0 in stage 9.0 (TID 73) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (17/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_18 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 21.0 in stage 9.0 (TID 78) (ip-172-31-16-42.ec2.internal, executor 1, partition 21, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 17.0 in stage 9.0 (TID 74) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (18/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 22.0 in stage 9.0 (TID 79) (ip-172-31-16-42.ec2.internal, executor 1, partition 22, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 18.0 in stage 9.0 (TID 75) in 40 ms on ip-172-31-16-42.ec2.internal (executor 1) (19/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_20 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_19 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 23.0 in stage 9.0 (TID 80) (ip-172-31-16-42.ec2.internal, executor 1, partition 23, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 19.0 in stage 9.0 (TID 76) in 54 ms on ip-172-31-16-42.ec2.internal (executor 1) (20/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_22 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 24.0 in stage 9.0 (TID 81) (ip-172-31-16-42.ec2.internal, executor 1, partition 24, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 20.0 in stage 9.0 (TID 77) in 44 ms on ip-172-31-16-42.ec2.internal (executor 1) (21/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 25.0 in stage 9.0 (TID 82) (ip-172-31-16-42.ec2.internal, executor 1, partition 25, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 22.0 in stage 9.0 (TID 79) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (22/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_21 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_24 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 26.0 in stage 9.0 (TID 83) (ip-172-31-16-42.ec2.internal, executor 1, partition 26, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 21.0 in stage 9.0 (TID 78) in 69 ms on ip-172-31-16-42.ec2.internal (executor 1) (23/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_25 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_23 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 25.0 in stage 9.0 (TID 82) in 45 ms on ip-172-31-16-42.ec2.internal (executor 1) (24/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 27.0 in stage 9.0 (TID 84) (ip-172-31-16-42.ec2.internal, executor 1, partition 27, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 28.0 in stage 9.0 (TID 85) (ip-172-31-16-42.ec2.internal, executor 1, partition 28, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 24.0 in stage 9.0 (TID 81) in 51 ms on ip-172-31-16-42.ec2.internal (executor 1) (25/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 29.0 in stage 9.0 (TID 86) (ip-172-31-16-42.ec2.internal, executor 1, partition 29, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 23.0 in stage 9.0 (TID 80) in 63 ms on ip-172-31-16-42.ec2.internal (executor 1) (26/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_26 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 30.0 in stage 9.0 (TID 87) (ip-172-31-16-42.ec2.internal, executor 1, partition 30, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 26.0 in stage 9.0 (TID 83) in 42 ms on ip-172-31-16-42.ec2.internal (executor 1) (27/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_28 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 894.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_29 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 31.0 in stage 9.0 (TID 88) (ip-172-31-16-42.ec2.internal, executor 1, partition 31, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_27 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 28.0 in stage 9.0 (TID 85) in 35 ms on ip-172-31-16-42.ec2.internal (executor 1) (28/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 32.0 in stage 9.0 (TID 89) (ip-172-31-16-42.ec2.internal, executor 1, partition 32, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 33.0 in stage 9.0 (TID 90) (ip-172-31-16-42.ec2.internal, executor 1, partition 33, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 27.0 in stage 9.0 (TID 84) in 42 ms on ip-172-31-16-42.ec2.internal (executor 1) (29/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 29.0 in stage 9.0 (TID 86) in 39 ms on ip-172-31-16-42.ec2.internal (executor 1) (30/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_30 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 34.0 in stage 9.0 (TID 91) (ip-172-31-16-42.ec2.internal, executor 1, partition 34, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 30.0 in stage 9.0 (TID 87) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (31/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_32 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_31 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_33 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 35.0 in stage 9.0 (TID 92) (ip-172-31-16-42.ec2.internal, executor 1, partition 35, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 36.0 in stage 9.0 (TID 93) (ip-172-31-16-42.ec2.internal, executor 1, partition 36, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_34 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 31.0 in stage 9.0 (TID 88) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (32/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 32.0 in stage 9.0 (TID 89) in 46 ms on ip-172-31-16-42.ec2.internal (executor 1) (33/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 37.0 in stage 9.0 (TID 94) (ip-172-31-16-42.ec2.internal, executor 1, partition 37, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 33.0 in stage 9.0 (TID 90) in 47 ms on ip-172-31-16-42.ec2.internal (executor 1) (34/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 38.0 in stage 9.0 (TID 95) (ip-172-31-16-42.ec2.internal, executor 1, partition 38, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 34.0 in stage 9.0 (TID 91) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (35/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_35 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 890.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_36 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_37 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_38 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 39.0 in stage 9.0 (TID 96) (ip-172-31-16-42.ec2.internal, executor 1, partition 39, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 36.0 in stage 9.0 (TID 93) in 77 ms on ip-172-31-16-42.ec2.internal (executor 1) (36/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 40.0 in stage 9.0 (TID 97) (ip-172-31-16-42.ec2.internal, executor 1, partition 40, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 41.0 in stage 9.0 (TID 98) (ip-172-31-16-42.ec2.internal, executor 1, partition 41, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 38.0 in stage 9.0 (TID 95) in 72 ms on ip-172-31-16-42.ec2.internal (executor 1) (37/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 42.0 in stage 9.0 (TID 99) (ip-172-31-16-42.ec2.internal, executor 1, partition 42, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 37.0 in stage 9.0 (TID 94) in 78 ms on ip-172-31-16-42.ec2.internal (executor 1) (38/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 35.0 in stage 9.0 (TID 92) in 82 ms on ip-172-31-16-42.ec2.internal (executor 1) (39/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_39 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_40 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_42 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 43.0 in stage 9.0 (TID 100) (ip-172-31-16-42.ec2.internal, executor 1, partition 43, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 39.0 in stage 9.0 (TID 96) in 65 ms on ip-172-31-16-42.ec2.internal (executor 1) (40/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 44.0 in stage 9.0 (TID 101) (ip-172-31-16-42.ec2.internal, executor 1, partition 44, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 40.0 in stage 9.0 (TID 97) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (41/50)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 45.0 in stage 9.0 (TID 102) (ip-172-31-16-42.ec2.internal, executor 1, partition 45, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 42.0 in stage 9.0 (TID 99) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (42/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_41 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 46.0 in stage 9.0 (TID 103) (ip-172-31-16-42.ec2.internal, executor 1, partition 46, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 41.0 in stage 9.0 (TID 98) in 65 ms on ip-172-31-16-42.ec2.internal (executor 1) (43/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_43 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 47.0 in stage 9.0 (TID 104) (ip-172-31-16-42.ec2.internal, executor 1, partition 47, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 43.0 in stage 9.0 (TID 100) in 35 ms on ip-172-31-16-42.ec2.internal (executor 1) (44/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_45 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_44 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 48.0 in stage 9.0 (TID 105) (ip-172-31-16-42.ec2.internal, executor 1, partition 48, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 45.0 in stage 9.0 (TID 102) in 48 ms on ip-172-31-16-42.ec2.internal (executor 1) (45/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_46 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 887.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 49.0 in stage 9.0 (TID 106) (ip-172-31-16-42.ec2.internal, executor 1, partition 49, PROCESS_LOCAL, 7363 bytes) 
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 44.0 in stage 9.0 (TID 101) in 54 ms on ip-172-31-16-42.ec2.internal (executor 1) (46/50)
+26/08/21 00:37:55 INFO ExecutorAllocationManager: Requesting 2 new executors because tasks are backlogged (new desired total will be 2 for resource profile id: 0)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_47 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 46.0 in stage 9.0 (TID 103) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (47/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 47.0 in stage 9.0 (TID 104) in 40 ms on ip-172-31-16-42.ec2.internal (executor 1) (48/50)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_48 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added rdd_27_49 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 46.0 B, free: 4.8 GiB)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 48.0 in stage 9.0 (TID 105) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (49/50)
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 49.0 in stage 9.0 (TID 106) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (50/50)
+26/08/21 00:37:55 INFO YarnScheduler: Removed TaskSet 9.0, whose tasks have all completed, from pool 
+26/08/21 00:37:55 INFO DAGScheduler: ShuffleMapStage 9 (count at NativeMethodAccessorImpl.java:0) finished in 1.081 s
+26/08/21 00:37:55 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:37:55 INFO DAGScheduler: running: Set()
+26/08/21 00:37:55 INFO DAGScheduler: waiting: Set()
+26/08/21 00:37:55 INFO DAGScheduler: failed: Set()
+26/08/21 00:37:55 INFO CodeGenerator: Code generated in 9.096028 ms
+26/08/21 00:37:55 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:55 INFO DAGScheduler: Got job 6 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/21 00:37:55 INFO DAGScheduler: Final stage: ResultStage 12 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:55 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 11)
+26/08/21 00:37:55 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:55 INFO DAGScheduler: Submitting ResultStage 12 (MapPartitionsRDD[32] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:55 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 14.5 KiB, free 908.9 MiB)
+26/08/21 00:37:55 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 6.8 KiB, free 908.9 MiB)
+26/08/21 00:37:55 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 6.8 KiB, free: 911.8 MiB)
+26/08/21 00:37:55 INFO SparkContext: Created broadcast 10 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:55 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 12 (MapPartitionsRDD[32] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:55 INFO YarnScheduler: Adding task set 12.0 with 1 tasks resource profile 0
+26/08/21 00:37:55 INFO TaskSetManager: Starting task 0.0 in stage 12.0 (TID 107) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/21 00:37:55 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 6.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:55 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 2 to 172.31.16.42:35874
+26/08/21 00:37:55 INFO TaskSetManager: Finished task 0.0 in stage 12.0 (TID 107) in 38 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:55 INFO YarnScheduler: Removed TaskSet 12.0, whose tasks have all completed, from pool 
+26/08/21 00:37:55 INFO DAGScheduler: ResultStage 12 (count at NativeMethodAccessorImpl.java:0) finished in 0.045 s
+26/08/21 00:37:55 INFO DAGScheduler: Job 6 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:55 INFO YarnScheduler: Killing all running tasks in stage 12: Stage finished
+26/08/21 00:37:55 INFO DAGScheduler: Job 6 finished: count at NativeMethodAccessorImpl.java:0, took 0.056710 s
+26/08/21 00:37:55 INFO CodeGenerator: Code generated in 10.173391 ms
+26/08/21 00:37:55 INFO CodeGenerator: Code generated in 5.687705 ms
+26/08/21 00:37:55 INFO PrepareDeltaScan: DELTA: Filtering files for query
+26/08/21 00:37:56 INFO CodeGenerator: Code generated in 60.35405 ms
+26/08/21 00:37:56 INFO SparkContext: Starting job: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:56 INFO DAGScheduler: Got job 7 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 50 output partitions
+26/08/21 00:37:56 INFO DAGScheduler: Final stage: ResultStage 14 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:56 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 13)
+26/08/21 00:37:56 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:56 INFO DAGScheduler: Submitting ResultStage 14 (MapPartitionsRDD[34] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_11 stored as values in memory (estimated size 669.4 KiB, free 908.3 MiB)
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_11_piece0 stored as bytes in memory (estimated size 160.4 KiB, free 908.1 MiB)
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 160.4 KiB, free: 911.6 MiB)
+26/08/21 00:37:56 INFO SparkContext: Created broadcast 11 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:56 INFO DAGScheduler: Submitting 50 missing tasks from ResultStage 14 (MapPartitionsRDD[34] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/08/21 00:37:56 INFO YarnScheduler: Adding task set 14.0 with 50 tasks resource profile 0
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 0.0 in stage 14.0 (TID 108) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 1.0 in stage 14.0 (TID 109) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 2.0 in stage 14.0 (TID 110) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 3.0 in stage 14.0 (TID 111) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 160.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 4.0 in stage 14.0 (TID 112) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 5.0 in stage 14.0 (TID 113) (ip-172-31-16-42.ec2.internal, executor 1, partition 5, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 2.0 in stage 14.0 (TID 110) in 92 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 1.0 in stage 14.0 (TID 109) in 93 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 6.0 in stage 14.0 (TID 114) (ip-172-31-16-42.ec2.internal, executor 1, partition 6, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 7.0 in stage 14.0 (TID 115) (ip-172-31-16-42.ec2.internal, executor 1, partition 7, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 3.0 in stage 14.0 (TID 111) in 96 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 0.0 in stage 14.0 (TID 108) in 97 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 8.0 in stage 14.0 (TID 116) (ip-172-31-16-42.ec2.internal, executor 1, partition 8, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 6.0 in stage 14.0 (TID 114) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 9.0 in stage 14.0 (TID 117) (ip-172-31-16-42.ec2.internal, executor 1, partition 9, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 7.0 in stage 14.0 (TID 115) in 24 ms on ip-172-31-16-42.ec2.internal (executor 1) (6/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 10.0 in stage 14.0 (TID 118) (ip-172-31-16-42.ec2.internal, executor 1, partition 10, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 5.0 in stage 14.0 (TID 113) in 38 ms on ip-172-31-16-42.ec2.internal (executor 1) (7/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 11.0 in stage 14.0 (TID 119) (ip-172-31-16-42.ec2.internal, executor 1, partition 11, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 4.0 in stage 14.0 (TID 112) in 45 ms on ip-172-31-16-42.ec2.internal (executor 1) (8/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 12.0 in stage 14.0 (TID 120) (ip-172-31-16-42.ec2.internal, executor 1, partition 12, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 9.0 in stage 14.0 (TID 117) in 20 ms on ip-172-31-16-42.ec2.internal (executor 1) (9/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 13.0 in stage 14.0 (TID 121) (ip-172-31-16-42.ec2.internal, executor 1, partition 13, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 10.0 in stage 14.0 (TID 118) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (10/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 14.0 in stage 14.0 (TID 122) (ip-172-31-16-42.ec2.internal, executor 1, partition 14, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 12.0 in stage 14.0 (TID 120) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (11/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 15.0 in stage 14.0 (TID 123) (ip-172-31-16-42.ec2.internal, executor 1, partition 15, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 8.0 in stage 14.0 (TID 116) in 44 ms on ip-172-31-16-42.ec2.internal (executor 1) (12/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 16.0 in stage 14.0 (TID 124) (ip-172-31-16-42.ec2.internal, executor 1, partition 16, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 11.0 in stage 14.0 (TID 119) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (13/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 17.0 in stage 14.0 (TID 125) (ip-172-31-16-42.ec2.internal, executor 1, partition 17, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 14.0 in stage 14.0 (TID 122) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (14/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 18.0 in stage 14.0 (TID 126) (ip-172-31-16-42.ec2.internal, executor 1, partition 18, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 16.0 in stage 14.0 (TID 124) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (15/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 15.0 in stage 14.0 (TID 123) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (16/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 19.0 in stage 14.0 (TID 127) (ip-172-31-16-42.ec2.internal, executor 1, partition 19, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 13.0 in stage 14.0 (TID 121) in 46 ms on ip-172-31-16-42.ec2.internal (executor 1) (17/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 20.0 in stage 14.0 (TID 128) (ip-172-31-16-42.ec2.internal, executor 1, partition 20, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 21.0 in stage 14.0 (TID 129) (ip-172-31-16-42.ec2.internal, executor 1, partition 21, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 18.0 in stage 14.0 (TID 126) in 49 ms on ip-172-31-16-42.ec2.internal (executor 1) (18/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 22.0 in stage 14.0 (TID 130) (ip-172-31-16-42.ec2.internal, executor 1, partition 22, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 17.0 in stage 14.0 (TID 125) in 57 ms on ip-172-31-16-42.ec2.internal (executor 1) (19/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 20.0 in stage 14.0 (TID 128) in 48 ms on ip-172-31-16-42.ec2.internal (executor 1) (20/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 23.0 in stage 14.0 (TID 131) (ip-172-31-16-42.ec2.internal, executor 1, partition 23, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 24.0 in stage 14.0 (TID 132) (ip-172-31-16-42.ec2.internal, executor 1, partition 24, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 19.0 in stage 14.0 (TID 127) in 55 ms on ip-172-31-16-42.ec2.internal (executor 1) (21/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 25.0 in stage 14.0 (TID 133) (ip-172-31-16-42.ec2.internal, executor 1, partition 25, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 24.0 in stage 14.0 (TID 132) in 24 ms on ip-172-31-16-42.ec2.internal (executor 1) (22/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 26.0 in stage 14.0 (TID 134) (ip-172-31-16-42.ec2.internal, executor 1, partition 26, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 22.0 in stage 14.0 (TID 130) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (23/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 27.0 in stage 14.0 (TID 135) (ip-172-31-16-42.ec2.internal, executor 1, partition 27, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 23.0 in stage 14.0 (TID 131) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (24/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 28.0 in stage 14.0 (TID 136) (ip-172-31-16-42.ec2.internal, executor 1, partition 28, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 21.0 in stage 14.0 (TID 129) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (25/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 29.0 in stage 14.0 (TID 137) (ip-172-31-16-42.ec2.internal, executor 1, partition 29, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 26.0 in stage 14.0 (TID 134) in 28 ms on ip-172-31-16-42.ec2.internal (executor 1) (26/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 30.0 in stage 14.0 (TID 138) (ip-172-31-16-42.ec2.internal, executor 1, partition 30, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 28.0 in stage 14.0 (TID 136) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (27/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 31.0 in stage 14.0 (TID 139) (ip-172-31-16-42.ec2.internal, executor 1, partition 31, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 25.0 in stage 14.0 (TID 133) in 45 ms on ip-172-31-16-42.ec2.internal (executor 1) (28/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 27.0 in stage 14.0 (TID 135) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (29/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 32.0 in stage 14.0 (TID 140) (ip-172-31-16-42.ec2.internal, executor 1, partition 32, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 33.0 in stage 14.0 (TID 141) (ip-172-31-16-42.ec2.internal, executor 1, partition 33, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 29.0 in stage 14.0 (TID 137) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (30/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 34.0 in stage 14.0 (TID 142) (ip-172-31-16-42.ec2.internal, executor 1, partition 34, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 31.0 in stage 14.0 (TID 139) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (31/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 35.0 in stage 14.0 (TID 143) (ip-172-31-16-42.ec2.internal, executor 1, partition 35, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 30.0 in stage 14.0 (TID 138) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (32/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 32.0 in stage 14.0 (TID 140) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (33/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 36.0 in stage 14.0 (TID 144) (ip-172-31-16-42.ec2.internal, executor 1, partition 36, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 37.0 in stage 14.0 (TID 145) (ip-172-31-16-42.ec2.internal, executor 1, partition 37, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 33.0 in stage 14.0 (TID 141) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (34/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 38.0 in stage 14.0 (TID 146) (ip-172-31-16-42.ec2.internal, executor 1, partition 38, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 34.0 in stage 14.0 (TID 142) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (35/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 39.0 in stage 14.0 (TID 147) (ip-172-31-16-42.ec2.internal, executor 1, partition 39, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 37.0 in stage 14.0 (TID 145) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (36/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 40.0 in stage 14.0 (TID 148) (ip-172-31-16-42.ec2.internal, executor 1, partition 40, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 35.0 in stage 14.0 (TID 143) in 40 ms on ip-172-31-16-42.ec2.internal (executor 1) (37/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 41.0 in stage 14.0 (TID 149) (ip-172-31-16-42.ec2.internal, executor 1, partition 41, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 36.0 in stage 14.0 (TID 144) in 38 ms on ip-172-31-16-42.ec2.internal (executor 1) (38/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 42.0 in stage 14.0 (TID 150) (ip-172-31-16-42.ec2.internal, executor 1, partition 42, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 39.0 in stage 14.0 (TID 147) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (39/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 43.0 in stage 14.0 (TID 151) (ip-172-31-16-42.ec2.internal, executor 1, partition 43, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 41.0 in stage 14.0 (TID 149) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (40/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 44.0 in stage 14.0 (TID 152) (ip-172-31-16-42.ec2.internal, executor 1, partition 44, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 40.0 in stage 14.0 (TID 148) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (41/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 45.0 in stage 14.0 (TID 153) (ip-172-31-16-42.ec2.internal, executor 1, partition 45, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 38.0 in stage 14.0 (TID 146) in 47 ms on ip-172-31-16-42.ec2.internal (executor 1) (42/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 46.0 in stage 14.0 (TID 154) (ip-172-31-16-42.ec2.internal, executor 1, partition 46, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 42.0 in stage 14.0 (TID 150) in 42 ms on ip-172-31-16-42.ec2.internal (executor 1) (43/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 44.0 in stage 14.0 (TID 152) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (44/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 47.0 in stage 14.0 (TID 155) (ip-172-31-16-42.ec2.internal, executor 1, partition 47, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 45.0 in stage 14.0 (TID 153) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (45/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 48.0 in stage 14.0 (TID 156) (ip-172-31-16-42.ec2.internal, executor 1, partition 48, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 43.0 in stage 14.0 (TID 151) in 43 ms on ip-172-31-16-42.ec2.internal (executor 1) (46/50)
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 49.0 in stage 14.0 (TID 157) (ip-172-31-16-42.ec2.internal, executor 1, partition 49, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 47.0 in stage 14.0 (TID 155) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (47/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 46.0 in stage 14.0 (TID 154) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (48/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 49.0 in stage 14.0 (TID 157) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (49/50)
+26/08/21 00:37:56 INFO TaskSetManager: Finished task 48.0 in stage 14.0 (TID 156) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (50/50)
+26/08/21 00:37:56 INFO YarnScheduler: Removed TaskSet 14.0, whose tasks have all completed, from pool 
+26/08/21 00:37:56 INFO DAGScheduler: ResultStage 14 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 0.495 s
+26/08/21 00:37:56 INFO DAGScheduler: Job 7 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:56 INFO YarnScheduler: Killing all running tasks in stage 14: Stage finished
+26/08/21 00:37:56 INFO DAGScheduler: Job 7 finished: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128, took 0.501557 s
+26/08/21 00:37:56 INFO CodeGenerator: Code generated in 14.692165 ms
+26/08/21 00:37:56 INFO PrepareDeltaScan: DELTA: Done
+26/08/21 00:37:56 INFO FileSourceStrategy: Pushed Filters: IsNull(pedido_id)
+26/08/21 00:37:56 INFO FileSourceStrategy: Post-Scan Filters: isnull(pedido_id#717)
+26/08/21 00:37:56 INFO CodeGenerator: Code generated in 13.248568 ms
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_12 stored as values in memory (estimated size 431.1 KiB, free 907.7 MiB)
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_12_piece0 stored as bytes in memory (estimated size 44.1 KiB, free 907.7 MiB)
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.1 KiB, free: 911.6 MiB)
+26/08/21 00:37:56 INFO SparkContext: Created broadcast 12 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_13 stored as values in memory (estimated size 431.2 KiB, free 907.2 MiB)
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_13_piece0 stored as bytes in memory (estimated size 44.0 KiB, free 907.2 MiB)
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.0 KiB, free: 911.5 MiB)
+26/08/21 00:37:56 INFO SparkContext: Created broadcast 13 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:56 INFO FileSourceScanExec: Planning scan with bin packing, max size: 5019139 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: true
+26/08/21 00:37:56 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/21 00:37:56 INFO DAGScheduler: Registering RDD 38 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 3
+26/08/21 00:37:56 INFO DAGScheduler: Got map stage job 8 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/21 00:37:56 INFO DAGScheduler: Final stage: ShuffleMapStage 15 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:56 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:56 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:56 INFO DAGScheduler: Submitting ShuffleMapStage 15 (MapPartitionsRDD[38] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_14 stored as values in memory (estimated size 32.4 KiB, free 907.2 MiB)
+26/08/21 00:37:56 INFO MemoryStore: Block broadcast_14_piece0 stored as bytes in memory (estimated size 14.6 KiB, free 907.2 MiB)
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 14.6 KiB, free: 911.5 MiB)
+26/08/21 00:37:56 INFO SparkContext: Created broadcast 14 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:56 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 15 (MapPartitionsRDD[38] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/21 00:37:56 INFO YarnScheduler: Adding task set 15.0 with 4 tasks resource profile 0
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 0.0 in stage 15.0 (TID 158) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 1.0 in stage 15.0 (TID 159) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 2.0 in stage 15.0 (TID 160) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:56 INFO TaskSetManager: Starting task 3.0 in stage 15.0 (TID 161) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:56 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 14.6 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 44.1 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 3.0 in stage 15.0 (TID 161) in 463 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 0.0 in stage 15.0 (TID 158) in 485 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 1.0 in stage 15.0 (TID 159) in 484 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 2.0 in stage 15.0 (TID 160) in 486 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/21 00:37:57 INFO YarnScheduler: Removed TaskSet 15.0, whose tasks have all completed, from pool 
+26/08/21 00:37:57 INFO DAGScheduler: ShuffleMapStage 15 (count at NativeMethodAccessorImpl.java:0) finished in 0.540 s
+26/08/21 00:37:57 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:37:57 INFO DAGScheduler: running: Set()
+26/08/21 00:37:57 INFO DAGScheduler: waiting: Set()
+26/08/21 00:37:57 INFO DAGScheduler: failed: Set()
+26/08/21 00:37:57 INFO CodeGenerator: Code generated in 8.845677 ms
+26/08/21 00:37:57 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:57 INFO DAGScheduler: Got job 9 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/21 00:37:57 INFO DAGScheduler: Final stage: ResultStage 17 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:57 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 16)
+26/08/21 00:37:57 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:57 INFO DAGScheduler: Submitting ResultStage 17 (MapPartitionsRDD[41] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:57 INFO MemoryStore: Block broadcast_15 stored as values in memory (estimated size 12.9 KiB, free 907.1 MiB)
+26/08/21 00:37:57 INFO MemoryStore: Block broadcast_15_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 907.1 MiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 6.2 KiB, free: 911.5 MiB)
+26/08/21 00:37:57 INFO SparkContext: Created broadcast 15 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:57 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 17 (MapPartitionsRDD[41] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:57 INFO YarnScheduler: Adding task set 17.0 with 1 tasks resource profile 0
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 0.0 in stage 17.0 (TID 162) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 6.2 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 3 to 172.31.16.42:35874
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 0.0 in stage 17.0 (TID 162) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:57 INFO YarnScheduler: Removed TaskSet 17.0, whose tasks have all completed, from pool 
+26/08/21 00:37:57 INFO DAGScheduler: ResultStage 17 (count at NativeMethodAccessorImpl.java:0) finished in 0.031 s
+26/08/21 00:37:57 INFO DAGScheduler: Job 9 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:57 INFO YarnScheduler: Killing all running tasks in stage 17: Stage finished
+26/08/21 00:37:57 INFO DAGScheduler: Job 9 finished: count at NativeMethodAccessorImpl.java:0, took 0.034280 s
+26/08/21 00:37:57 INFO PrepareDeltaScan: DELTA: Filtering files for query
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_11_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 160.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_11_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 160.4 KiB, free: 911.7 MiB)
+26/08/21 00:37:57 INFO CodeGenerator: Code generated in 87.386824 ms
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_12_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 44.1 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO SparkContext: Starting job: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:57 INFO DAGScheduler: Got job 10 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 50 output partitions
+26/08/21 00:37:57 INFO DAGScheduler: Final stage: ResultStage 19 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:57 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 18)
+26/08/21 00:37:57 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:57 INFO DAGScheduler: Submitting ResultStage 19 (MapPartitionsRDD[43] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:57 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 666.5 KiB, free 907.3 MiB)
+26/08/21 00:37:57 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 159.6 KiB, free 907.1 MiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 159.6 KiB, free: 911.5 MiB)
+26/08/21 00:37:57 INFO SparkContext: Created broadcast 16 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_12_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 44.1 KiB, free: 911.6 MiB)
+26/08/21 00:37:57 INFO DAGScheduler: Submitting 50 missing tasks from ResultStage 19 (MapPartitionsRDD[43] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/08/21 00:37:57 INFO YarnScheduler: Adding task set 19.0 with 50 tasks resource profile 0
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 0.0 in stage 19.0 (TID 163) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 1.0 in stage 19.0 (TID 164) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 2.0 in stage 19.0 (TID 165) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 3.0 in stage 19.0 (TID 166) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 159.6 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_8_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 111.8 KiB, free: 911.7 MiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_8_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 111.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_15_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 6.2 KiB, free: 911.7 MiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_15_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 6.2 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_0_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 43.4 KiB, free: 911.7 MiB)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_0_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 43.4 KiB, free: 4.8 GiB)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 4.0 in stage 19.0 (TID 167) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 1.0 in stage 19.0 (TID 164) in 85 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/50)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 5.0 in stage 19.0 (TID 168) (ip-172-31-16-42.ec2.internal, executor 1, partition 5, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 3.0 in stage 19.0 (TID 166) in 85 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/50)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 6.0 in stage 19.0 (TID 169) (ip-172-31-16-42.ec2.internal, executor 1, partition 6, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 2.0 in stage 19.0 (TID 165) in 89 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/50)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 7.0 in stage 19.0 (TID 170) (ip-172-31-16-42.ec2.internal, executor 1, partition 7, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 0.0 in stage 19.0 (TID 163) in 91 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/50)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 8.0 in stage 19.0 (TID 171) (ip-172-31-16-42.ec2.internal, executor 1, partition 8, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 9.0 in stage 19.0 (TID 172) (ip-172-31-16-42.ec2.internal, executor 1, partition 9, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 4.0 in stage 19.0 (TID 167) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/50)
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 5.0 in stage 19.0 (TID 168) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (6/50)
+26/08/21 00:37:57 INFO BlockManagerInfo: Removed broadcast_14_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 14.6 KiB, free: 911.7 MiB)
+26/08/21 00:37:57 INFO TaskSetManager: Starting task 10.0 in stage 19.0 (TID 173) (ip-172-31-16-42.ec2.internal, executor 1, partition 10, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:57 INFO TaskSetManager: Finished task 6.0 in stage 19.0 (TID 169) in 42 ms on ip-172-31-16-42.ec2.internal (executor 1) (7/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_14_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 14.6 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 11.0 in stage 19.0 (TID 174) (ip-172-31-16-42.ec2.internal, executor 1, partition 11, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 7.0 in stage 19.0 (TID 170) in 52 ms on ip-172-31-16-42.ec2.internal (executor 1) (8/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_10_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 6.8 KiB, free: 911.7 MiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 12.0 in stage 19.0 (TID 175) (ip-172-31-16-42.ec2.internal, executor 1, partition 12, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 9.0 in stage 19.0 (TID 172) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (9/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_10_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 6.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 13.0 in stage 19.0 (TID 176) (ip-172-31-16-42.ec2.internal, executor 1, partition 13, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 10.0 in stage 19.0 (TID 173) in 43 ms on ip-172-31-16-42.ec2.internal (executor 1) (10/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 14.0 in stage 19.0 (TID 177) (ip-172-31-16-42.ec2.internal, executor 1, partition 14, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 11.0 in stage 19.0 (TID 174) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (11/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 15.0 in stage 19.0 (TID 178) (ip-172-31-16-42.ec2.internal, executor 1, partition 15, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 8.0 in stage 19.0 (TID 171) in 57 ms on ip-172-31-16-42.ec2.internal (executor 1) (12/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_9_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 153.9 KiB, free: 911.9 MiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_9_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 153.9 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 16.0 in stage 19.0 (TID 179) (ip-172-31-16-42.ec2.internal, executor 1, partition 16, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 12.0 in stage 19.0 (TID 175) in 39 ms on ip-172-31-16-42.ec2.internal (executor 1) (13/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 17.0 in stage 19.0 (TID 180) (ip-172-31-16-42.ec2.internal, executor 1, partition 17, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 18.0 in stage 19.0 (TID 181) (ip-172-31-16-42.ec2.internal, executor 1, partition 18, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 15.0 in stage 19.0 (TID 178) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (14/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 16.0 in stage 19.0 (TID 179) in 20 ms on ip-172-31-16-42.ec2.internal (executor 1) (15/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 19.0 in stage 19.0 (TID 182) (ip-172-31-16-42.ec2.internal, executor 1, partition 19, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_13_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 44.0 KiB, free: 911.9 MiB)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 14.0 in stage 19.0 (TID 177) in 57 ms on ip-172-31-16-42.ec2.internal (executor 1) (16/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 20.0 in stage 19.0 (TID 183) (ip-172-31-16-42.ec2.internal, executor 1, partition 20, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 13.0 in stage 19.0 (TID 176) in 63 ms on ip-172-31-16-42.ec2.internal (executor 1) (17/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 21.0 in stage 19.0 (TID 184) (ip-172-31-16-42.ec2.internal, executor 1, partition 21, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 22.0 in stage 19.0 (TID 185) (ip-172-31-16-42.ec2.internal, executor 1, partition 22, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 17.0 in stage 19.0 (TID 180) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (18/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 18.0 in stage 19.0 (TID 181) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (19/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_7_piece0 on ip-172-31-28-207.ec2.internal:46727 in memory (size: 125.8 KiB, free: 912.1 MiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 23.0 in stage 19.0 (TID 186) (ip-172-31-16-42.ec2.internal, executor 1, partition 23, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 21.0 in stage 19.0 (TID 184) in 18 ms on ip-172-31-16-42.ec2.internal (executor 1) (20/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 24.0 in stage 19.0 (TID 187) (ip-172-31-16-42.ec2.internal, executor 1, partition 24, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 19.0 in stage 19.0 (TID 182) in 43 ms on ip-172-31-16-42.ec2.internal (executor 1) (21/50)
+26/08/21 00:37:58 INFO BlockManagerInfo: Removed broadcast_7_piece0 on ip-172-31-16-42.ec2.internal:35385 in memory (size: 125.8 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 25.0 in stage 19.0 (TID 188) (ip-172-31-16-42.ec2.internal, executor 1, partition 25, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 22.0 in stage 19.0 (TID 185) in 26 ms on ip-172-31-16-42.ec2.internal (executor 1) (22/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 26.0 in stage 19.0 (TID 189) (ip-172-31-16-42.ec2.internal, executor 1, partition 26, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 20.0 in stage 19.0 (TID 183) in 38 ms on ip-172-31-16-42.ec2.internal (executor 1) (23/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 27.0 in stage 19.0 (TID 190) (ip-172-31-16-42.ec2.internal, executor 1, partition 27, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 23.0 in stage 19.0 (TID 186) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (24/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 28.0 in stage 19.0 (TID 191) (ip-172-31-16-42.ec2.internal, executor 1, partition 28, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 26.0 in stage 19.0 (TID 189) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (25/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 29.0 in stage 19.0 (TID 192) (ip-172-31-16-42.ec2.internal, executor 1, partition 29, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 24.0 in stage 19.0 (TID 187) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (26/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 30.0 in stage 19.0 (TID 193) (ip-172-31-16-42.ec2.internal, executor 1, partition 30, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 25.0 in stage 19.0 (TID 188) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (27/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 31.0 in stage 19.0 (TID 194) (ip-172-31-16-42.ec2.internal, executor 1, partition 31, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 27.0 in stage 19.0 (TID 190) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (28/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 32.0 in stage 19.0 (TID 195) (ip-172-31-16-42.ec2.internal, executor 1, partition 32, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 29.0 in stage 19.0 (TID 192) in 22 ms on ip-172-31-16-42.ec2.internal (executor 1) (29/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 33.0 in stage 19.0 (TID 196) (ip-172-31-16-42.ec2.internal, executor 1, partition 33, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 28.0 in stage 19.0 (TID 191) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (30/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 34.0 in stage 19.0 (TID 197) (ip-172-31-16-42.ec2.internal, executor 1, partition 34, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 30.0 in stage 19.0 (TID 193) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (31/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 32.0 in stage 19.0 (TID 195) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (32/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 35.0 in stage 19.0 (TID 198) (ip-172-31-16-42.ec2.internal, executor 1, partition 35, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 36.0 in stage 19.0 (TID 199) (ip-172-31-16-42.ec2.internal, executor 1, partition 36, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 33.0 in stage 19.0 (TID 196) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (33/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 31.0 in stage 19.0 (TID 194) in 39 ms on ip-172-31-16-42.ec2.internal (executor 1) (34/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 37.0 in stage 19.0 (TID 200) (ip-172-31-16-42.ec2.internal, executor 1, partition 37, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 38.0 in stage 19.0 (TID 201) (ip-172-31-16-42.ec2.internal, executor 1, partition 38, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 34.0 in stage 19.0 (TID 197) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (35/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 39.0 in stage 19.0 (TID 202) (ip-172-31-16-42.ec2.internal, executor 1, partition 39, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 36.0 in stage 19.0 (TID 199) in 20 ms on ip-172-31-16-42.ec2.internal (executor 1) (36/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 40.0 in stage 19.0 (TID 203) (ip-172-31-16-42.ec2.internal, executor 1, partition 40, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 35.0 in stage 19.0 (TID 198) in 44 ms on ip-172-31-16-42.ec2.internal (executor 1) (37/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 41.0 in stage 19.0 (TID 204) (ip-172-31-16-42.ec2.internal, executor 1, partition 41, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 37.0 in stage 19.0 (TID 200) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (38/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 42.0 in stage 19.0 (TID 205) (ip-172-31-16-42.ec2.internal, executor 1, partition 42, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 38.0 in stage 19.0 (TID 201) in 28 ms on ip-172-31-16-42.ec2.internal (executor 1) (39/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 43.0 in stage 19.0 (TID 206) (ip-172-31-16-42.ec2.internal, executor 1, partition 43, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 39.0 in stage 19.0 (TID 202) in 22 ms on ip-172-31-16-42.ec2.internal (executor 1) (40/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 44.0 in stage 19.0 (TID 207) (ip-172-31-16-42.ec2.internal, executor 1, partition 44, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 41.0 in stage 19.0 (TID 204) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (41/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 45.0 in stage 19.0 (TID 208) (ip-172-31-16-42.ec2.internal, executor 1, partition 45, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 40.0 in stage 19.0 (TID 203) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (42/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 46.0 in stage 19.0 (TID 209) (ip-172-31-16-42.ec2.internal, executor 1, partition 46, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 42.0 in stage 19.0 (TID 205) in 24 ms on ip-172-31-16-42.ec2.internal (executor 1) (43/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 47.0 in stage 19.0 (TID 210) (ip-172-31-16-42.ec2.internal, executor 1, partition 47, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 43.0 in stage 19.0 (TID 206) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (44/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 48.0 in stage 19.0 (TID 211) (ip-172-31-16-42.ec2.internal, executor 1, partition 48, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 44.0 in stage 19.0 (TID 207) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (45/50)
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 49.0 in stage 19.0 (TID 212) (ip-172-31-16-42.ec2.internal, executor 1, partition 49, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 45.0 in stage 19.0 (TID 208) in 18 ms on ip-172-31-16-42.ec2.internal (executor 1) (46/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 47.0 in stage 19.0 (TID 210) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (47/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 46.0 in stage 19.0 (TID 209) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (48/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 49.0 in stage 19.0 (TID 212) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (49/50)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 48.0 in stage 19.0 (TID 211) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (50/50)
+26/08/21 00:37:58 INFO YarnScheduler: Removed TaskSet 19.0, whose tasks have all completed, from pool 
+26/08/21 00:37:58 INFO DAGScheduler: ResultStage 19 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 0.473 s
+26/08/21 00:37:58 INFO DAGScheduler: Job 10 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:58 INFO YarnScheduler: Killing all running tasks in stage 19: Stage finished
+26/08/21 00:37:58 INFO DAGScheduler: Job 10 finished: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128, took 0.477220 s
+26/08/21 00:37:58 INFO PrepareDeltaScan: DELTA: Done
+26/08/21 00:37:58 INFO FileSourceStrategy: Pushed Filters: 
+26/08/21 00:37:58 INFO FileSourceStrategy: Post-Scan Filters: (((isnull(total#723) OR (total#723 = )) OR (lower(total#723) = null)) OR isnull(cast(total#723 as double)))
+26/08/21 00:37:58 INFO CodeGenerator: Code generated in 14.948646 ms
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 431.1 KiB, free 910.2 MiB)
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 44.1 KiB, free 910.1 MiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.1 KiB, free: 912.0 MiB)
+26/08/21 00:37:58 INFO SparkContext: Created broadcast 17 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_18 stored as values in memory (estimated size 431.2 KiB, free 909.7 MiB)
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_18_piece0 stored as bytes in memory (estimated size 44.1 KiB, free 909.7 MiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.1 KiB, free: 912.0 MiB)
+26/08/21 00:37:58 INFO SparkContext: Created broadcast 18 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:58 INFO FileSourceScanExec: Planning scan with bin packing, max size: 5019139 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: true
+26/08/21 00:37:58 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/21 00:37:58 INFO DAGScheduler: Registering RDD 47 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 4
+26/08/21 00:37:58 INFO DAGScheduler: Got map stage job 11 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/21 00:37:58 INFO DAGScheduler: Final stage: ShuffleMapStage 20 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:58 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:58 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:58 INFO DAGScheduler: Submitting ShuffleMapStage 20 (MapPartitionsRDD[47] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_19 stored as values in memory (estimated size 36.3 KiB, free 909.6 MiB)
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_19_piece0 stored as bytes in memory (estimated size 16.9 KiB, free 909.6 MiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 16.9 KiB, free: 912.0 MiB)
+26/08/21 00:37:58 INFO SparkContext: Created broadcast 19 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:58 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 20 (MapPartitionsRDD[47] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/21 00:37:58 INFO YarnScheduler: Adding task set 20.0 with 4 tasks resource profile 0
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 0.0 in stage 20.0 (TID 213) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 1.0 in stage 20.0 (TID 214) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 2.0 in stage 20.0 (TID 215) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 3.0 in stage 20.0 (TID 216) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 16.9 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 44.1 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 3.0 in stage 20.0 (TID 216) in 197 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 2.0 in stage 20.0 (TID 215) in 258 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 1.0 in stage 20.0 (TID 214) in 266 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 0.0 in stage 20.0 (TID 213) in 275 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/21 00:37:58 INFO YarnScheduler: Removed TaskSet 20.0, whose tasks have all completed, from pool 
+26/08/21 00:37:58 INFO DAGScheduler: ShuffleMapStage 20 (count at NativeMethodAccessorImpl.java:0) finished in 0.301 s
+26/08/21 00:37:58 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:37:58 INFO DAGScheduler: running: Set()
+26/08/21 00:37:58 INFO DAGScheduler: waiting: Set()
+26/08/21 00:37:58 INFO DAGScheduler: failed: Set()
+26/08/21 00:37:58 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:58 INFO DAGScheduler: Got job 12 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/21 00:37:58 INFO DAGScheduler: Final stage: ResultStage 22 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:58 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 21)
+26/08/21 00:37:58 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:58 INFO DAGScheduler: Submitting ResultStage 22 (MapPartitionsRDD[50] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_20 stored as values in memory (estimated size 12.9 KiB, free 909.6 MiB)
+26/08/21 00:37:58 INFO MemoryStore: Block broadcast_20_piece0 stored as bytes in memory (estimated size 6.3 KiB, free 909.6 MiB)
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 6.3 KiB, free: 912.0 MiB)
+26/08/21 00:37:58 INFO SparkContext: Created broadcast 20 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:58 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 22 (MapPartitionsRDD[50] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:37:58 INFO YarnScheduler: Adding task set 22.0 with 1 tasks resource profile 0
+26/08/21 00:37:58 INFO TaskSetManager: Starting task 0.0 in stage 22.0 (TID 217) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/21 00:37:58 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 6.3 KiB, free: 4.8 GiB)
+26/08/21 00:37:58 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 4 to 172.31.16.42:35874
+26/08/21 00:37:58 INFO TaskSetManager: Finished task 0.0 in stage 22.0 (TID 217) in 14 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:37:58 INFO YarnScheduler: Removed TaskSet 22.0, whose tasks have all completed, from pool 
+26/08/21 00:37:58 INFO DAGScheduler: ResultStage 22 (count at NativeMethodAccessorImpl.java:0) finished in 0.019 s
+26/08/21 00:37:58 INFO DAGScheduler: Job 12 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:58 INFO YarnScheduler: Killing all running tasks in stage 22: Stage finished
+26/08/21 00:37:58 INFO DAGScheduler: Job 12 finished: count at NativeMethodAccessorImpl.java:0, took 0.021821 s
+26/08/21 00:37:58 INFO PrepareDeltaScan: DELTA: Filtering files for query
+26/08/21 00:37:59 INFO CodeGenerator: Code generated in 81.395167 ms
+26/08/21 00:37:59 INFO SparkContext: Starting job: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128
+26/08/21 00:37:59 INFO DAGScheduler: Got job 13 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) with 50 output partitions
+26/08/21 00:37:59 INFO DAGScheduler: Final stage: ResultStage 24 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128)
+26/08/21 00:37:59 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 23)
+26/08/21 00:37:59 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:59 INFO DAGScheduler: Submitting ResultStage 24 (MapPartitionsRDD[52] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128), which has no missing parents
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_21 stored as values in memory (estimated size 597.5 KiB, free 909.0 MiB)
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_21_piece0 stored as bytes in memory (estimated size 141.2 KiB, free 908.9 MiB)
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 141.2 KiB, free: 911.8 MiB)
+26/08/21 00:37:59 INFO SparkContext: Created broadcast 21 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:59 INFO DAGScheduler: Submitting 50 missing tasks from ResultStage 24 (MapPartitionsRDD[52] at $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/08/21 00:37:59 INFO YarnScheduler: Adding task set 24.0 with 50 tasks resource profile 0
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 0.0 in stage 24.0 (TID 218) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 1.0 in stage 24.0 (TID 219) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 2.0 in stage 24.0 (TID 220) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 3.0 in stage 24.0 (TID 221) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 141.2 KiB, free: 4.8 GiB)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 4.0 in stage 24.0 (TID 222) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 5.0 in stage 24.0 (TID 223) (ip-172-31-16-42.ec2.internal, executor 1, partition 5, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 2.0 in stage 24.0 (TID 220) in 144 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 6.0 in stage 24.0 (TID 224) (ip-172-31-16-42.ec2.internal, executor 1, partition 6, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 3.0 in stage 24.0 (TID 221) in 144 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 1.0 in stage 24.0 (TID 219) in 144 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 7.0 in stage 24.0 (TID 225) (ip-172-31-16-42.ec2.internal, executor 1, partition 7, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 0.0 in stage 24.0 (TID 218) in 149 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 8.0 in stage 24.0 (TID 226) (ip-172-31-16-42.ec2.internal, executor 1, partition 8, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 4.0 in stage 24.0 (TID 222) in 28 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 9.0 in stage 24.0 (TID 227) (ip-172-31-16-42.ec2.internal, executor 1, partition 9, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 7.0 in stage 24.0 (TID 225) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (6/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 10.0 in stage 24.0 (TID 228) (ip-172-31-16-42.ec2.internal, executor 1, partition 10, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 6.0 in stage 24.0 (TID 224) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (7/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 11.0 in stage 24.0 (TID 229) (ip-172-31-16-42.ec2.internal, executor 1, partition 11, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 5.0 in stage 24.0 (TID 223) in 49 ms on ip-172-31-16-42.ec2.internal (executor 1) (8/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 12.0 in stage 24.0 (TID 230) (ip-172-31-16-42.ec2.internal, executor 1, partition 12, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 8.0 in stage 24.0 (TID 226) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (9/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 9.0 in stage 24.0 (TID 227) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (10/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 13.0 in stage 24.0 (TID 231) (ip-172-31-16-42.ec2.internal, executor 1, partition 13, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 14.0 in stage 24.0 (TID 232) (ip-172-31-16-42.ec2.internal, executor 1, partition 14, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 10.0 in stage 24.0 (TID 228) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (11/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 15.0 in stage 24.0 (TID 233) (ip-172-31-16-42.ec2.internal, executor 1, partition 15, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 11.0 in stage 24.0 (TID 229) in 16 ms on ip-172-31-16-42.ec2.internal (executor 1) (12/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 14.0 in stage 24.0 (TID 232) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (13/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 16.0 in stage 24.0 (TID 234) (ip-172-31-16-42.ec2.internal, executor 1, partition 16, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 17.0 in stage 24.0 (TID 235) (ip-172-31-16-42.ec2.internal, executor 1, partition 17, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 18.0 in stage 24.0 (TID 236) (ip-172-31-16-42.ec2.internal, executor 1, partition 18, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 13.0 in stage 24.0 (TID 231) in 33 ms on ip-172-31-16-42.ec2.internal (executor 1) (14/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 12.0 in stage 24.0 (TID 230) in 35 ms on ip-172-31-16-42.ec2.internal (executor 1) (15/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 19.0 in stage 24.0 (TID 237) (ip-172-31-16-42.ec2.internal, executor 1, partition 19, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 15.0 in stage 24.0 (TID 233) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (16/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 20.0 in stage 24.0 (TID 238) (ip-172-31-16-42.ec2.internal, executor 1, partition 20, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 17.0 in stage 24.0 (TID 235) in 18 ms on ip-172-31-16-42.ec2.internal (executor 1) (17/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 21.0 in stage 24.0 (TID 239) (ip-172-31-16-42.ec2.internal, executor 1, partition 21, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 16.0 in stage 24.0 (TID 234) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (18/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 22.0 in stage 24.0 (TID 240) (ip-172-31-16-42.ec2.internal, executor 1, partition 22, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 19.0 in stage 24.0 (TID 237) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (19/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 23.0 in stage 24.0 (TID 241) (ip-172-31-16-42.ec2.internal, executor 1, partition 23, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 18.0 in stage 24.0 (TID 236) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (20/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 20.0 in stage 24.0 (TID 238) in 17 ms on ip-172-31-16-42.ec2.internal (executor 1) (21/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 24.0 in stage 24.0 (TID 242) (ip-172-31-16-42.ec2.internal, executor 1, partition 24, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 25.0 in stage 24.0 (TID 243) (ip-172-31-16-42.ec2.internal, executor 1, partition 25, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 23.0 in stage 24.0 (TID 241) in 17 ms on ip-172-31-16-42.ec2.internal (executor 1) (22/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 26.0 in stage 24.0 (TID 244) (ip-172-31-16-42.ec2.internal, executor 1, partition 26, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 21.0 in stage 24.0 (TID 239) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (23/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 27.0 in stage 24.0 (TID 245) (ip-172-31-16-42.ec2.internal, executor 1, partition 27, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 24.0 in stage 24.0 (TID 242) in 18 ms on ip-172-31-16-42.ec2.internal (executor 1) (24/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 28.0 in stage 24.0 (TID 246) (ip-172-31-16-42.ec2.internal, executor 1, partition 28, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 22.0 in stage 24.0 (TID 240) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (25/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 29.0 in stage 24.0 (TID 247) (ip-172-31-16-42.ec2.internal, executor 1, partition 29, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 28.0 in stage 24.0 (TID 246) in 18 ms on ip-172-31-16-42.ec2.internal (executor 1) (26/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 27.0 in stage 24.0 (TID 245) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (27/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 30.0 in stage 24.0 (TID 248) (ip-172-31-16-42.ec2.internal, executor 1, partition 30, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 31.0 in stage 24.0 (TID 249) (ip-172-31-16-42.ec2.internal, executor 1, partition 31, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 25.0 in stage 24.0 (TID 243) in 31 ms on ip-172-31-16-42.ec2.internal (executor 1) (28/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 32.0 in stage 24.0 (TID 250) (ip-172-31-16-42.ec2.internal, executor 1, partition 32, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 26.0 in stage 24.0 (TID 244) in 32 ms on ip-172-31-16-42.ec2.internal (executor 1) (29/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 33.0 in stage 24.0 (TID 251) (ip-172-31-16-42.ec2.internal, executor 1, partition 33, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 30.0 in stage 24.0 (TID 248) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (30/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 29.0 in stage 24.0 (TID 247) in 28 ms on ip-172-31-16-42.ec2.internal (executor 1) (31/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 34.0 in stage 24.0 (TID 252) (ip-172-31-16-42.ec2.internal, executor 1, partition 34, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 35.0 in stage 24.0 (TID 253) (ip-172-31-16-42.ec2.internal, executor 1, partition 35, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 31.0 in stage 24.0 (TID 249) in 26 ms on ip-172-31-16-42.ec2.internal (executor 1) (32/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 36.0 in stage 24.0 (TID 254) (ip-172-31-16-42.ec2.internal, executor 1, partition 36, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 32.0 in stage 24.0 (TID 250) in 25 ms on ip-172-31-16-42.ec2.internal (executor 1) (33/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 37.0 in stage 24.0 (TID 255) (ip-172-31-16-42.ec2.internal, executor 1, partition 37, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 35.0 in stage 24.0 (TID 253) in 27 ms on ip-172-31-16-42.ec2.internal (executor 1) (34/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 34.0 in stage 24.0 (TID 252) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (35/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 38.0 in stage 24.0 (TID 256) (ip-172-31-16-42.ec2.internal, executor 1, partition 38, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 39.0 in stage 24.0 (TID 257) (ip-172-31-16-42.ec2.internal, executor 1, partition 39, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 36.0 in stage 24.0 (TID 254) in 29 ms on ip-172-31-16-42.ec2.internal (executor 1) (36/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 40.0 in stage 24.0 (TID 258) (ip-172-31-16-42.ec2.internal, executor 1, partition 40, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 33.0 in stage 24.0 (TID 251) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (37/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 41.0 in stage 24.0 (TID 259) (ip-172-31-16-42.ec2.internal, executor 1, partition 41, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 40.0 in stage 24.0 (TID 258) in 23 ms on ip-172-31-16-42.ec2.internal (executor 1) (38/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 39.0 in stage 24.0 (TID 257) in 26 ms on ip-172-31-16-42.ec2.internal (executor 1) (39/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 42.0 in stage 24.0 (TID 260) (ip-172-31-16-42.ec2.internal, executor 1, partition 42, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 43.0 in stage 24.0 (TID 261) (ip-172-31-16-42.ec2.internal, executor 1, partition 43, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 38.0 in stage 24.0 (TID 256) in 30 ms on ip-172-31-16-42.ec2.internal (executor 1) (40/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 44.0 in stage 24.0 (TID 262) (ip-172-31-16-42.ec2.internal, executor 1, partition 44, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 37.0 in stage 24.0 (TID 255) in 35 ms on ip-172-31-16-42.ec2.internal (executor 1) (41/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 45.0 in stage 24.0 (TID 263) (ip-172-31-16-42.ec2.internal, executor 1, partition 45, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 41.0 in stage 24.0 (TID 259) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (42/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 44.0 in stage 24.0 (TID 262) in 16 ms on ip-172-31-16-42.ec2.internal (executor 1) (43/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 46.0 in stage 24.0 (TID 264) (ip-172-31-16-42.ec2.internal, executor 1, partition 46, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 47.0 in stage 24.0 (TID 265) (ip-172-31-16-42.ec2.internal, executor 1, partition 47, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 43.0 in stage 24.0 (TID 261) in 19 ms on ip-172-31-16-42.ec2.internal (executor 1) (44/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 48.0 in stage 24.0 (TID 266) (ip-172-31-16-42.ec2.internal, executor 1, partition 48, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 45.0 in stage 24.0 (TID 263) in 15 ms on ip-172-31-16-42.ec2.internal (executor 1) (45/50)
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 49.0 in stage 24.0 (TID 267) (ip-172-31-16-42.ec2.internal, executor 1, partition 49, PROCESS_LOCAL, 7374 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 42.0 in stage 24.0 (TID 260) in 36 ms on ip-172-31-16-42.ec2.internal (executor 1) (46/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 48.0 in stage 24.0 (TID 266) in 17 ms on ip-172-31-16-42.ec2.internal (executor 1) (47/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 47.0 in stage 24.0 (TID 265) in 26 ms on ip-172-31-16-42.ec2.internal (executor 1) (48/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 46.0 in stage 24.0 (TID 264) in 28 ms on ip-172-31-16-42.ec2.internal (executor 1) (49/50)
+26/08/21 00:37:59 INFO TaskSetManager: Finished task 49.0 in stage 24.0 (TID 267) in 13 ms on ip-172-31-16-42.ec2.internal (executor 1) (50/50)
+26/08/21 00:37:59 INFO YarnScheduler: Removed TaskSet 24.0, whose tasks have all completed, from pool 
+26/08/21 00:37:59 INFO DAGScheduler: ResultStage 24 ($anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128) finished in 0.456 s
+26/08/21 00:37:59 INFO DAGScheduler: Job 13 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:37:59 INFO YarnScheduler: Killing all running tasks in stage 24: Stage finished
+26/08/21 00:37:59 INFO DAGScheduler: Job 13 finished: $anonfun$recordDeltaOperationInternal$1 at DatabricksLogging.scala:128, took 0.461717 s
+26/08/21 00:37:59 INFO PrepareDeltaScan: DELTA: Done
+26/08/21 00:37:59 INFO FileSourceStrategy: Pushed Filters: 
+26/08/21 00:37:59 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/21 00:37:59 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_22 stored as values in memory (estimated size 434.5 KiB, free 908.4 MiB)
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_22_piece0 stored as bytes in memory (estimated size 44.4 KiB, free 908.4 MiB)
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.4 KiB, free: 911.8 MiB)
+26/08/21 00:37:59 INFO SparkContext: Created broadcast 22 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_23 stored as values in memory (estimated size 434.6 KiB, free 908.0 MiB)
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_23_piece0 stored as bytes in memory (estimated size 44.4 KiB, free 907.9 MiB)
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_23_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 44.4 KiB, free: 911.7 MiB)
+26/08/21 00:37:59 INFO SparkContext: Created broadcast 23 from count at NativeMethodAccessorImpl.java:0
+26/08/21 00:37:59 INFO FileSourceScanExec: Planning scan with bin packing, max size: 5019139 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: true
+26/08/21 00:37:59 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/21 00:37:59 INFO CodeGenerator: Code generated in 25.184259 ms
+26/08/21 00:37:59 INFO DAGScheduler: Registering RDD 56 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 5
+26/08/21 00:37:59 INFO DAGScheduler: Got map stage job 14 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/21 00:37:59 INFO DAGScheduler: Final stage: ShuffleMapStage 25 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:37:59 INFO DAGScheduler: Parents of final stage: List()
+26/08/21 00:37:59 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:37:59 INFO DAGScheduler: Submitting ShuffleMapStage 25 (MapPartitionsRDD[56] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_24 stored as values in memory (estimated size 49.1 KiB, free 907.9 MiB)
+26/08/21 00:37:59 INFO MemoryStore: Block broadcast_24_piece0 stored as bytes in memory (estimated size 17.3 KiB, free 907.9 MiB)
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 17.3 KiB, free: 911.7 MiB)
+26/08/21 00:37:59 INFO SparkContext: Created broadcast 24 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:37:59 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 25 (MapPartitionsRDD[56] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/21 00:37:59 INFO YarnScheduler: Adding task set 25.0 with 4 tasks resource profile 0
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 0.0 in stage 25.0 (TID 268) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 1.0 in stage 25.0 (TID 269) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 2.0 in stage 25.0 (TID 270) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:59 INFO TaskSetManager: Starting task 3.0 in stage 25.0 (TID 271) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8101 bytes) 
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 17.3 KiB, free: 4.8 GiB)
+26/08/21 00:37:59 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 44.4 KiB, free: 4.8 GiB)
+26/08/21 00:38:00 INFO TaskSetManager: Finished task 3.0 in stage 25.0 (TID 271) in 388 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/21 00:38:00 INFO TaskSetManager: Finished task 0.0 in stage 25.0 (TID 268) in 834 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/21 00:38:00 INFO TaskSetManager: Finished task 2.0 in stage 25.0 (TID 270) in 852 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/21 00:38:00 INFO TaskSetManager: Finished task 1.0 in stage 25.0 (TID 269) in 854 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/21 00:38:00 INFO YarnScheduler: Removed TaskSet 25.0, whose tasks have all completed, from pool 
+26/08/21 00:38:00 INFO DAGScheduler: ShuffleMapStage 25 (count at NativeMethodAccessorImpl.java:0) finished in 0.864 s
+26/08/21 00:38:00 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:38:00 INFO DAGScheduler: running: Set()
+26/08/21 00:38:00 INFO DAGScheduler: waiting: Set()
+26/08/21 00:38:00 INFO DAGScheduler: failed: Set()
+26/08/21 00:38:00 INFO ShufflePartitionsUtil: For shuffle(5), advisory target size: 67108864, actual target size 7754414, minimum partition size: 1048576
+26/08/21 00:38:00 INFO ShufflePartitionsUtil: For shuffle(5), advisory target size: 67108864, actual target size 7754414, minimum partition size: 1048576
+26/08/21 00:38:00 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/21 00:38:00 INFO CodeGenerator: Code generated in 19.332784 ms
+26/08/21 00:38:00 INFO DAGScheduler: Registering RDD 59 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 6
+26/08/21 00:38:00 INFO DAGScheduler: Got map stage job 15 (count at NativeMethodAccessorImpl.java:0) with 5 output partitions
+26/08/21 00:38:00 INFO DAGScheduler: Final stage: ShuffleMapStage 27 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:38:00 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 26)
+26/08/21 00:38:00 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:38:00 INFO DAGScheduler: Submitting ShuffleMapStage 27 (MapPartitionsRDD[59] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:38:00 INFO MemoryStore: Block broadcast_25 stored as values in memory (estimated size 25.1 KiB, free 907.8 MiB)
+26/08/21 00:38:00 INFO MemoryStore: Block broadcast_25_piece0 stored as bytes in memory (estimated size 10.1 KiB, free 907.8 MiB)
+26/08/21 00:38:00 INFO BlockManagerInfo: Added broadcast_25_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 10.1 KiB, free: 911.7 MiB)
+26/08/21 00:38:00 INFO SparkContext: Created broadcast 25 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:38:00 INFO DAGScheduler: Submitting 5 missing tasks from ShuffleMapStage 27 (MapPartitionsRDD[59] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4))
+26/08/21 00:38:00 INFO YarnScheduler: Adding task set 27.0 with 5 tasks resource profile 0
+26/08/21 00:38:00 INFO TaskSetManager: Starting task 0.0 in stage 27.0 (TID 272) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:38:00 INFO TaskSetManager: Starting task 1.0 in stage 27.0 (TID 273) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:38:00 INFO TaskSetManager: Starting task 2.0 in stage 27.0 (TID 274) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:38:00 INFO TaskSetManager: Starting task 3.0 in stage 27.0 (TID 275) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:38:00 INFO BlockManagerInfo: Added broadcast_25_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 10.1 KiB, free: 4.8 GiB)
+26/08/21 00:38:00 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 5 to 172.31.16.42:35874
+26/08/21 00:38:01 INFO TaskSetManager: Starting task 4.0 in stage 27.0 (TID 276) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, NODE_LOCAL, 7363 bytes) 
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 1.0 in stage 27.0 (TID 273) in 627 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/5)
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 3.0 in stage 27.0 (TID 275) in 636 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/5)
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 2.0 in stage 27.0 (TID 274) in 653 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/5)
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 4.0 in stage 27.0 (TID 276) in 41 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/5)
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 0.0 in stage 27.0 (TID 272) in 668 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/5)
+26/08/21 00:38:01 INFO YarnScheduler: Removed TaskSet 27.0, whose tasks have all completed, from pool 
+26/08/21 00:38:01 INFO DAGScheduler: ShuffleMapStage 27 (count at NativeMethodAccessorImpl.java:0) finished in 0.678 s
+26/08/21 00:38:01 INFO DAGScheduler: looking for newly runnable stages
+26/08/21 00:38:01 INFO DAGScheduler: running: Set()
+26/08/21 00:38:01 INFO DAGScheduler: waiting: Set()
+26/08/21 00:38:01 INFO DAGScheduler: failed: Set()
+26/08/21 00:38:01 INFO CodeGenerator: Code generated in 5.710265 ms
+26/08/21 00:38:01 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/21 00:38:01 INFO DAGScheduler: Got job 16 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/21 00:38:01 INFO DAGScheduler: Final stage: ResultStage 30 (count at NativeMethodAccessorImpl.java:0)
+26/08/21 00:38:01 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 29)
+26/08/21 00:38:01 INFO DAGScheduler: Missing parents: List()
+26/08/21 00:38:01 INFO DAGScheduler: Submitting ResultStage 30 (MapPartitionsRDD[62] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/21 00:38:01 INFO MemoryStore: Block broadcast_26 stored as values in memory (estimated size 12.9 KiB, free 907.8 MiB)
+26/08/21 00:38:01 INFO MemoryStore: Block broadcast_26_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 907.8 MiB)
+26/08/21 00:38:01 INFO BlockManagerInfo: Added broadcast_26_piece0 in memory on ip-172-31-28-207.ec2.internal:46727 (size: 6.2 KiB, free: 911.7 MiB)
+26/08/21 00:38:01 INFO SparkContext: Created broadcast 26 from broadcast at DAGScheduler.scala:1592
+26/08/21 00:38:01 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 30 (MapPartitionsRDD[62] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/21 00:38:01 INFO YarnScheduler: Adding task set 30.0 with 1 tasks resource profile 0
+26/08/21 00:38:01 INFO TaskSetManager: Starting task 0.0 in stage 30.0 (TID 277) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/21 00:38:01 INFO BlockManagerInfo: Added broadcast_26_piece0 in memory on ip-172-31-16-42.ec2.internal:35385 (size: 6.2 KiB, free: 4.8 GiB)
+26/08/21 00:38:01 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 6 to 172.31.16.42:35874
+26/08/21 00:38:01 INFO TaskSetManager: Finished task 0.0 in stage 30.0 (TID 277) in 20 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/21 00:38:01 INFO YarnScheduler: Removed TaskSet 30.0, whose tasks have all completed, from pool 
+26/08/21 00:38:01 INFO DAGScheduler: ResultStage 30 (count at NativeMethodAccessorImpl.java:0) finished in 0.027 s
+26/08/21 00:38:01 INFO DAGScheduler: Job 16 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/21 00:38:01 INFO YarnScheduler: Killing all running tasks in stage 30: Stage finished
+26/08/21 00:38:01 INFO DAGScheduler: Job 16 finished: count at NativeMethodAccessorImpl.java:0, took 0.030802 s
+
+=== Verificación Bronze (deben aparecer los problemas del raw) ===
+Filas totales: 101,500
+pedido_id nulos: 208 (debe ser > 0)
+total nulos: 2,571 (debe ser > 0)
+Duplicados exactos: 1,500 (debe ser > 0)
+
+=== Cómo inspeccionar el primer commit de _delta_log ===
+aws s3 cp s3a://st1630-efcortesr-2026/bronze/pedidos/_delta_log/00000000000000000000.json - | python3 -m json.tool | head -50
+
+Busca estas líneas dentro del JSON y anota en tu bitácora qué
+representa cada una:
+  - "commitInfo"  -> ¿quién hizo el commit? ¿cuándo? ¿con qué operación?
+  - "metaData"    -> ¿coincide el schema con tu BRONZE_SCHEMA + las 2
+                     columnas de auditoría del TODO 3?
+  - "add"         -> ¿cuántos archivos Parquet agregó este commit?
+
+26/08/21 00:38:01 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/08/21 00:38:01 INFO SparkUI: Stopped Spark web UI at http://ip-172-31-28-207.ec2.internal:4040
+26/08/21 00:38:01 INFO YarnClientSchedulerBackend: Interrupting monitor thread
+26/08/21 00:38:01 INFO YarnClientSchedulerBackend: Shutting down all executors
+26/08/21 00:38:01 INFO YarnSchedulerBackend$YarnDriverEndpoint: Asking each executor to shut down
+26/08/21 00:38:01 INFO YarnClientSchedulerBackend: YARN client scheduler backend Stopped
+26/08/21 00:38:01 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/08/21 00:38:01 INFO MemoryStore: MemoryStore cleared
+26/08/21 00:38:01 INFO BlockManager: BlockManager stopped
+26/08/21 00:38:01 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/08/21 00:38:01 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/08/21 00:38:01 INFO SparkContext: Successfully stopped SparkContext
+26/08/21 00:38:01 INFO ShutdownHookManager: Shutdown hook called
+26/08/21 00:38:01 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-4112fb71-8c9c-4fbd-bbfa-5970258d37b0/pyspark-7b054fb4-f50f-4f8e-9049-03b32c1ce547
+26/08/21 00:38:01 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-bdbd83e1-59ab-4ac5-838c-976b3b3adc39
+26/08/21 00:38:01 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-4112fb71-8c9c-4fbd-bbfa-5970258d37b0
+26/08/21 00:38:03 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+26/08/21 00:38:03 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+26/08/21 00:38:03 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.

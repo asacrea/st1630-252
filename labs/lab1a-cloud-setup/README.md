@@ -135,9 +135,9 @@ aws sts get-caller-identity
 
 ```json
 {
-    "UserId": "AROAEXAMPLE:user123456",
-    "Account": "123456789012",
-    "Arn": "arn:aws:sts::123456789012:assumed-role/voclabs/user123456"
+  "UserId": "AROAEXAMPLE:user123456",
+  "Account": "123456789012",
+  "Arn": "arn:aws:sts::123456789012:assumed-role/voclabs/user123456"
 }
 ```
 
@@ -426,40 +426,40 @@ ninguno de los dos debe aparecer en el PR bajo ninguna circunstancia.
 
 ### Rúbrica
 
-| Criterio | Peso | Completo | Parcial | Incompleto |
-|---|---|---|---|---|
-| **Infraestructura** (S3 + IAM + EMR funcionando) | 30% | El bucket, el rol IAM y el clúster existen con la configuración pedida; el clúster llegó a `WAITING` y se apagó correctamente después | Falta alguna pieza menor (p. ej. el bucket no bloquea acceso público, o el clúster se apagó pero mucho después de terminar) | El clúster nunca llegó a `WAITING`, o la política IAM usa `Resource: "*"` |
-| **Verificación Spark** | 25% | El notebook corre de principio a fin, muestra el schema/filas del Parquet leído desde S3, y el benchmark con tiempos reales | Corre pero con algún paso incompleto (p. ej. sin la captura del DAG) | No hay evidencia de haber ejecutado el notebook contra el clúster real |
-| **`architecture.md`** | 25% | Las 7 secciones completas, con justificaciones específicas a la propia ejecución (no genéricas) y la sección de IAM bien argumentada | Completo pero con justificaciones vagas, o falta la estimación de costo | Plantilla sin completar, o respuestas genéricas sin adaptar a la propia ejecución |
-| **Bitácora de delegación** | 20% | Completa, con justificación específica por fila, consistente con lo que realmente se delegó | Completa pero genérica | Ausente, o marca como "no delegado" tareas que evidentemente sí lo fueron |
+| Criterio                                         | Peso | Completo                                                                                                                              | Parcial                                                                                                                     | Incompleto                                                                        |
+| ------------------------------------------------ | ---- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Infraestructura** (S3 + IAM + EMR funcionando) | 30%  | El bucket, el rol IAM y el clúster existen con la configuración pedida; el clúster llegó a `WAITING` y se apagó correctamente después | Falta alguna pieza menor (p. ej. el bucket no bloquea acceso público, o el clúster se apagó pero mucho después de terminar) | El clúster nunca llegó a `WAITING`, o la política IAM usa `Resource: "*"`         |
+| **Verificación Spark**                           | 25%  | El notebook corre de principio a fin, muestra el schema/filas del Parquet leído desde S3, y el benchmark con tiempos reales           | Corre pero con algún paso incompleto (p. ej. sin la captura del DAG)                                                        | No hay evidencia de haber ejecutado el notebook contra el clúster real            |
+| **`architecture.md`**                            | 25%  | Las 7 secciones completas, con justificaciones específicas a la propia ejecución (no genéricas) y la sección de IAM bien argumentada  | Completo pero con justificaciones vagas, o falta la estimación de costo                                                     | Plantilla sin completar, o respuestas genéricas sin adaptar a la propia ejecución |
+| **Bitácora de delegación**                       | 20%  | Completa, con justificación específica por fila, consistente con lo que realmente se delegó                                           | Completa pero genérica                                                                                                      | Ausente, o marca como "no delegado" tareas que evidentemente sí lo fueron         |
 
 ## Bitácora de delegación
 
 Este lab sigue `../../docs/politica-ia.md`. Tareas específicas de este
 lab y qué aplica por defecto:
 
-| Tarea | ¿Se puede delegar? | Nota |
-|---|---|---|
-| Generar/editar el boilerplate de los scripts bash | Sí | Ya viene resuelto en el repo; delegar ajustes menores está permitido |
-| Troubleshooting de errores de AWS CLI / EMR / IAM | Sí | Bajo valor de aprendizaje memorizar mensajes de error de la CLI |
-| Formatear o pulir la redacción de `architecture.md` | Sí | Redacción, no contenido |
-| Decidir qué permisos IAM otorgar (Parte 3) | **No** | Es la decisión de diseño central del lab |
-| Diseñar la estructura de prefijos Bronze/Silver/Gold | **No** | Decisión de arquitectura que se evalúa en `architecture.md` |
-| Escribir las justificaciones de `architecture.md` | **No** | Debe reflejar tu propio razonamiento, no el de un agente |
-| Interpretar los resultados de Spark (benchmark, DAG) | **No** | Es evidencia empírica de tu propia ejecución — un agente no tiene acceso a tu Spark UI real |
+| Tarea                                                | ¿Se puede delegar? | Nota                                                                                        |
+| ---------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------- |
+| Generar/editar el boilerplate de los scripts bash    | Sí                 | Ya viene resuelto en el repo; delegar ajustes menores está permitido                        |
+| Troubleshooting de errores de AWS CLI / EMR / IAM    | Sí                 | Bajo valor de aprendizaje memorizar mensajes de error de la CLI                             |
+| Formatear o pulir la redacción de `architecture.md`  | Sí                 | Redacción, no contenido                                                                     |
+| Decidir qué permisos IAM otorgar (Parte 3)           | **No**             | Es la decisión de diseño central del lab                                                    |
+| Diseñar la estructura de prefijos Bronze/Silver/Gold | **No**             | Decisión de arquitectura que se evalúa en `architecture.md`                                 |
+| Escribir las justificaciones de `architecture.md`    | **No**             | Debe reflejar tu propio razonamiento, no el de un agente                                    |
+| Interpretar los resultados de Spark (benchmark, DAG) | **No**             | Es evidencia empírica de tu propia ejecución — un agente no tiene acceso a tu Spark UI real |
 
 ## Troubleshooting
 
-| # | Error / síntoma | Causa probable | Solución |
-|---|---|---|---|
-| 1 | `ExpiredToken` / `InvalidClientTokenId` en cualquier comando `aws` | Las credenciales de AWS Academy expiraron (~4 horas) o el Learner Lab se reinició | Vuelve al Learner Lab, copia las credenciales nuevas y repite `aws configure` + `aws configure set aws_session_token` |
-| 2 | `AccessDenied` al leer/escribir en S3 desde Spark o desde la CLI | El rol/usuario no tiene los permisos IAM correctos, o el `InstanceProfile` del clúster EMR no es el que creaste en `setup_iam.sh` | Revisa la política adjunta al rol (`aws iam list-attached-role-policies --role-name EMR_EC2_{tu-usuario}_role`) y que el clúster use ese instance profile |
-| 3 | Clúster EMR en estado `TERMINATED_WITH_ERRORS` | `SubnetId` inválido, zona sin capacidad para `m5.xlarge`, o `KeyName` inexistente | Revisa `Cluster.Status.StateChangeReason` con `describe-cluster`; prueba otra subnet o verifica el nombre del key pair |
-| 4 | PySpark no encuentra el archivo en S3 (`Path does not exist`) | Ruta mal escrita, o el bucket/prefijo no coincide con lo que subiste en la Parte 2 | Verifica con `aws s3 ls s3://<bucket>/bronze/ventas/` que el archivo existe exactamente en esa ruta |
-| 5 | El clúster está muy lento o el job nunca termina | Solo 1 core node y el dataset/consulta pide más paralelismo del disponible, o el bootstrap action falló silenciosamente | Para este lab (10.000 filas) no debería ocurrir — si pasa, revisa los logs del bootstrap en `s3://<bucket>/logs/` antes de asumir que necesitas más nodos |
-| 6 | SSH al nodo master falla (`Connection timed out`) | El security group del clúster no tiene el puerto 22 abierto desde tu IP | Desde la consola EC2, agrega una regla de entrada al security group `ElasticMapReduce-master` permitiendo SSH (22) desde tu IP actual |
-| 7 | Un agente de IA generó una política IAM con `"Resource": "*"` o `"Action": "s3:*"` | Es el patrón por defecto que muchos agentes proponen si no se les pide explícitamente mínimo privilegio | Revisa siempre el JSON antes de aplicarlo (compáralo contra el bloque "NO_USAR" de `setup_iam.sh`); si ves `*` en `Resource` o en `Action` de un statement `Allow`, no lo apliques sin acotar el recurso |
-| 8 | Costos inesperados en la cuenta de AWS Academy | Un clúster EMR (o una instancia EC2 suelta) quedó encendido más tiempo del planeado | Revisa el dashboard de créditos del Learner Lab regularmente durante el lab; si ves consumo inesperado, verifica primero `aws emr list-clusters --active` y termina lo que encuentres encendido |
+| #   | Error / síntoma                                                                    | Causa probable                                                                                                                    | Solución                                                                                                                                                                                                 |
+| --- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `ExpiredToken` / `InvalidClientTokenId` en cualquier comando `aws`                 | Las credenciales de AWS Academy expiraron (~4 horas) o el Learner Lab se reinició                                                 | Vuelve al Learner Lab, copia las credenciales nuevas y repite `aws configure` + `aws configure set aws_session_token`                                                                                    |
+| 2   | `AccessDenied` al leer/escribir en S3 desde Spark o desde la CLI                   | El rol/usuario no tiene los permisos IAM correctos, o el `InstanceProfile` del clúster EMR no es el que creaste en `setup_iam.sh` | Revisa la política adjunta al rol (`aws iam list-attached-role-policies --role-name EMR_EC2_{tu-usuario}_role`) y que el clúster use ese instance profile                                                |
+| 3   | Clúster EMR en estado `TERMINATED_WITH_ERRORS`                                     | `SubnetId` inválido, zona sin capacidad para `m5.xlarge`, o `KeyName` inexistente                                                 | Revisa `Cluster.Status.StateChangeReason` con `describe-cluster`; prueba otra subnet o verifica el nombre del key pair                                                                                   |
+| 4   | PySpark no encuentra el archivo en S3 (`Path does not exist`)                      | Ruta mal escrita, o el bucket/prefijo no coincide con lo que subiste en la Parte 2                                                | Verifica con `aws s3 ls s3://<bucket>/bronze/ventas/` que el archivo existe exactamente en esa ruta                                                                                                      |
+| 5   | El clúster está muy lento o el job nunca termina                                   | Solo 1 core node y el dataset/consulta pide más paralelismo del disponible, o el bootstrap action falló silenciosamente           | Para este lab (10.000 filas) no debería ocurrir — si pasa, revisa los logs del bootstrap en `s3://<bucket>/logs/` antes de asumir que necesitas más nodos                                                |
+| 6   | SSH al nodo master falla (`Connection timed out`)                                  | El security group del clúster no tiene el puerto 22 abierto desde tu IP                                                           | Desde la consola EC2, agrega una regla de entrada al security group `ElasticMapReduce-master` permitiendo SSH (22) desde tu IP actual                                                                    |
+| 7   | Un agente de IA generó una política IAM con `"Resource": "*"` o `"Action": "s3:*"` | Es el patrón por defecto que muchos agentes proponen si no se les pide explícitamente mínimo privilegio                           | Revisa siempre el JSON antes de aplicarlo (compáralo contra el bloque "NO_USAR" de `setup_iam.sh`); si ves `*` en `Resource` o en `Action` de un statement `Allow`, no lo apliques sin acotar el recurso |
+| 8   | Costos inesperados en la cuenta de AWS Academy                                     | Un clúster EMR (o una instancia EC2 suelta) quedó encendido más tiempo del planeado                                               | Revisa el dashboard de créditos del Learner Lab regularmente durante el lab; si ves consumo inesperado, verifica primero `aws emr list-clusters --active` y termina lo que encuentres encendido          |
 
 ## Referencias
 
@@ -467,5 +467,5 @@ lab y qué aplica por defecto:
 - [AWS S3 — Documentación oficial](https://docs.aws.amazon.com/s3/)
 - [AWS IAM — Documentación oficial](https://docs.aws.amazon.com/iam/)
 - [AWS Pricing Calculator](https://calculator.aws/)
-- Kleppmann, *Designing Data-Intensive Applications* — caps. 5 (replicación) y 9 (consistencia y consenso)
+- Kleppmann, _Designing Data-Intensive Applications_ — caps. 5 (replicación) y 9 (consistencia y consenso)
 - Slides de la clase S4 del curso (arquitectura medallion, CAP, Parquet vs. CSV)

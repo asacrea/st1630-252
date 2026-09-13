@@ -28,7 +28,7 @@ services:
       # eso este valor se ve "aleatorio" en vez de ser algo legible.
       # Puedes generar el tuyo con:
       #   python3 -c "import uuid,base64; print(base64.urlsafe_b64encode(uuid.uuid4().bytes).decode().rstrip('='))"
-      CLUSTER_ID: "Q3BKNjDIQlq8inPUqvlU1g"
+      CLUSTER_ID: "JycKkoXFQO2gQbVm7SOsAQ"
 
       # ── KRaft: coordinación de clúster integrada en el broker ───
       # Este broker cumple los dos roles (broker + controller) del

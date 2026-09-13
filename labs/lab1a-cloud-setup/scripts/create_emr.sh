@@ -30,10 +30,10 @@ set -euo pipefail
 # scripts anteriores; KEY_NAME y SUBNET_ID son obligatorios y no
 # tienen un valor por defecto válido)
 # ─────────────────────────────────────────────────────────────
-ESTUDIANTE="tu-usuario"        # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
+ESTUDIANTE="efcortesr"         # EDITAR: el mismo valor que en setup_s3.sh / setup_iam.sh
 ANIO="2026"                    # EDITAR si tu cohorte no es 2026
 REGION="us-east-1"             # EDITAR: la misma región que usaste en setup_s3.sh
-KEY_NAME="EDITAR-nombre-de-tu-keypair"   # EDITAR: el key pair que creaste en la Parte 1
+KEY_NAME="st1630-lab1a"                  # EDITAR: el key pair que creaste en la Parte 1
 SUBNET_ID="EDITAR-subnet-xxxxxxxx"       # EDITAR: una subnet de tu VPC por defecto
 # ─────────────────────────────────────────────────────────────
 
@@ -70,7 +70,7 @@ echo "Creando clúster EMR '${CLUSTER_NAME}'..."
 CLUSTER_ID=$(aws emr create-cluster \
     --name "${CLUSTER_NAME}" \
     --release-label emr-6.15.0 \
-    --applications Name=Spark Name=Hadoop \
+    --applications Name=Spark Name=Hadoop Name=Livy Name=JupyterEnterpriseGateway \
     --instance-type m5.xlarge \
     --instance-count 2 \
     --use-default-roles \

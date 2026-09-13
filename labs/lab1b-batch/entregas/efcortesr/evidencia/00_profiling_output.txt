@@ -1,0 +1,1105 @@
+26/08/20 23:25:01 INFO SparkContext: Running Spark version 3.4.1-amzn-2
+26/08/20 23:25:01 INFO ResourceUtils: ==============================================================
+26/08/20 23:25:01 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/08/20 23:25:01 INFO ResourceUtils: ==============================================================
+26/08/20 23:25:01 INFO SparkContext: Submitted application: ST1630-Lab1b-Profiling
+26/08/20 23:25:01 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 2, script: , vendor: , memory -> name: memory, amount: 4743, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/08/20 23:25:01 INFO ResourceProfile: Limiting resource is cpus at 2 tasks per executor
+26/08/20 23:25:01 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/08/20 23:25:01 INFO SecurityManager: Changing view acls to: hadoop
+26/08/20 23:25:01 INFO SecurityManager: Changing modify acls to: hadoop
+26/08/20 23:25:01 INFO SecurityManager: Changing view acls groups to: 
+26/08/20 23:25:01 INFO SecurityManager: Changing modify acls groups to: 
+26/08/20 23:25:01 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: hadoop; groups with view permissions: EMPTY; users with modify permissions: hadoop; groups with modify permissions: EMPTY
+26/08/20 23:25:01 INFO Utils: Successfully started service 'sparkDriver' on port 33219.
+26/08/20 23:25:01 INFO SparkEnv: Registering MapOutputTracker
+26/08/20 23:25:01 INFO SparkEnv: Registering BlockManagerMaster
+26/08/20 23:25:01 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/08/20 23:25:01 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/08/20 23:25:01 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/08/20 23:25:01 INFO DiskBlockManager: Created local directory at /mnt/tmp/blockmgr-c76e8e94-69c1-43f4-a5ae-c91e4e67db1e
+26/08/20 23:25:01 INFO MemoryStore: MemoryStore started with capacity 912.3 MiB
+26/08/20 23:25:02 INFO SparkEnv: Registering OutputCommitCoordinator
+26/08/20 23:25:02 INFO SubResultCacheManager: Sub-result caches are disabled.
+26/08/20 23:25:02 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/08/20 23:25:02 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/08/20 23:25:02 INFO Utils: Using 100 preallocated executors (minExecutors: 0). Set spark.dynamicAllocation.preallocateExecutors to `false` disable executor preallocation.
+26/08/20 23:25:02 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at ip-172-31-28-207.ec2.internal/172.31.28.207:8032
+26/08/20 23:25:03 INFO Configuration: resource-types.xml not found
+26/08/20 23:25:03 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/08/20 23:25:03 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (12288 MB per container)
+26/08/20 23:25:03 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/08/20 23:25:03 INFO Client: Setting up container launch context for our AM
+26/08/20 23:25:03 INFO Client: Setting up the launch environment for our AM container
+26/08/20 23:25:03 INFO Client: Preparing resources for our AM container
+26/08/20 23:25:03 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/08/20 23:25:06 INFO Client: Uploading resource file:/mnt/tmp/spark-26c4d7ed-0ec0-4ce5-9ed5-da0dfb3f7457/__spark_libs__772617773424385090.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0003/__spark_libs__772617773424385090.zip
+26/08/20 23:25:07 INFO Client: Uploading resource file:/etc/hudi/conf.dist/hudi-defaults.conf -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0003/hudi-defaults.conf
+26/08/20 23:25:07 INFO Client: Uploading resource file:/usr/lib/spark/python/lib/pyspark.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0003/pyspark.zip
+26/08/20 23:25:07 INFO Client: Uploading resource file:/usr/lib/spark/python/lib/py4j-0.10.9.7-src.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0003/py4j-0.10.9.7-src.zip
+26/08/20 23:25:07 INFO Client: Uploading resource file:/mnt/tmp/spark-26c4d7ed-0ec0-4ce5-9ed5-da0dfb3f7457/__spark_conf__9174995674936002848.zip -> hdfs://ip-172-31-28-207.ec2.internal:8020/user/hadoop/.sparkStaging/application_1787267597390_0003/__spark_conf__.zip
+26/08/20 23:25:08 INFO SecurityManager: Changing view acls to: hadoop
+26/08/20 23:25:08 INFO SecurityManager: Changing modify acls to: hadoop
+26/08/20 23:25:08 INFO SecurityManager: Changing view acls groups to: 
+26/08/20 23:25:08 INFO SecurityManager: Changing modify acls groups to: 
+26/08/20 23:25:08 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: hadoop; groups with view permissions: EMPTY; users with modify permissions: hadoop; groups with modify permissions: EMPTY
+26/08/20 23:25:08 INFO Client: Submitting application application_1787267597390_0003 to ResourceManager
+26/08/20 23:25:08 INFO YarnClientImpl: Submitted application application_1787267597390_0003
+26/08/20 23:25:09 INFO Client: Application report for application_1787267597390_0003 (state: ACCEPTED)
+26/08/20 23:25:09 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1787268308217
+	 final status: UNDEFINED
+	 tracking URL: http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0003/
+	 user: hadoop
+26/08/20 23:25:10 INFO Client: Application report for application_1787267597390_0003 (state: ACCEPTED)
+26/08/20 23:25:11 INFO Client: Application report for application_1787267597390_0003 (state: ACCEPTED)
+26/08/20 23:25:12 INFO Client: Application report for application_1787267597390_0003 (state: ACCEPTED)
+26/08/20 23:25:13 INFO Client: Application report for application_1787267597390_0003 (state: RUNNING)
+26/08/20 23:25:13 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 172.31.16.42
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1787268308217
+	 final status: UNDEFINED
+	 tracking URL: http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0003/
+	 user: hadoop
+26/08/20 23:25:13 INFO YarnClientSchedulerBackend: Application application_1787267597390_0003 has started running.
+26/08/20 23:25:13 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 41269.
+26/08/20 23:25:13 INFO NettyBlockTransferService: Server created on ip-172-31-28-207.ec2.internal:41269
+26/08/20 23:25:13 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/08/20 23:25:13 INFO BlockManager: external shuffle service port = 7337
+26/08/20 23:25:13 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 41269, None)
+26/08/20 23:25:13 INFO BlockManagerMasterEndpoint: Registering block manager ip-172-31-28-207.ec2.internal:41269 with 912.3 MiB RAM, BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 41269, None)
+26/08/20 23:25:13 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 41269, None)
+26/08/20 23:25:13 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, ip-172-31-28-207.ec2.internal, 41269, None)
+26/08/20 23:25:13 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> ip-172-31-28-207.ec2.internal, PROXY_URI_BASES -> http://ip-172-31-28-207.ec2.internal:20888/proxy/application_1787267597390_0003), /proxy/application_1787267597390_0003
+26/08/20 23:25:13 INFO SingleEventLogFileWriter: Logging events to hdfs:/var/log/spark/apps/application_1787267597390_0003.inprogress
+26/08/20 23:25:13 INFO Utils: Using 100 preallocated executors (minExecutors: 0). Set spark.dynamicAllocation.preallocateExecutors to `false` disable executor preallocation.
+26/08/20 23:25:13 WARN YarnSchedulerBackend$YarnSchedulerEndpoint: Attempted to request executors before the AM has registered!
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/08/20 23:25:13 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:13 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+26/08/20 23:25:14 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/08/20 23:25:14 INFO SharedState: Warehouse path is 'hdfs://ip-172-31-28-207.ec2.internal:8020/user/spark/warehouse'.
+26/08/20 23:25:14 INFO ServerInfo: Adding filter to /SQL: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:14 INFO ServerInfo: Adding filter to /SQL/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:14 INFO ServerInfo: Adding filter to /SQL/execution: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:14 INFO ServerInfo: Adding filter to /SQL/execution/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:14 INFO ServerInfo: Adding filter to /static/sql: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/08/20 23:25:15 INFO MetricsConfig: Loaded properties from hadoop-metrics2.properties
+26/08/20 23:25:15 INFO MetricsSystemImpl: Scheduled Metric snapshot period at 300 second(s).
+26/08/20 23:25:15 INFO MetricsSystemImpl: s3a-file-system metrics system started
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+26/08/20 23:25:15 WARN S3AFileSystem: Getting region for bucket st1630-efcortesr-2026 from S3, this will slow down FS initialisation. To avoid this, set the region using property fs.s3a.bucket.st1630-efcortesr-2026.endpoint.region
+26/08/20 23:25:17 INFO InMemoryFileIndex: It took 90 ms to list leaf files for 1 paths.
+26/08/20 23:25:17 INFO InMemoryFileIndex: It took 28 ms to list leaf files for 1 paths.
+26/08/20 23:25:17 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.16.42:46788) with ID 1,  ResourceProfileId 0
+26/08/20 23:25:17 INFO ExecutorMonitor: New executor 1 has registered (new total is 1)
+26/08/20 23:25:17 INFO BlockManagerMasterEndpoint: Registering block manager ip-172-31-16-42.ec2.internal:35833 with 4.8 GiB RAM, BlockManagerId(1, ip-172-31-16-42.ec2.internal, 35833, None)
+26/08/20 23:25:20 INFO FileSourceStrategy: Pushed Filters: 
+26/08/20 23:25:20 INFO FileSourceStrategy: Post-Scan Filters: (length(trim(value#0, None)) > 0)
+26/08/20 23:25:21 INFO CodeGenerator: Code generated in 434.335569 ms
+26/08/20 23:25:21 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 421.3 KiB, free 911.9 MiB)
+26/08/20 23:25:21 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 42.7 KiB, free 911.8 MiB)
+26/08/20 23:25:21 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 42.7 KiB, free: 912.3 MiB)
+26/08/20 23:25:21 INFO SparkContext: Created broadcast 0 from csv at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:21 INFO GPLNativeCodeLoader: Loaded native gpl library
+26/08/20 23:25:21 INFO LzoCodec: Successfully loaded & initialized native-lzo library [hadoop-lzo rev 049362b7cf53ff5f739d6b1532457f2c6cd495e8]
+26/08/20 23:25:21 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4375541 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: false
+26/08/20 23:25:21 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/20 23:25:22 INFO SparkContext: Starting job: csv at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:22 INFO DAGScheduler: Got job 0 (csv at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:22 INFO DAGScheduler: Final stage: ResultStage 0 (csv at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:22 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:22 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:22 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[3] at csv at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:22 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 15.3 KiB, free 911.8 MiB)
+26/08/20 23:25:22 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 7.7 KiB, free 911.8 MiB)
+26/08/20 23:25:22 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 7.7 KiB, free: 912.3 MiB)
+26/08/20 23:25:22 INFO SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:22 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[3] at csv at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:22 INFO YarnScheduler: Adding task set 0.0 with 1 tasks resource profile 0
+26/08/20 23:25:22 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8057 bytes) 
+26/08/20 23:25:22 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 7.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:24 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 42.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:26 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 3723 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:26 INFO YarnScheduler: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+26/08/20 23:25:26 INFO DAGScheduler: ResultStage 0 (csv at NativeMethodAccessorImpl.java:0) finished in 3.880 s
+26/08/20 23:25:26 INFO DAGScheduler: Job 0 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:26 INFO YarnScheduler: Killing all running tasks in stage 0: Stage finished
+26/08/20 23:25:26 INFO DAGScheduler: Job 0 finished: csv at NativeMethodAccessorImpl.java:0, took 3.939097 s
+26/08/20 23:25:26 INFO CodeGenerator: Code generated in 17.626269 ms
+26/08/20 23:25:26 INFO FileSourceStrategy: Pushed Filters: 
+26/08/20 23:25:26 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 421.3 KiB, free 911.4 MiB)
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 42.7 KiB, free 911.4 MiB)
+26/08/20 23:25:26 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 42.7 KiB, free: 912.2 MiB)
+26/08/20 23:25:26 INFO SparkContext: Created broadcast 2 from csv at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:26 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4375541 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: false
+26/08/20 23:25:26 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/20 23:25:26 INFO FileSourceStrategy: Pushed Filters: 
+26/08/20 23:25:26 INFO FileSourceStrategy: Post-Scan Filters: 
+26/08/20 23:25:26 INFO CodeGenerator: Code generated in 17.479473 ms
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 421.2 KiB, free 911.0 MiB)
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 42.5 KiB, free 910.9 MiB)
+26/08/20 23:25:26 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 42.5 KiB, free: 912.2 MiB)
+26/08/20 23:25:26 INFO SparkContext: Created broadcast 3 from count at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:26 INFO FileSourceScanExec: Planning scan with bin packing, max size: 4375541 bytes, open cost is considered as scanning 4194304 bytes, number of split files: 4, prefetch: false
+26/08/20 23:25:26 INFO FileSourceScanExec: relation: None, fileSplitsInPartitionHistogram: Vector((1 fileSplits,4))
+26/08/20 23:25:26 INFO DAGScheduler: Registering RDD 18 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+26/08/20 23:25:26 INFO DAGScheduler: Got map stage job 1 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:26 INFO DAGScheduler: Final stage: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:26 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:26 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:26 INFO DAGScheduler: Submitting ShuffleMapStage 1 (MapPartitionsRDD[18] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 25.9 KiB, free 910.9 MiB)
+26/08/20 23:25:26 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 12.2 KiB, free 910.9 MiB)
+26/08/20 23:25:26 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 12.2 KiB, free: 912.2 MiB)
+26/08/20 23:25:26 INFO SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:26 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 1 (MapPartitionsRDD[18] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:26 INFO YarnScheduler: Adding task set 1.0 with 4 tasks resource profile 0
+26/08/20 23:25:26 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:26 INFO TaskSetManager: Starting task 1.0 in stage 1.0 (TID 2) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:26 INFO TaskSetManager: Starting task 2.0 in stage 1.0 (TID 3) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:26 INFO TaskSetManager: Starting task 3.0 in stage 1.0 (TID 4) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:26 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 12.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:27 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 42.5 KiB, free: 4.8 GiB)
+26/08/20 23:25:27 INFO BlockManagerInfo: Added rdd_13_3 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 149.6 KiB, free: 4.8 GiB)
+26/08/20 23:25:28 INFO TaskSetManager: Finished task 3.0 in stage 1.0 (TID 4) in 1401 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:28 INFO BlockManagerInfo: Added rdd_13_2 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 3.0 MiB, free: 4.8 GiB)
+26/08/20 23:25:28 INFO TaskSetManager: Finished task 2.0 in stage 1.0 (TID 3) in 1966 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:28 INFO BlockManagerInfo: Added rdd_13_0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 3.0 MiB, free: 4.8 GiB)
+26/08/20 23:25:28 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 2013 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:29 INFO BlockManagerInfo: Added rdd_13_1 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 3.0 MiB, free: 4.8 GiB)
+26/08/20 23:25:29 INFO TaskSetManager: Finished task 1.0 in stage 1.0 (TID 2) in 2081 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:29 INFO YarnScheduler: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+26/08/20 23:25:29 INFO DAGScheduler: ShuffleMapStage 1 (count at NativeMethodAccessorImpl.java:0) finished in 2.127 s
+26/08/20 23:25:29 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:29 INFO DAGScheduler: running: Set()
+26/08/20 23:25:29 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:29 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:29 INFO CodeGenerator: Code generated in 15.163254 ms
+26/08/20 23:25:29 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:29 INFO DAGScheduler: Got job 2 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:29 INFO DAGScheduler: Final stage: ResultStage 3 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:29 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 2)
+26/08/20 23:25:29 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:29 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[21] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:29 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 12.9 KiB, free 910.9 MiB)
+26/08/20 23:25:29 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 6.3 KiB, free 910.9 MiB)
+26/08/20 23:25:29 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 6.3 KiB, free: 912.1 MiB)
+26/08/20 23:25:29 INFO SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:29 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 3 (MapPartitionsRDD[21] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:29 INFO YarnScheduler: Adding task set 3.0 with 1 tasks resource profile 0
+26/08/20 23:25:29 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 5) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:29 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 6.3 KiB, free: 4.8 GiB)
+26/08/20 23:25:29 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 0 to 172.31.16.42:46788
+26/08/20 23:25:29 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 5) in 180 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:29 INFO YarnScheduler: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+26/08/20 23:25:29 INFO DAGScheduler: ResultStage 3 (count at NativeMethodAccessorImpl.java:0) finished in 0.199 s
+26/08/20 23:25:29 INFO DAGScheduler: Job 2 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:29 INFO YarnScheduler: Killing all running tasks in stage 3: Stage finished
+26/08/20 23:25:29 INFO DAGScheduler: Job 2 finished: count at NativeMethodAccessorImpl.java:0, took 0.213475 s
+
+=== Filas totales: 101,500 ===
+26/08/20 23:25:29 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:29 INFO CodeGenerator: Code generated in 69.863673 ms
+26/08/20 23:25:29 INFO DAGScheduler: Registering RDD 26 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 1
+26/08/20 23:25:29 INFO DAGScheduler: Got map stage job 3 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:29 INFO DAGScheduler: Final stage: ShuffleMapStage 4 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:29 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:29 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:29 INFO DAGScheduler: Submitting ShuffleMapStage 4 (MapPartitionsRDD[26] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:29 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 39.9 KiB, free 910.8 MiB)
+26/08/20 23:25:29 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 16.5 KiB, free 910.8 MiB)
+26/08/20 23:25:29 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 16.5 KiB, free: 912.1 MiB)
+26/08/20 23:25:29 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:29 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 4 (MapPartitionsRDD[26] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:29 INFO YarnScheduler: Adding task set 4.0 with 4 tasks resource profile 0
+26/08/20 23:25:29 INFO TaskSetManager: Starting task 0.0 in stage 4.0 (TID 6) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:29 INFO TaskSetManager: Starting task 1.0 in stage 4.0 (TID 7) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:29 INFO TaskSetManager: Starting task 2.0 in stage 4.0 (TID 8) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:29 INFO TaskSetManager: Starting task 3.0 in stage 4.0 (TID 9) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:29 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 16.5 KiB, free: 4.8 GiB)
+26/08/20 23:25:30 INFO TaskSetManager: Finished task 3.0 in stage 4.0 (TID 9) in 451 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:30 INFO TaskSetManager: Finished task 1.0 in stage 4.0 (TID 7) in 1157 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:30 INFO TaskSetManager: Finished task 0.0 in stage 4.0 (TID 6) in 1173 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:30 INFO TaskSetManager: Finished task 2.0 in stage 4.0 (TID 8) in 1193 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:30 INFO YarnScheduler: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+26/08/20 23:25:30 INFO DAGScheduler: ShuffleMapStage 4 (count at NativeMethodAccessorImpl.java:0) finished in 1.214 s
+26/08/20 23:25:30 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:30 INFO DAGScheduler: running: Set()
+26/08/20 23:25:30 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:30 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:30 INFO ShufflePartitionsUtil: For shuffle(1), advisory target size: 67108864, actual target size 7754414, minimum partition size: 1048576
+26/08/20 23:25:30 INFO ShufflePartitionsUtil: For shuffle(1), advisory target size: 67108864, actual target size 7754414, minimum partition size: 1048576
+26/08/20 23:25:30 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:30 INFO CodeGenerator: Code generated in 48.753957 ms
+26/08/20 23:25:30 INFO DAGScheduler: Registering RDD 29 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 2
+26/08/20 23:25:30 INFO DAGScheduler: Got map stage job 4 (count at NativeMethodAccessorImpl.java:0) with 5 output partitions
+26/08/20 23:25:30 INFO DAGScheduler: Final stage: ShuffleMapStage 6 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:30 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 5)
+26/08/20 23:25:30 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:30 INFO DAGScheduler: Submitting ShuffleMapStage 6 (MapPartitionsRDD[29] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:30 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 25.0 KiB, free 910.8 MiB)
+26/08/20 23:25:30 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 10.1 KiB, free 910.8 MiB)
+26/08/20 23:25:30 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 10.1 KiB, free: 912.1 MiB)
+26/08/20 23:25:30 INFO SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:30 INFO DAGScheduler: Submitting 5 missing tasks from ShuffleMapStage 6 (MapPartitionsRDD[29] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4))
+26/08/20 23:25:30 INFO YarnScheduler: Adding task set 6.0 with 5 tasks resource profile 0
+26/08/20 23:25:30 INFO TaskSetManager: Starting task 0.0 in stage 6.0 (TID 10) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:30 INFO TaskSetManager: Starting task 1.0 in stage 6.0 (TID 11) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:30 INFO TaskSetManager: Starting task 2.0 in stage 6.0 (TID 12) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:30 INFO TaskSetManager: Starting task 3.0 in stage 6.0 (TID 13) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:30 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 10.1 KiB, free: 4.8 GiB)
+26/08/20 23:25:30 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 1 to 172.31.16.42:46788
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 4.0 in stage 6.0 (TID 14) (ip-172-31-16-42.ec2.internal, executor 1, partition 4, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 2.0 in stage 6.0 (TID 12) in 241 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/5)
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 0.0 in stage 6.0 (TID 10) in 281 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/5)
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 1.0 in stage 6.0 (TID 11) in 289 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/5)
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 3.0 in stage 6.0 (TID 13) in 288 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/5)
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 4.0 in stage 6.0 (TID 14) in 61 ms on ip-172-31-16-42.ec2.internal (executor 1) (5/5)
+26/08/20 23:25:31 INFO YarnScheduler: Removed TaskSet 6.0, whose tasks have all completed, from pool 
+26/08/20 23:25:31 INFO DAGScheduler: ShuffleMapStage 6 (count at NativeMethodAccessorImpl.java:0) finished in 0.321 s
+26/08/20 23:25:31 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:31 INFO DAGScheduler: running: Set()
+26/08/20 23:25:31 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:31 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:31 INFO CodeGenerator: Code generated in 12.705626 ms
+26/08/20 23:25:31 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:31 INFO DAGScheduler: Got job 5 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:31 INFO DAGScheduler: Final stage: ResultStage 9 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:31 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 8)
+26/08/20 23:25:31 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:31 INFO DAGScheduler: Submitting ResultStage 9 (MapPartitionsRDD[32] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:31 INFO MemoryStore: Block broadcast_8 stored as values in memory (estimated size 12.9 KiB, free 910.8 MiB)
+26/08/20 23:25:31 INFO MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 910.8 MiB)
+26/08/20 23:25:31 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 6.2 KiB, free: 912.1 MiB)
+26/08/20 23:25:31 INFO SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:31 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 9 (MapPartitionsRDD[32] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:31 INFO YarnScheduler: Adding task set 9.0 with 1 tasks resource profile 0
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 0.0 in stage 9.0 (TID 15) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:31 INFO BlockManagerInfo: Added broadcast_8_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 6.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:31 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 2 to 172.31.16.42:46788
+26/08/20 23:25:31 INFO TaskSetManager: Finished task 0.0 in stage 9.0 (TID 15) in 42 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:31 INFO YarnScheduler: Removed TaskSet 9.0, whose tasks have all completed, from pool 
+26/08/20 23:25:31 INFO DAGScheduler: ResultStage 9 (count at NativeMethodAccessorImpl.java:0) finished in 0.059 s
+26/08/20 23:25:31 INFO DAGScheduler: Job 5 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:31 INFO YarnScheduler: Killing all running tasks in stage 9: Stage finished
+26/08/20 23:25:31 INFO DAGScheduler: Job 5 finished: count at NativeMethodAccessorImpl.java:0, took 0.066523 s
+Duplicados exactos: 1,500 (1.48%)
+
+=== Nulos por columna ===
+26/08/20 23:25:31 INFO CodeGenerator: Code generated in 60.996992 ms
+26/08/20 23:25:31 INFO DAGScheduler: Registering RDD 37 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) as input to shuffle 3
+26/08/20 23:25:31 INFO DAGScheduler: Got map stage job 6 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) with 4 output partitions
+26/08/20 23:25:31 INFO DAGScheduler: Final stage: ShuffleMapStage 10 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54)
+26/08/20 23:25:31 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:31 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:31 INFO DAGScheduler: Submitting ShuffleMapStage 10 (MapPartitionsRDD[37] at collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54), which has no missing parents
+26/08/20 23:25:31 INFO MemoryStore: Block broadcast_9 stored as values in memory (estimated size 56.6 KiB, free 910.7 MiB)
+26/08/20 23:25:31 INFO MemoryStore: Block broadcast_9_piece0 stored as bytes in memory (estimated size 20.7 KiB, free 910.7 MiB)
+26/08/20 23:25:31 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 20.7 KiB, free: 912.1 MiB)
+26/08/20 23:25:31 INFO SparkContext: Created broadcast 9 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:31 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 10 (MapPartitionsRDD[37] at collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:31 INFO YarnScheduler: Adding task set 10.0 with 4 tasks resource profile 0
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 0.0 in stage 10.0 (TID 16) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 1.0 in stage 10.0 (TID 17) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 2.0 in stage 10.0 (TID 18) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:31 INFO TaskSetManager: Starting task 3.0 in stage 10.0 (TID 19) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:31 INFO BlockManagerInfo: Added broadcast_9_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 20.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO TaskSetManager: Finished task 3.0 in stage 10.0 (TID 19) in 140 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:32 INFO TaskSetManager: Finished task 1.0 in stage 10.0 (TID 17) in 278 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:32 INFO TaskSetManager: Finished task 2.0 in stage 10.0 (TID 18) in 293 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:32 INFO TaskSetManager: Finished task 0.0 in stage 10.0 (TID 16) in 297 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:32 INFO YarnScheduler: Removed TaskSet 10.0, whose tasks have all completed, from pool 
+26/08/20 23:25:32 INFO DAGScheduler: ShuffleMapStage 10 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) finished in 0.315 s
+26/08/20 23:25:32 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:32 INFO DAGScheduler: running: Set()
+26/08/20 23:25:32 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:32 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:32 INFO CodeGenerator: Code generated in 45.18287 ms
+26/08/20 23:25:32 INFO SparkContext: Starting job: collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54
+26/08/20 23:25:32 INFO DAGScheduler: Got job 7 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) with 1 output partitions
+26/08/20 23:25:32 INFO DAGScheduler: Final stage: ResultStage 12 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54)
+26/08/20 23:25:32 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 11)
+26/08/20 23:25:32 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:32 INFO DAGScheduler: Submitting ResultStage 12 (MapPartitionsRDD[40] at collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54), which has no missing parents
+26/08/20 23:25:32 INFO MemoryStore: Block broadcast_10 stored as values in memory (estimated size 34.3 KiB, free 910.6 MiB)
+26/08/20 23:25:32 INFO MemoryStore: Block broadcast_10_piece0 stored as bytes in memory (estimated size 11.3 KiB, free 910.6 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 11.3 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO SparkContext: Created broadcast 10 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:32 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 12 (MapPartitionsRDD[40] at collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:32 INFO YarnScheduler: Adding task set 12.0 with 1 tasks resource profile 0
+26/08/20 23:25:32 INFO TaskSetManager: Starting task 0.0 in stage 12.0 (TID 20) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:32 INFO BlockManagerInfo: Added broadcast_10_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 11.3 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 3 to 172.31.16.42:46788
+26/08/20 23:25:32 INFO TaskSetManager: Finished task 0.0 in stage 12.0 (TID 20) in 66 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:32 INFO YarnScheduler: Removed TaskSet 12.0, whose tasks have all completed, from pool 
+26/08/20 23:25:32 INFO DAGScheduler: ResultStage 12 (collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54) finished in 0.076 s
+26/08/20 23:25:32 INFO DAGScheduler: Job 7 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:32 INFO YarnScheduler: Killing all running tasks in stage 12: Stage finished
+26/08/20 23:25:32 INFO DAGScheduler: Job 7 finished: collect at /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6/00_profiling.py:54, took 0.079646 s
+  total                   2,571  (2.53%)
+  pedido_id                 208  (0.20%)
+  email_cliente             144  (0.14%)
+  fecha                       0  (0.00%)
+  categoria                   0  (0.00%)
+  producto                    0  (0.00%)
+  cantidad                    0  (0.00%)
+  precio_unit                 0  (0.00%)
+  metodo_pago                 0  (0.00%)
+  devuelto                    0  (0.00%)
+  calificacion                0  (0.00%)
+  region                      0  (0.00%)
+  canal                       0  (0.00%)
+  vendedor_id                 0  (0.00%)
+
+=== Formatos de fecha detectados (top 10 por patrón) ===
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_9_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 20.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_9_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 20.7 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_6_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 16.5 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_6_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 16.5 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_5_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 6.3 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_5_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 6.3 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_4_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 12.2 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_4_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 12.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_1_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 7.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_1_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 7.7 KiB, free: 912.1 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_10_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 11.3 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_10_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 11.3 KiB, free: 912.2 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_8_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 6.2 KiB, free: 912.2 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_8_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 6.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_7_piece0 on ip-172-31-16-42.ec2.internal:35833 in memory (size: 10.1 KiB, free: 4.8 GiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Removed broadcast_7_piece0 on ip-172-31-28-207.ec2.internal:41269 in memory (size: 10.1 KiB, free: 912.2 MiB)
+26/08/20 23:25:32 INFO CodeGenerator: Code generated in 56.455814 ms
+26/08/20 23:25:32 INFO DAGScheduler: Registering RDD 45 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 4
+26/08/20 23:25:32 INFO DAGScheduler: Got map stage job 8 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:32 INFO DAGScheduler: Final stage: ShuffleMapStage 13 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:32 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:32 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:32 INFO DAGScheduler: Submitting ShuffleMapStage 13 (MapPartitionsRDD[45] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:32 INFO MemoryStore: Block broadcast_11 stored as values in memory (estimated size 46.5 KiB, free 910.9 MiB)
+26/08/20 23:25:32 INFO MemoryStore: Block broadcast_11_piece0 stored as bytes in memory (estimated size 21.2 KiB, free 910.9 MiB)
+26/08/20 23:25:32 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 21.2 KiB, free: 912.2 MiB)
+26/08/20 23:25:32 INFO SparkContext: Created broadcast 11 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:32 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 13 (MapPartitionsRDD[45] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:32 INFO YarnScheduler: Adding task set 13.0 with 4 tasks resource profile 0
+26/08/20 23:25:32 INFO TaskSetManager: Starting task 0.0 in stage 13.0 (TID 21) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:32 INFO TaskSetManager: Starting task 1.0 in stage 13.0 (TID 22) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:32 INFO TaskSetManager: Starting task 2.0 in stage 13.0 (TID 23) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:32 INFO TaskSetManager: Starting task 3.0 in stage 13.0 (TID 24) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:32 INFO BlockManagerInfo: Added broadcast_11_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 21.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 3.0 in stage 13.0 (TID 24) in 208 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 1.0 in stage 13.0 (TID 22) in 261 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 2.0 in stage 13.0 (TID 23) in 269 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 0.0 in stage 13.0 (TID 21) in 277 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:33 INFO YarnScheduler: Removed TaskSet 13.0, whose tasks have all completed, from pool 
+26/08/20 23:25:33 INFO DAGScheduler: ShuffleMapStage 13 (showString at NativeMethodAccessorImpl.java:0) finished in 0.295 s
+26/08/20 23:25:33 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:33 INFO DAGScheduler: running: Set()
+26/08/20 23:25:33 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:33 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:33 INFO ShufflePartitionsUtil: For shuffle(4), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:33 INFO ShufflePartitionsUtil: For shuffle(4), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 14.749207 ms
+26/08/20 23:25:33 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 24.117164 ms
+26/08/20 23:25:33 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:33 INFO DAGScheduler: Got job 9 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:33 INFO DAGScheduler: Final stage: ResultStage 15 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:33 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 14)
+26/08/20 23:25:33 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:33 INFO DAGScheduler: Submitting ResultStage 15 (MapPartitionsRDD[49] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_12 stored as values in memory (estimated size 28.5 KiB, free 910.8 MiB)
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_12_piece0 stored as bytes in memory (estimated size 13.2 KiB, free 910.8 MiB)
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.2 KiB, free: 912.1 MiB)
+26/08/20 23:25:33 INFO SparkContext: Created broadcast 12 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:33 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 15 (MapPartitionsRDD[49] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:33 INFO YarnScheduler: Adding task set 15.0 with 1 tasks resource profile 0
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 0.0 in stage 15.0 (TID 25) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_12_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:33 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 4 to 172.31.16.42:46788
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 0.0 in stage 15.0 (TID 25) in 91 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:33 INFO YarnScheduler: Removed TaskSet 15.0, whose tasks have all completed, from pool 
+26/08/20 23:25:33 INFO DAGScheduler: ResultStage 15 (showString at NativeMethodAccessorImpl.java:0) finished in 0.099 s
+26/08/20 23:25:33 INFO DAGScheduler: Job 9 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:33 INFO YarnScheduler: Killing all running tasks in stage 15: Stage finished
+26/08/20 23:25:33 INFO DAGScheduler: Job 9 finished: showString at NativeMethodAccessorImpl.java:0, took 0.106778 s
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 14.410338 ms
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 8.195241 ms
++---------------------------------+-----+
+|patron_fecha                     |count|
++---------------------------------+-----+
+|dd/MM/yyyy o MM/dd/yyyy (ambiguo)|40644|
+|yyyy/MM/dd                       |20293|
+|yyyy-MM-dd                       |20284|
+|dd-MM-yyyy                       |20279|
++---------------------------------+-----+
+
+
+=== Valores únicos de 'region' (ordenados por frecuencia) ===
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 43.845286 ms
+26/08/20 23:25:33 INFO DAGScheduler: Registering RDD 54 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 5
+26/08/20 23:25:33 INFO DAGScheduler: Got map stage job 10 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:33 INFO DAGScheduler: Final stage: ShuffleMapStage 16 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:33 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:33 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:33 INFO DAGScheduler: Submitting ShuffleMapStage 16 (MapPartitionsRDD[54] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_13 stored as values in memory (estimated size 43.8 KiB, free 910.8 MiB)
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_13_piece0 stored as bytes in memory (estimated size 20.1 KiB, free 910.8 MiB)
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 20.1 KiB, free: 912.1 MiB)
+26/08/20 23:25:33 INFO SparkContext: Created broadcast 13 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:33 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 16 (MapPartitionsRDD[54] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:33 INFO YarnScheduler: Adding task set 16.0 with 4 tasks resource profile 0
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 0.0 in stage 16.0 (TID 26) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 1.0 in stage 16.0 (TID 27) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 2.0 in stage 16.0 (TID 28) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 3.0 in stage 16.0 (TID 29) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_13_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 20.1 KiB, free: 4.8 GiB)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 3.0 in stage 16.0 (TID 29) in 116 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 2.0 in stage 16.0 (TID 28) in 118 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 1.0 in stage 16.0 (TID 27) in 127 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 0.0 in stage 16.0 (TID 26) in 129 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:33 INFO YarnScheduler: Removed TaskSet 16.0, whose tasks have all completed, from pool 
+26/08/20 23:25:33 INFO DAGScheduler: ShuffleMapStage 16 (showString at NativeMethodAccessorImpl.java:0) finished in 0.141 s
+26/08/20 23:25:33 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:33 INFO DAGScheduler: running: Set()
+26/08/20 23:25:33 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:33 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:33 INFO ShufflePartitionsUtil: For shuffle(5), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:33 INFO ShufflePartitionsUtil: For shuffle(5), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:33 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 25.1272 ms
+26/08/20 23:25:33 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:33 INFO DAGScheduler: Got job 11 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:33 INFO DAGScheduler: Final stage: ResultStage 18 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:33 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 17)
+26/08/20 23:25:33 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:33 INFO DAGScheduler: Submitting ResultStage 18 (MapPartitionsRDD[58] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_14 stored as values in memory (estimated size 28.9 KiB, free 910.7 MiB)
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_14_piece0 stored as bytes in memory (estimated size 13.2 KiB, free 910.7 MiB)
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.2 KiB, free: 912.1 MiB)
+26/08/20 23:25:33 INFO SparkContext: Created broadcast 14 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:33 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 18 (MapPartitionsRDD[58] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:33 INFO YarnScheduler: Adding task set 18.0 with 1 tasks resource profile 0
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 0.0 in stage 18.0 (TID 30) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_14_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:33 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 5 to 172.31.16.42:46788
+26/08/20 23:25:33 INFO TaskSetManager: Finished task 0.0 in stage 18.0 (TID 30) in 47 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:33 INFO YarnScheduler: Removed TaskSet 18.0, whose tasks have all completed, from pool 
+26/08/20 23:25:33 INFO DAGScheduler: ResultStage 18 (showString at NativeMethodAccessorImpl.java:0) finished in 0.056 s
+26/08/20 23:25:33 INFO DAGScheduler: Job 11 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:33 INFO YarnScheduler: Killing all running tasks in stage 18: Stage finished
+26/08/20 23:25:33 INFO DAGScheduler: Job 11 finished: showString at NativeMethodAccessorImpl.java:0, took 0.061847 s
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 7.379469 ms
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 6.638365 ms
++------------+-----+
+|region      |count|
++------------+-----+
+|BOGOTÁ      |5017 |
+|Bogota      |4956 |
+|bogota      |4894 |
+|BTA         |4803 |
+|Bta         |4796 |
+|BOGOTA      |4759 |
+| Bogotá     |4701 |
+|Bogotá      |4677 |
+|Medellín    |3487 |
+|MEDELLÍN    |3444 |
+|medellin    |3425 |
+|Medellin    |3392 |
+|MDE         |3332 |
+|medellín    |3316 |
+|CALI        |2598 |
+|Cali        |2579 |
+| Cali       |2570 |
+|CLO         |2550 |
+|cali        |2487 |
+|cali        |2473 |
+|BARRANQUILLA|2042 |
+|Bquilla     |2018 |
+|Barranquilla|2015 |
+|BAQ         |2015 |
+|barranquilla|1912 |
+|BGA         |1869 |
+|Bucaramanga |1842 |
+|Buca        |1837 |
+|bucaramanga |1830 |
+|BUCARAMANGA |1734 |
+|Desconocido |1665 |
+|otro        |1634 |
+|N/A         |1632 |
+|NA          |1615 |
+|OTRO        |1584 |
++------------+-----+
+
+26/08/20 23:25:33 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:33 INFO CodeGenerator: Code generated in 16.490878 ms
+26/08/20 23:25:33 INFO DAGScheduler: Registering RDD 63 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 6
+26/08/20 23:25:33 INFO DAGScheduler: Got map stage job 12 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:33 INFO DAGScheduler: Final stage: ShuffleMapStage 19 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:33 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:33 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:33 INFO DAGScheduler: Submitting ShuffleMapStage 19 (MapPartitionsRDD[63] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_15 stored as values in memory (estimated size 30.5 KiB, free 910.7 MiB)
+26/08/20 23:25:33 INFO MemoryStore: Block broadcast_15_piece0 stored as bytes in memory (estimated size 13.8 KiB, free 910.7 MiB)
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.8 KiB, free: 912.1 MiB)
+26/08/20 23:25:33 INFO SparkContext: Created broadcast 15 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:33 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 19 (MapPartitionsRDD[63] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:33 INFO YarnScheduler: Adding task set 19.0 with 4 tasks resource profile 0
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 0.0 in stage 19.0 (TID 31) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 1.0 in stage 19.0 (TID 32) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 2.0 in stage 19.0 (TID 33) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO TaskSetManager: Starting task 3.0 in stage 19.0 (TID 34) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:33 INFO BlockManagerInfo: Added broadcast_15_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.8 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 3.0 in stage 19.0 (TID 34) in 88 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 19.0 (TID 31) in 113 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 2.0 in stage 19.0 (TID 33) in 118 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 1.0 in stage 19.0 (TID 32) in 124 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 19.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ShuffleMapStage 19 (count at NativeMethodAccessorImpl.java:0) finished in 0.137 s
+26/08/20 23:25:34 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:34 INFO DAGScheduler: running: Set()
+26/08/20 23:25:34 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:34 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(6), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(6), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:34 INFO CodeGenerator: Code generated in 21.077256 ms
+26/08/20 23:25:34 INFO DAGScheduler: Registering RDD 66 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 7
+26/08/20 23:25:34 INFO DAGScheduler: Got map stage job 13 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ShuffleMapStage 21 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 20)
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ShuffleMapStage 21 (MapPartitionsRDD[66] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_16 stored as values in memory (estimated size 19.3 KiB, free 910.7 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_16_piece0 stored as bytes in memory (estimated size 8.9 KiB, free 910.7 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 8.9 KiB, free: 912.1 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 16 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 21 (MapPartitionsRDD[66] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 21.0 with 1 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 21.0 (TID 35) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_16_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 8.9 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 6 to 172.31.16.42:46788
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 21.0 (TID 35) in 63 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 21.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ShuffleMapStage 21 (count at NativeMethodAccessorImpl.java:0) finished in 0.071 s
+26/08/20 23:25:34 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:34 INFO DAGScheduler: running: Set()
+26/08/20 23:25:34 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:34 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:34 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:34 INFO DAGScheduler: Got job 14 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ResultStage 24 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 23)
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ResultStage 24 (MapPartitionsRDD[69] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_17 stored as values in memory (estimated size 12.9 KiB, free 910.6 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_17_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 910.6 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 6.2 KiB, free: 912.1 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 17 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 24 (MapPartitionsRDD[69] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 24.0 with 1 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 24.0 (TID 36) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_17_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 6.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 7 to 172.31.16.42:46788
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 24.0 (TID 36) in 24 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 24.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ResultStage 24 (count at NativeMethodAccessorImpl.java:0) finished in 0.031 s
+26/08/20 23:25:34 INFO DAGScheduler: Job 14 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:34 INFO YarnScheduler: Killing all running tasks in stage 24: Stage finished
+26/08/20 23:25:34 INFO DAGScheduler: Job 14 finished: count at NativeMethodAccessorImpl.java:0, took 0.034020 s
+Total de valores distintos en 'region': 35
+
+=== Valores únicos de 'canal' (ordenados por frecuencia) ===
+26/08/20 23:25:34 INFO DAGScheduler: Registering RDD 74 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 8
+26/08/20 23:25:34 INFO DAGScheduler: Got map stage job 15 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ShuffleMapStage 25 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ShuffleMapStage 25 (MapPartitionsRDD[74] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_18 stored as values in memory (estimated size 43.8 KiB, free 910.6 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_18_piece0 stored as bytes in memory (estimated size 20.1 KiB, free 910.6 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 20.1 KiB, free: 912.1 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 18 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 25 (MapPartitionsRDD[74] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 25.0 with 4 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 25.0 (TID 37) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 1.0 in stage 25.0 (TID 38) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 2.0 in stage 25.0 (TID 39) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 3.0 in stage 25.0 (TID 40) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_18_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 20.1 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 3.0 in stage 25.0 (TID 40) in 88 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 2.0 in stage 25.0 (TID 39) in 90 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 25.0 (TID 37) in 104 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 1.0 in stage 25.0 (TID 38) in 115 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 25.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ShuffleMapStage 25 (showString at NativeMethodAccessorImpl.java:0) finished in 0.127 s
+26/08/20 23:25:34 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:34 INFO DAGScheduler: running: Set()
+26/08/20 23:25:34 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:34 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(8), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(8), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:34 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:34 INFO DAGScheduler: Got job 16 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ResultStage 27 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 26)
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ResultStage 27 (MapPartitionsRDD[78] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_19 stored as values in memory (estimated size 28.9 KiB, free 910.6 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_19_piece0 stored as bytes in memory (estimated size 13.2 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.2 KiB, free: 912.0 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 19 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 27 (MapPartitionsRDD[78] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 27.0 with 1 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 27.0 (TID 41) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_19_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 8 to 172.31.16.42:46788
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 27.0 (TID 41) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 27.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ResultStage 27 (showString at NativeMethodAccessorImpl.java:0) finished in 0.042 s
+26/08/20 23:25:34 INFO DAGScheduler: Job 16 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:34 INFO YarnScheduler: Killing all running tasks in stage 27: Stage finished
+26/08/20 23:25:34 INFO DAGScheduler: Job 16 finished: showString at NativeMethodAccessorImpl.java:0, took 0.045018 s
++-------------+-----+
+|canal        |count|
++-------------+-----+
+|App Móvil    |7198 |
+|móvil        |7158 |
+|app movil    |7121 |
+|APP MOVIL    |7090 |
+|APP_MOVIL    |7004 |
+|online       |6112 |
+|pagina_web   |6111 |
+|WEB          |6083 |
+|sitio_web    |6082 |
+|Web          |6036 |
+|TIENDA FISICA|5118 |
+|Tienda Física|5105 |
+|tienda       |5065 |
+|TIENDA       |4977 |
+|físico       |4893 |
+|call_center  |2181 |
+|llamada      |2076 |
+|TELEFONO     |2054 |
+|tel          |2020 |
+|Teléfono     |2016 |
++-------------+-----+
+
+26/08/20 23:25:34 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:34 INFO DAGScheduler: Registering RDD 83 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 9
+26/08/20 23:25:34 INFO DAGScheduler: Got map stage job 17 (count at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ShuffleMapStage 28 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ShuffleMapStage 28 (MapPartitionsRDD[83] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_20 stored as values in memory (estimated size 30.5 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_20_piece0 stored as bytes in memory (estimated size 13.8 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.8 KiB, free: 912.0 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 20 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 28 (MapPartitionsRDD[83] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 28.0 with 4 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 28.0 (TID 42) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 1.0 in stage 28.0 (TID 43) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 2.0 in stage 28.0 (TID 44) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 3.0 in stage 28.0 (TID 45) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_20_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.8 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 28.0 (TID 42) in 41 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 3.0 in stage 28.0 (TID 45) in 60 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 1.0 in stage 28.0 (TID 43) in 62 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 2.0 in stage 28.0 (TID 44) in 64 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 28.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ShuffleMapStage 28 (count at NativeMethodAccessorImpl.java:0) finished in 0.073 s
+26/08/20 23:25:34 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:34 INFO DAGScheduler: running: Set()
+26/08/20 23:25:34 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:34 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(9), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO ShufflePartitionsUtil: For shuffle(9), advisory target size: 67108864, actual target size 1048576, minimum partition size: 1048576
+26/08/20 23:25:34 INFO HashAggregateExec: spark.sql.codegen.aggregate.map.twolevel.enabled is set to true, but current version of codegened fast hashmap does not support this aggregate.
+26/08/20 23:25:34 INFO DAGScheduler: Registering RDD 86 (count at NativeMethodAccessorImpl.java:0) as input to shuffle 10
+26/08/20 23:25:34 INFO DAGScheduler: Got map stage job 18 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ShuffleMapStage 30 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 29)
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ShuffleMapStage 30 (MapPartitionsRDD[86] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_21 stored as values in memory (estimated size 19.3 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_21_piece0 stored as bytes in memory (estimated size 8.9 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 8.9 KiB, free: 912.0 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 21 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 1 missing tasks from ShuffleMapStage 30 (MapPartitionsRDD[86] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 30.0 with 1 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 30.0 (TID 46) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7363 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_21_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 8.9 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 9 to 172.31.16.42:46788
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 30.0 (TID 46) in 34 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 30.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ShuffleMapStage 30 (count at NativeMethodAccessorImpl.java:0) finished in 0.043 s
+26/08/20 23:25:34 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:34 INFO DAGScheduler: running: Set()
+26/08/20 23:25:34 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:34 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:34 INFO SparkContext: Starting job: count at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:34 INFO DAGScheduler: Got job 19 (count at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:34 INFO DAGScheduler: Final stage: ResultStage 33 (count at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:34 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 32)
+26/08/20 23:25:34 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:34 INFO DAGScheduler: Submitting ResultStage 33 (MapPartitionsRDD[89] at count at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_22 stored as values in memory (estimated size 12.9 KiB, free 910.5 MiB)
+26/08/20 23:25:34 INFO MemoryStore: Block broadcast_22_piece0 stored as bytes in memory (estimated size 6.2 KiB, free 910.4 MiB)
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 6.2 KiB, free: 912.0 MiB)
+26/08/20 23:25:34 INFO SparkContext: Created broadcast 22 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:34 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 33 (MapPartitionsRDD[89] at count at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:34 INFO YarnScheduler: Adding task set 33.0 with 1 tasks resource profile 0
+26/08/20 23:25:34 INFO TaskSetManager: Starting task 0.0 in stage 33.0 (TID 47) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:34 INFO BlockManagerInfo: Added broadcast_22_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 6.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:34 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 10 to 172.31.16.42:46788
+26/08/20 23:25:34 INFO TaskSetManager: Finished task 0.0 in stage 33.0 (TID 47) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:34 INFO YarnScheduler: Removed TaskSet 33.0, whose tasks have all completed, from pool 
+26/08/20 23:25:34 INFO DAGScheduler: ResultStage 33 (count at NativeMethodAccessorImpl.java:0) finished in 0.030 s
+26/08/20 23:25:34 INFO DAGScheduler: Job 19 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:34 INFO YarnScheduler: Killing all running tasks in stage 33: Stage finished
+26/08/20 23:25:34 INFO DAGScheduler: Job 19 finished: count at NativeMethodAccessorImpl.java:0, took 0.032946 s
+Total de valores distintos en 'canal': 20
+
+=== Estadísticas de 'total' ===
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 33.196411 ms
+26/08/20 23:25:35 INFO DAGScheduler: Registering RDD 94 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 11
+26/08/20 23:25:35 INFO DAGScheduler: Got map stage job 20 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ShuffleMapStage 34 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ShuffleMapStage 34 (MapPartitionsRDD[94] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_23 stored as values in memory (estimated size 35.8 KiB, free 910.4 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_23_piece0 stored as bytes in memory (estimated size 15.5 KiB, free 910.4 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_23_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 15.5 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 23 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 34 (MapPartitionsRDD[94] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 34.0 with 4 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 34.0 (TID 48) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 1.0 in stage 34.0 (TID 49) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 2.0 in stage 34.0 (TID 50) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 3.0 in stage 34.0 (TID 51) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_23_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 15.5 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 3.0 in stage 34.0 (TID 51) in 101 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 1.0 in stage 34.0 (TID 49) in 146 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 34.0 (TID 48) in 160 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 2.0 in stage 34.0 (TID 50) in 161 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 34.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ShuffleMapStage 34 (showString at NativeMethodAccessorImpl.java:0) finished in 0.178 s
+26/08/20 23:25:35 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:35 INFO DAGScheduler: running: Set()
+26/08/20 23:25:35 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:35 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 24.778933 ms
+26/08/20 23:25:35 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:35 INFO DAGScheduler: Got job 21 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ResultStage 36 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 35)
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ResultStage 36 (MapPartitionsRDD[97] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_24 stored as values in memory (estimated size 23.1 KiB, free 910.4 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_24_piece0 stored as bytes in memory (estimated size 8.9 KiB, free 910.4 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 8.9 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 24 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 36 (MapPartitionsRDD[97] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 36.0 with 1 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 36.0 (TID 52) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_24_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 8.9 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 11 to 172.31.16.42:46788
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 36.0 (TID 52) in 54 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 36.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ResultStage 36 (showString at NativeMethodAccessorImpl.java:0) finished in 0.064 s
+26/08/20 23:25:35 INFO DAGScheduler: Job 21 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:35 INFO YarnScheduler: Killing all running tasks in stage 36: Stage finished
+26/08/20 23:25:35 INFO DAGScheduler: Job 21 finished: showString at NativeMethodAccessorImpl.java:0, took 0.071551 s
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 8.449695 ms
++------------------+-------+----------------+-----+---------+-----+
+|min               |max    |mean            |nulos|negativos|ceros|
++------------------+-------+----------------+-----+---------+-----+
+|-49989.55707293571|3.893E9|3986873.59396779|2571 |926      |462  |
++------------------+-------+----------------+-----+---------+-----+
+
+=== Estadísticas de 'precio_unit' ===
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 18.140188 ms
+26/08/20 23:25:35 INFO DAGScheduler: Registering RDD 102 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 12
+26/08/20 23:25:35 INFO DAGScheduler: Got map stage job 22 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ShuffleMapStage 37 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ShuffleMapStage 37 (MapPartitionsRDD[102] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_25 stored as values in memory (estimated size 30.9 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_25_piece0 stored as bytes in memory (estimated size 13.7 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_25_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.7 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 25 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 37 (MapPartitionsRDD[102] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 37.0 with 4 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 37.0 (TID 53) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 1.0 in stage 37.0 (TID 54) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 2.0 in stage 37.0 (TID 55) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 3.0 in stage 37.0 (TID 56) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_25_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 3.0 in stage 37.0 (TID 56) in 46 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 1.0 in stage 37.0 (TID 54) in 85 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 37.0 (TID 53) in 96 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 2.0 in stage 37.0 (TID 55) in 98 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 37.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ShuffleMapStage 37 (showString at NativeMethodAccessorImpl.java:0) finished in 0.110 s
+26/08/20 23:25:35 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:35 INFO DAGScheduler: running: Set()
+26/08/20 23:25:35 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:35 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 18.109584 ms
+26/08/20 23:25:35 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:35 INFO DAGScheduler: Got job 23 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ResultStage 39 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 38)
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ResultStage 39 (MapPartitionsRDD[105] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_26 stored as values in memory (estimated size 17.1 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_26_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_26_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 7.4 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 26 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 39 (MapPartitionsRDD[105] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 39.0 with 1 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 39.0 (TID 57) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_26_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 7.4 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 12 to 172.31.16.42:46788
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 39.0 (TID 57) in 37 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 39.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ResultStage 39 (showString at NativeMethodAccessorImpl.java:0) finished in 0.045 s
+26/08/20 23:25:35 INFO DAGScheduler: Job 23 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:35 INFO YarnScheduler: Killing all running tasks in stage 39: Stage finished
+26/08/20 23:25:35 INFO DAGScheduler: Job 23 finished: showString at NativeMethodAccessorImpl.java:0, took 0.048164 s
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 6.65079 ms
++---------+--------+---------+
+|min      |max     |negativos|
++---------+--------+---------+
+|-741400.0|799900.0|641      |
++---------+--------+---------+
+
+=== Estadísticas de 'cantidad' ===
+26/08/20 23:25:35 INFO CodeGenerator: Code generated in 17.332454 ms
+26/08/20 23:25:35 INFO DAGScheduler: Registering RDD 110 (showString at NativeMethodAccessorImpl.java:0) as input to shuffle 13
+26/08/20 23:25:35 INFO DAGScheduler: Got map stage job 24 (showString at NativeMethodAccessorImpl.java:0) with 4 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ShuffleMapStage 40 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ShuffleMapStage 40 (MapPartitionsRDD[110] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_27 stored as values in memory (estimated size 30.9 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_27_piece0 stored as bytes in memory (estimated size 13.7 KiB, free 910.3 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_27_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 13.7 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 27 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 40 (MapPartitionsRDD[110] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 40.0 with 4 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 40.0 (TID 58) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 1.0 in stage 40.0 (TID 59) (ip-172-31-16-42.ec2.internal, executor 1, partition 1, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 2.0 in stage 40.0 (TID 60) (ip-172-31-16-42.ec2.internal, executor 1, partition 2, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 3.0 in stage 40.0 (TID 61) (ip-172-31-16-42.ec2.internal, executor 1, partition 3, PROCESS_LOCAL, 8046 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_27_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 13.7 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 3.0 in stage 40.0 (TID 61) in 50 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 1.0 in stage 40.0 (TID 59) in 70 ms on ip-172-31-16-42.ec2.internal (executor 1) (2/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 2.0 in stage 40.0 (TID 60) in 70 ms on ip-172-31-16-42.ec2.internal (executor 1) (3/4)
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 40.0 (TID 58) in 72 ms on ip-172-31-16-42.ec2.internal (executor 1) (4/4)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 40.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ShuffleMapStage 40 (showString at NativeMethodAccessorImpl.java:0) finished in 0.084 s
+26/08/20 23:25:35 INFO DAGScheduler: looking for newly runnable stages
+26/08/20 23:25:35 INFO DAGScheduler: running: Set()
+26/08/20 23:25:35 INFO DAGScheduler: waiting: Set()
+26/08/20 23:25:35 INFO DAGScheduler: failed: Set()
+26/08/20 23:25:35 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:35 INFO DAGScheduler: Got job 25 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:35 INFO DAGScheduler: Final stage: ResultStage 42 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:35 INFO DAGScheduler: Parents of final stage: List(ShuffleMapStage 41)
+26/08/20 23:25:35 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:35 INFO DAGScheduler: Submitting ResultStage 42 (MapPartitionsRDD[113] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_28 stored as values in memory (estimated size 17.1 KiB, free 910.2 MiB)
+26/08/20 23:25:35 INFO MemoryStore: Block broadcast_28_piece0 stored as bytes in memory (estimated size 7.4 KiB, free 910.2 MiB)
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_28_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 7.4 KiB, free: 912.0 MiB)
+26/08/20 23:25:35 INFO SparkContext: Created broadcast 28 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:35 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 42 (MapPartitionsRDD[113] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:35 INFO YarnScheduler: Adding task set 42.0 with 1 tasks resource profile 0
+26/08/20 23:25:35 INFO TaskSetManager: Starting task 0.0 in stage 42.0 (TID 62) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, NODE_LOCAL, 7374 bytes) 
+26/08/20 23:25:35 INFO BlockManagerInfo: Added broadcast_28_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 7.4 KiB, free: 4.8 GiB)
+26/08/20 23:25:35 INFO MapOutputTrackerMasterEndpoint: Asked to send map output locations for shuffle 13 to 172.31.16.42:46788
+26/08/20 23:25:35 INFO TaskSetManager: Finished task 0.0 in stage 42.0 (TID 62) in 21 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:35 INFO YarnScheduler: Removed TaskSet 42.0, whose tasks have all completed, from pool 
+26/08/20 23:25:35 INFO DAGScheduler: ResultStage 42 (showString at NativeMethodAccessorImpl.java:0) finished in 0.027 s
+26/08/20 23:25:35 INFO DAGScheduler: Job 25 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:35 INFO YarnScheduler: Killing all running tasks in stage 42: Stage finished
+26/08/20 23:25:35 INFO DAGScheduler: Job 25 finished: showString at NativeMethodAccessorImpl.java:0, took 0.029453 s
++----+---+---------------+
+|min |max|cero_o_negativo|
++----+---+---------------+
+|-5.0|5.0|622            |
++----+---+---------------+
+
+
+=== Muestra: 3 filas con pedido_id nulo ===
+26/08/20 23:25:36 INFO CodeGenerator: Code generated in 11.136625 ms
+26/08/20 23:25:36 INFO DefaultCachedBatchSerializer: Predicate isnull(pedido_id#17) generates partition filter: (pedido_id.nullCount#4747 > 0)
+26/08/20 23:25:36 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:36 INFO DAGScheduler: Got job 26 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:36 INFO DAGScheduler: Final stage: ResultStage 43 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:36 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:36 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:36 INFO DAGScheduler: Submitting ResultStage 43 (MapPartitionsRDD[118] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_29 stored as values in memory (estimated size 35.1 KiB, free 910.2 MiB)
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_29_piece0 stored as bytes in memory (estimated size 15.5 KiB, free 910.2 MiB)
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_29_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 15.5 KiB, free: 911.9 MiB)
+26/08/20 23:25:36 INFO SparkContext: Created broadcast 29 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:36 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 43 (MapPartitionsRDD[118] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:36 INFO YarnScheduler: Adding task set 43.0 with 1 tasks resource profile 0
+26/08/20 23:25:36 INFO TaskSetManager: Starting task 0.0 in stage 43.0 (TID 63) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8057 bytes) 
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_29_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 15.5 KiB, free: 4.8 GiB)
+26/08/20 23:25:36 INFO TaskSetManager: Finished task 0.0 in stage 43.0 (TID 63) in 44 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:36 INFO YarnScheduler: Removed TaskSet 43.0, whose tasks have all completed, from pool 
+26/08/20 23:25:36 INFO DAGScheduler: ResultStage 43 (showString at NativeMethodAccessorImpl.java:0) finished in 0.055 s
+26/08/20 23:25:36 INFO DAGScheduler: Job 26 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:36 INFO YarnScheduler: Killing all running tasks in stage 43: Stage finished
+26/08/20 23:25:36 INFO DAGScheduler: Job 26 finished: showString at NativeMethodAccessorImpl.java:0, took 0.059118 s
+26/08/20 23:25:36 INFO CodeGenerator: Code generated in 18.229938 ms
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+|pedido_id|fecha     |categoria|producto|cantidad|precio_unit|total   |email_cliente              |metodo_pago    |devuelto|calificacion|region      |canal    |vendedor_id|
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+|null     |04/11/2025|Alimentos|Aceite  |1.0     |5400.0     |5400.0  |sara.castro393@outlook.com |efectivo       |False   |3           | Bogotá     |físico   |VEN-3019   |
+|null     |2025/11/20|Hogar    |Cafetera|2.0     |249900.0   |499800.0|andres.lopez878@yahoo.com  |tarjeta_debito |False   |4           |bogota      |APP MOVIL|7315       |
+|null     |29/10/2025|Alimentos|Aceite  |2.0     |15900.0    |31800.0 |santiago.gomez740@yahoo.com|tarjeta_credito|False   |3           |barranquilla|App Móvil|3324       |
++---------+----------+---------+--------+--------+-----------+--------+---------------------------+---------------+--------+------------+------------+---------+-----------+
+only showing top 3 rows
+
+=== Muestra: 3 filas con total nulo ===
+26/08/20 23:25:36 INFO CodeGenerator: Code generated in 11.75971 ms
+26/08/20 23:25:36 INFO DefaultCachedBatchSerializer: Predicate (isnull(total#23) OR (total#23 = )) generates partition filter: ((total.nullCount#5114 > 0) OR ((total.lowerBound#5113 <= ) AND ( <= total.upperBound#5112)))
+26/08/20 23:25:36 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:36 INFO DAGScheduler: Got job 27 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:36 INFO DAGScheduler: Final stage: ResultStage 44 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:36 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:36 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:36 INFO DAGScheduler: Submitting ResultStage 44 (MapPartitionsRDD[123] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_30 stored as values in memory (estimated size 36.9 KiB, free 910.1 MiB)
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_30_piece0 stored as bytes in memory (estimated size 16.2 KiB, free 910.1 MiB)
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_30_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 16.2 KiB, free: 911.9 MiB)
+26/08/20 23:25:36 INFO SparkContext: Created broadcast 30 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:36 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 44 (MapPartitionsRDD[123] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:36 INFO YarnScheduler: Adding task set 44.0 with 1 tasks resource profile 0
+26/08/20 23:25:36 INFO TaskSetManager: Starting task 0.0 in stage 44.0 (TID 64) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8057 bytes) 
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_30_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 16.2 KiB, free: 4.8 GiB)
+26/08/20 23:25:36 INFO TaskSetManager: Finished task 0.0 in stage 44.0 (TID 64) in 51 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:36 INFO YarnScheduler: Removed TaskSet 44.0, whose tasks have all completed, from pool 
+26/08/20 23:25:36 INFO DAGScheduler: ResultStage 44 (showString at NativeMethodAccessorImpl.java:0) finished in 0.069 s
+26/08/20 23:25:36 INFO DAGScheduler: Job 27 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:36 INFO YarnScheduler: Killing all running tasks in stage 44: Stage finished
+26/08/20 23:25:36 INFO DAGScheduler: Job 27 finished: showString at NativeMethodAccessorImpl.java:0, took 0.073230 s
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+|pedido_id |fecha     |categoria|producto        |cantidad|precio_unit|total|email_cliente                 |metodo_pago   |devuelto|calificacion|region   |canal        |vendedor_id|
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+|PED-033396|08-06-2026|Deportes |Maleta deportiva|1.0     |34200.0    |null |laura.ramirez532@hotmail.com  |tarjeta_debito|False   |4           |MEDELLÍN |APP_MOVIL    |6003       |
+|PED-015714|01/20/2026|Alimentos|Aceite          |2.0     |10900.0    |null |valentina.castro60@hotmail.com|efectivo      |False   |4           |Medellin |TIENDA FISICA|6807       |
+|PED-028620|22-05-2025|Ropa     |Gorra           |2.0     |85200.0    |null |laura.ramirez505@yahoo.com    |PSE           |True    |5           |Cali     |online       |2743       |
++----------+----------+---------+----------------+--------+-----------+-----+------------------------------+--------------+--------+------------+---------+-------------+-----------+
+only showing top 3 rows
+
+=== Muestra: 3 filas con precio_unit negativo ===
+26/08/20 23:25:36 INFO CodeGenerator: Code generated in 25.530726 ms
+26/08/20 23:25:36 INFO DefaultCachedBatchSerializer: Predicate isnotnull(precio_unit#22) generates partition filter: ((precio_unit.count#5459 - precio_unit.nullCount#5458) > 0)
+26/08/20 23:25:36 INFO SparkContext: Starting job: showString at NativeMethodAccessorImpl.java:0
+26/08/20 23:25:36 INFO DAGScheduler: Got job 28 (showString at NativeMethodAccessorImpl.java:0) with 1 output partitions
+26/08/20 23:25:36 INFO DAGScheduler: Final stage: ResultStage 45 (showString at NativeMethodAccessorImpl.java:0)
+26/08/20 23:25:36 INFO DAGScheduler: Parents of final stage: List()
+26/08/20 23:25:36 INFO DAGScheduler: Missing parents: List()
+26/08/20 23:25:36 INFO DAGScheduler: Submitting ResultStage 45 (MapPartitionsRDD[128] at showString at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_31 stored as values in memory (estimated size 39.9 KiB, free 910.1 MiB)
+26/08/20 23:25:36 INFO MemoryStore: Block broadcast_31_piece0 stored as bytes in memory (estimated size 17.4 KiB, free 910.1 MiB)
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_31_piece0 in memory on ip-172-31-28-207.ec2.internal:41269 (size: 17.4 KiB, free: 911.9 MiB)
+26/08/20 23:25:36 INFO SparkContext: Created broadcast 31 from broadcast at DAGScheduler.scala:1592
+26/08/20 23:25:36 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 45 (MapPartitionsRDD[128] at showString at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0))
+26/08/20 23:25:36 INFO YarnScheduler: Adding task set 45.0 with 1 tasks resource profile 0
+26/08/20 23:25:36 INFO TaskSetManager: Starting task 0.0 in stage 45.0 (TID 65) (ip-172-31-16-42.ec2.internal, executor 1, partition 0, PROCESS_LOCAL, 8057 bytes) 
+26/08/20 23:25:36 INFO BlockManagerInfo: Added broadcast_31_piece0 in memory on ip-172-31-16-42.ec2.internal:35833 (size: 17.4 KiB, free: 4.8 GiB)
+26/08/20 23:25:36 INFO TaskSetManager: Finished task 0.0 in stage 45.0 (TID 65) in 53 ms on ip-172-31-16-42.ec2.internal (executor 1) (1/1)
+26/08/20 23:25:36 INFO YarnScheduler: Removed TaskSet 45.0, whose tasks have all completed, from pool 
+26/08/20 23:25:36 INFO DAGScheduler: ResultStage 45 (showString at NativeMethodAccessorImpl.java:0) finished in 0.079 s
+26/08/20 23:25:36 INFO DAGScheduler: Job 28 is finished. Cancelling potential speculative or zombie tasks for this job
+26/08/20 23:25:36 INFO YarnScheduler: Killing all running tasks in stage 45: Stage finished
+26/08/20 23:25:36 INFO DAGScheduler: Job 28 finished: showString at NativeMethodAccessorImpl.java:0, took 0.084899 s
+26/08/20 23:25:36 INFO CodeGenerator: Code generated in 22.937266 ms
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+|pedido_id |fecha     |categoria|producto     |cantidad|precio_unit|total   |email_cliente             |metodo_pago    |devuelto|calificacion|region |canal    |vendedor_id|total_num|precio_num|cantidad_num|
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+|PED-025040|06/02/2025|Ropa     |Pantalón     |2.0     |-52100.0   |104200.0|mateo.garcia775@yahoo.com |tarjeta_credito|False   |5           |MDE    |WEB      |VEN-1755   |104200.0 |-52100.0  |2.0         |
+|PED-049796|12-08-2025|Deportes |Tenis running|2.0     |-252400.0  |504800.0|david.lopez163@hotmail.com|nequi          |False   |2           |Bogota |móvil    |7931       |504800.0 |-252400.0 |2.0         |
+|PED-087729|2026/02/13|Deportes |Bicicleta    |5.0     |-115400.0  |577000.0|camila.torres94@yahoo.com |efectivo       |False   |4           |BTA    |APP_MOVIL|7101       |577000.0 |-115400.0 |5.0         |
++----------+----------+---------+-------------+--------+-----------+--------+--------------------------+---------------+--------+------------+-------+---------+-----------+---------+----------+------------+
+only showing top 3 rows
+
+
+=== Hallazgos que debes documentar en data_profiling.md ===
+(ver la sección "El dataset -- conoce tus datos antes de
+transformarlos" de ../README.md para el detalle de cada pregunta)
+
+1. ¿Cuántos duplicados exactos tiene el dataset?
+2. ¿Cuántos formatos de fecha distintos puedes identificar? Lista al
+   menos 3 con ejemplos reales del dataset.
+3. ¿Cuántas variantes de "Bogotá" existen? Lístalas todas.
+4. ¿Cuántas variantes de "app_movil" existen? Lístalas todas.
+5. ¿Qué porcentaje de filas tiene total <= 0 o nulo?
+6. ¿Qué tipo de dato tiene la columna vendedor_id? ¿Es consistente?
+7. ¿Qué regla de negocio permite detectar errores en 'total'?
+
+26/08/20 23:25:36 INFO SparkContext: SparkContext is stopping with exitCode 0.
+26/08/20 23:25:36 INFO SparkUI: Stopped Spark web UI at http://ip-172-31-28-207.ec2.internal:4040
+26/08/20 23:25:36 INFO YarnClientSchedulerBackend: Interrupting monitor thread
+26/08/20 23:25:36 INFO YarnClientSchedulerBackend: Shutting down all executors
+26/08/20 23:25:36 INFO YarnSchedulerBackend$YarnDriverEndpoint: Asking each executor to shut down
+26/08/20 23:25:36 INFO YarnClientSchedulerBackend: YARN client scheduler backend Stopped
+26/08/20 23:25:36 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+26/08/20 23:25:36 INFO MemoryStore: MemoryStore cleared
+26/08/20 23:25:36 INFO BlockManager: BlockManager stopped
+26/08/20 23:25:36 INFO BlockManagerMaster: BlockManagerMaster stopped
+26/08/20 23:25:36 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+26/08/20 23:25:36 INFO SparkContext: Successfully stopped SparkContext
+26/08/20 23:25:36 INFO ShutdownHookManager: Shutdown hook called
+26/08/20 23:25:36 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-b7754aa0-0243-4228-b764-c6ff8d7bfdd6
+26/08/20 23:25:36 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-26c4d7ed-0ec0-4ce5-9ed5-da0dfb3f7457/pyspark-def0bd4a-738e-4b2a-b64b-fe5a0620182b
+26/08/20 23:25:36 INFO ShutdownHookManager: Deleting directory /mnt/tmp/spark-26c4d7ed-0ec0-4ce5-9ed5-da0dfb3f7457
+26/08/20 23:25:38 INFO MetricsSystemImpl: Stopping s3a-file-system metrics system...
+26/08/20 23:25:38 INFO MetricsSystemImpl: s3a-file-system metrics system stopped.
+26/08/20 23:25:38 INFO MetricsSystemImpl: s3a-file-system metrics system shutdown complete.

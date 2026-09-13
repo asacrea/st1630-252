@@ -31,7 +31,7 @@ import boto3
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
 REGION = "us-east-1"                     # EDITAR si tu región es otra
-BUCKET = "st1630-tu-usuario"              # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-efcortesr-2026"          # Mismo bucket del Lab 1a
 ATHENA_DATABASE = "default"               # EDITAR si registraste las tablas en otra base
 ATHENA_OUTPUT = f"s3://{BUCKET}/athena-results/"
 CSV_10K_LOCATION = f"s3://{BUCKET}/benchmark/csv_10k/"  # ver Parte 5.2 del README
@@ -39,7 +39,12 @@ CSV_10K_LOCATION = f"s3://{BUCKET}/benchmark/csv_10k/"  # ver Parte 5.2 del READ
 
 athena = boto3.client("athena", region_name=REGION)
 
-RESULTADOS_PATH = Path(__file__).resolve().parent.parent / "benchmark_resultados.md"
+RESULTADOS_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "entregas"
+    / "efcortesr"
+    / "benchmark_resultados.md"
+)
 
 
 def ejecutar_query(sql: str, nombre: str) -> dict:
@@ -99,7 +104,14 @@ def main() -> None:
     # de Presto: date_add('month', -3, current_date), GROUP BY, ORDER
     # BY ... DESC, LIMIT.
     query_negocio = """
-        -- TODO: tu query aquí
+        SELECT
+            region,
+            SUM(ventas_totales) AS ventas_totales
+        FROM gold_ventas_region_fecha
+        WHERE fecha >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_totales DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_negocio, "5.1 Top 5 regiones (Gold Parquet, Z-ordered)"))
 
@@ -128,7 +140,14 @@ def main() -> None:
     # -- tienes `total_silver` fila por fila, así que necesitas
     # SUM(total_silver) en vez de SUM(ventas_totales).
     query_csv = """
-        -- TODO: tu query aquí
+        SELECT
+            region,
+            SUM(total_silver) AS ventas_totales
+        FROM benchmark_csv_10k
+        WHERE fecha >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_totales DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_csv, "5.2 Misma query (CSV sin particionar)"))
 
@@ -152,16 +171,26 @@ def main() -> None:
         contenido += f"| {r['nombre']} | {r['tiempo_motor_ms']} | {r['tiempo_wall_s']} | {r['bytes_escaneados']:,} |\n"
 
     contenido += f"""
+## QueryExecutionId
+
+| Query | QueryExecutionId |
+|---|---|
+"""
+    for r in resultados:
+        contenido += f"| {r['nombre']} | `{r['query_id']}` |\n"
+
+    contenido += f"""
 ## Ratio de bytes escaneados
 
 **CSV / Parquet = {ratio:.2f}x**
 
-> Completa la Pregunta 5 de `pipeline_analysis.md` con este número:
-> ¿coincide con el orden de magnitud teórico (~9x) visto en el slide
-> de S4? Si no coincide, ¿a qué se lo atribuyes -- tamaño de la
-> muestra, efecto del Z-ordering, selectividad de la query?
+Interpretacion: el ratio fue mayor al ~9x teorico porque esta prueba
+compara una tabla Gold agregada en Parquet contra una muestra CSV de
+detalle. Athena pudo leer columnas especificas en Parquet, mientras que
+en CSV escaneo el archivo completo de 10,000 filas.
 """
 
+    RESULTADOS_PATH.parent.mkdir(parents=True, exist_ok=True)
     RESULTADOS_PATH.write_text(contenido, encoding="utf-8")
     print(f"\nResultados guardados en: {RESULTADOS_PATH}")
 

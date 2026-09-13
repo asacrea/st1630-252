@@ -24,7 +24,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-efcortesr-2026"  # Mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 # Local (si corres contra una copia descargada, sin EMR):
 # RAW = "../datos/ventas_colombia_raw.csv"
@@ -135,6 +135,25 @@ df_num.select(
 # print(f"Emails con formato inválido (no nulos): {n_email_invalido:,}")
 
 # ── Muestras de cada tipo de problema ──────────────────────────
+print("\n=== Tipos detectados en 'vendedor_id' ===")
+df_vend = df.withColumn(
+    "tipo_vendedor",
+    F.when(F.col("vendedor_id").rlike(r"^\d+$"), F.lit("entero"))
+    .when(F.col("vendedor_id").startswith("VEN-"), F.lit("prefijado"))
+    .otherwise(F.lit("mixto")),
+)
+df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
+
+print("\n=== Validacion de 'email_cliente' ===")
+email_valido_pattern = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+n_email_nulo = df.filter(F.col("email_cliente").isNull()).count()
+n_email_invalido = df.filter(
+    F.col("email_cliente").isNotNull()
+    & (~F.col("email_cliente").rlike(email_valido_pattern))
+).count()
+print(f"Emails nulos: {n_email_nulo:,}")
+print(f"Emails con formato invalido (no nulos): {n_email_invalido:,}")
+
 print("\n=== Muestra: 3 filas con pedido_id nulo ===")
 df.filter(F.col("pedido_id").isNull()).show(3, truncate=False)
 
