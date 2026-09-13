@@ -22,9 +22,12 @@ services:
     environment:
       # CLUSTER_ID es lo que el entrypoint del contenedor usa para
       # formatear el almacenamiento en modo KRaft la primera vez que
-      # arranca (equivalente a `kafka-storage format`). Es un ID
-      # arbitrario -- cualquier string fijo sirve, no tiene que ser
-      # único fuera de este lab.
+      # arranca (equivalente a `kafka-storage format`). No puede ser
+      # cualquier string: tiene que decodificar como un UUID de 16
+      # bytes en base64 url-safe sin padding (22 caracteres) -- por
+      # eso este valor se ve "aleatorio" en vez de ser algo legible.
+      # Puedes generar el tuyo con:
+      #   python3 -c "import uuid,base64; print(base64.urlsafe_b64encode(uuid.uuid4().bytes).decode().rstrip('='))"
       CLUSTER_ID: "JycKkoXFQO2gQbVm7SOsAQ"
 
       # ── KRaft: coordinación de clúster integrada en el broker ───

@@ -17,7 +17,12 @@ esos nombres tal cual -- si los cambias, tendrás que ajustar también
 esa parte.
 
 Uso:
-    spark-submit 02_silver.py
+    python3 02_silver.py
+    # o: spark-submit 02_silver.py
+
+Prerequisito de entorno: pip install pyspark delta-spark==2.4.0 (ver
+../README.md, Prerequisito -- misma versión que 01_bronze.py, debe
+coincidir con el Spark de tu clúster EMR).
 
 Qué puedes delegar: sintaxis puntual (¿cómo se llama la función de
 regex en PySpark?). Qué NO puedes delegar: el contenido de
@@ -29,11 +34,17 @@ cada bloque que completes -- ver ../README.md, "Bitácora de delegación".
 import re
 import unicodedata
 
+from delta import configure_spark_with_delta_pip
 from delta.tables import DeltaTable
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
-spark = SparkSession.builder.appName("ST1630-Lab1b-Silver").getOrCreate()
+_builder = (
+    SparkSession.builder.appName("ST1630-Lab1b-Silver")
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+)
+spark = configure_spark_with_delta_pip(_builder).getOrCreate()
 spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
 
 # ─────────────────────────────────────────────────────────────

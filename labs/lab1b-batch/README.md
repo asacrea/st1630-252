@@ -46,6 +46,24 @@ Si cualquiera de los dos comandos no muestra lo esperado, vuelve al
 `README.md` del Lab 1a antes de continuar — este lab construye
 directamente sobre esa infraestructura.
 
+**Software para correr los scripts de Delta** (en el master de tu
+clúster EMR, o en local si vas a probar contra `/tmp/lake/`):
+
+```bash
+pip install pyspark delta-spark==2.4.0
+```
+
+`2.4.0` es la versión de Delta Lake compatible con Spark 3.4.1 — la
+que trae el clúster EMR 6.15.0 que creaste en el Lab 1a
+(`create_emr.sh`). Los 3 scripts (`01_bronze.py`, `02_silver.py`,
+`03_gold.py`) ya configuran Delta automáticamente al arrancar
+(`configure_spark_with_delta_pip`) usando la versión que hayas
+instalado con pip — no necesitas pasar `--packages` a mano. Si en algún
+momento tu clúster corre una versión distinta de Spark, ajusta la
+versión de `delta-spark` según la [tabla de compatibilidad oficial de
+Delta Lake](https://docs.delta.io/latest/releases.html) antes de
+instalar.
+
 ## El dataset — conoce tus datos antes de transformarlos
 
 `datos/ventas_colombia_raw.csv` tiene **101.500 filas** y problemas de
@@ -412,10 +430,11 @@ Este lab sigue `../../docs/politica-ia.md`.
 | 2 | `region_silver` termina con más de 6 valores distintos | El `MAPA_REGION` no cubre alguna variante (frecuentemente: formas sin tilde como `BOGOTA`/`MEDELLIN`, que `upper()` no arregla) | Corre `df_region.select("region_silver").distinct().show()` y busca el valor sobrante; agrégalo a `MAPA_REGION` |
 | 3 | `AnalysisException: Table or view not found` en `MERGE` | Es la primera ejecución y la tabla Silver todavía no existe | El script ya maneja esto con `DeltaTable.isDeltaTable(...)` — si el error persiste, revisa que `SILVER` apunte a una ruta donde tengas permisos de escritura (rol IAM del Lab 1a) |
 | 4 | El MERGE falla con `AnalysisException` sobre columnas ambiguas | `whenMatchedUpdateAll()` sin alias claros cuando ambos DataFrames tienen columnas con el mismo nombre | Usa siempre `.alias("s")` / `.alias("n")` (ya están declarados en el `if` del TODO 3.7) y verifica que la condición del merge use esos alias, no los nombres de columna a secas |
-| 5 | `spark-submit` falla con `ModuleNotFoundError: No module named 'delta'` | El paquete `delta-spark` no está instalado/configurado en el clúster | En EMR, agrega el paquete Delta al lanzar el job: `spark-submit --packages io.delta:delta-spark_2.12:3.1.0 --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" 02_silver.py` |
+| 5 | `ModuleNotFoundError: No module named 'delta'` | El paquete `delta-spark` no está instalado en el entorno Python que usa el cluster/tu máquina | `pip install pyspark delta-spark==2.4.0` (ver Prerequisito). Los scripts ya llaman a `configure_spark_with_delta_pip` internamente, así que instalar el paquete correcto basta -- no necesitas `--packages` a mano |
+| 5b | `[DATA_SOURCE_NOT_FOUND] Failed to find the data source: delta` al leer/escribir, o `AnalysisException` de versión de Scala/Spark al arrancar | La versión de `delta-spark` instalada no es compatible con la versión de Spark de tu cluster (p. ej. instalaste `delta-spark==3.x` contra Spark 3.4.1 de EMR 6.15.0, que necesita `2.4.0`) | Desinstala y reinstala la versión correcta: `pip uninstall -y delta-spark && pip install delta-spark==2.4.0` (o la que corresponda a tu Spark real, según la [tabla de compatibilidad de Delta](https://docs.delta.io/latest/releases.html)) |
 | 6 | El benchmark Athena falla con `Query FAILED: Insufficient permissions` | El rol/usuario no tiene permisos sobre el bucket de resultados de Athena (`ATHENA_OUTPUT`) | Crea el prefijo `athena-results/` en tu bucket y confirma que tu rol IAM del Lab 1a incluye `s3:PutObject` sobre él (puede requerir ampliar la política si Athena escribe en una ruta nueva) |
 | 7 | `get_query_execution` nunca pasa de estado `RUNNING` | Query costosa, o la tabla externa CSV mal definida (columnas no coinciden con el archivo) | Verifica el DDL de `CREATE EXTERNAL TABLE` contra las columnas reales del CSV exportado; revisa el estado manualmente desde la consola de Athena |
-| 8 | `OPTIMIZE ... ZORDER BY` falla con `AnalysisException: ZORDER BY is only supported in Delta` | Intentaste correrlo sobre una tabla que no es Delta, o sin el catálogo Delta configurado | Confirma que `GOLD` apunta a una tabla escrita con `.format("delta")`, y que el `spark-submit` incluye los flags de Delta del punto 5 |
+| 8 | `OPTIMIZE ... ZORDER BY` falla con `AnalysisException: ZORDER BY is only supported in Delta`, o `TABLE_OR_VIEW_NOT_FOUND` al usar `delta.\`ruta\`` | La tabla en `GOLD` no es Delta, o la ruta no es absoluta (`delta.\`ruta\`` no resuelve bien con rutas relativas) | Confirma que `GOLD` apunta a una tabla escrita con `.format("delta")` y que la ruta sea absoluta (`s3a://...` en EMR ya lo es; en local usa una ruta absoluta, no `../algo`) |
 | 9 | El clúster EMR queda "Terminated" a mitad del Día 2 | Los clústers de EMR/Academy se auto-terminan tras inactividad o al expirar la sesión del Learner Lab (~4 horas) | Reinicia el clúster (Lab 1a, `create_emr.sh`), reatáchalo, y vuelve a correr desde el último script que no terminó — Bronze y Silver ya escritos no se pierden, viven en S3 |
 | 10 | Costos inesperados / créditos de AWS Academy agotándose rápido | Clúster EMR olvidado encendido, o queries de Athena escaneando mucho más de lo esperado por falta de Z-ordering | Revisa `aws emr list-clusters --active` regularmente y apaga lo que no uses; en Athena, confirma que estás consultando las tablas Gold (con Z-order) y no escaneando Bronze/Silver completos sin filtrar |
 

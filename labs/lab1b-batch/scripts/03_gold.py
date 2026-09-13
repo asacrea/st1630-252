@@ -9,18 +9,29 @@ no trae ninguna implementación de referencia -- lo diseñas tú desde
 cero (ver 4.3 más abajo).
 
 Uso:
-    spark-submit 03_gold.py
+    python3 03_gold.py
+    # o: spark-submit 03_gold.py
+
+Prerequisito de entorno: pip install pyspark delta-spark==2.4.0 (ver
+../README.md, Prerequisito -- misma versión que 01_bronze.py/02_silver.py).
 
 Qué puedes delegar: sintaxis puntual de Window/groupBy si te trabas.
 Qué NO puedes delegar: el diseño del KPI 3, y la clasificación
 NARROW/WIDE de cada bloque que completes.
 """
 
+from delta import configure_spark_with_delta_pip
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-spark = SparkSession.builder.appName("ST1630-Lab1b-Gold").enableHiveSupport().getOrCreate()
+_builder = (
+    SparkSession.builder.appName("ST1630-Lab1b-Gold")
+    .enableHiveSupport()  # necesario en EMR para que CREATE TABLE registre en Glue Catalog
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+)
+spark = configure_spark_with_delta_pip(_builder).getOrCreate()
 spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
 
 # ─────────────────────────────────────────────────────────────
