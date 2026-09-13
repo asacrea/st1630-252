@@ -1,7 +1,12 @@
 # Prueba de idempotencia — Lab 2a
 
-**Curso:** ST1630-2026-2 · **Semana:** S6-S7 · **Fecha:** _(completar)_
-**Estudiante:** _(nombre y correo @eafit.edu.co)_
+**Curso:** ST1630-2026-2 · **Semana:** S6-S7 · **Fecha:** 29/08/2026
+**Estudiante:** 
+* Athina Alejandra Cappelleti García (aacappellg@eafit.edu.co)
+* David Alejandro Gutiérrez Leal (dagutierrl@eafit.edu.co)
+* Emmanuel Álvarez Castrillón (ealvarezc1@eafit.edu.co)
+* Ginna Alejandra Valencia Macuace (gavalencim@eafit.edu.co)
+* Mariamny Del Valle Ramírez Telles (mvramirezt@eafit.edu.co)
 
 > Copia este archivo a tu carpeta de entrega como
 > `datos/prueba_idempotencia.md` y complétalo mientras ejecutas la
@@ -39,12 +44,17 @@ print(spark.read.format("delta").load("/tmp/lake/bronze/pedidos").count())
 ```
 [pega aquí las últimas líneas de la terminal antes del Ctrl+C —
 debe verse claramente el offset del último mensaje procesado]
+
+[OK] offset=60 partition=3 pedido_id=07408023-7e46-4a61-9a8f-f1d0b7c32a7d
+[OK] offset=61 partition=3 pedido_id=273e97fc-9dd8-44e5-a03b-4dfd649cb537
+[OK] offset=62 partition=3 pedido_id=ed68351f-47f1-4a77-b276-8c61ddd0dad4
+
 ```
 
 ## Evidencia — conteo de Bronze ANTES de reiniciar
 
 ```
-N = [tu número aquí]
+N = 1000
 ```
 
 ## Evidencia — log del consumidor (al reiniciar)
@@ -52,26 +62,23 @@ N = [tu número aquí]
 ```
 [pega aquí las primeras líneas al reiniciar el consumidor -- debe
 verse el mismo offset (o uno anterior) siendo reprocesado]
+
+Escuchando 'pedidos-ventas' como grupo 'analytics-group' (bootstrap: localhost:9092)...
+Escribiendo a Bronze en: /tmp/lake/bronze/pedidos
+Ctrl+C para detener (útil para la prueba de idempotencia -- Parte 2.4 del README).
+
+^C
+Detenido por el usuario (Ctrl+C). Si fue antes de un commit, ese mensaje se va a reprocesar en el próximo arranque -- exactamente el escenario de la prueba de idempotencia.
 ```
 
 ## Evidencia — conteo de Bronze DESPUÉS de reiniciar
 
 ```
-N' = [tu número aquí]
+N' = 1000
 ```
 
 ## Interpretación
 
 ¿`N` es igual a `N'`? → [sí/no]
 
-Si `N = N'`: el MERGE Delta es idempotente y tu implementación de
-at-least-once funciona como se espera — Kafka reenvió un mensaje ya
-procesado, pero el `MERGE ... ON pedido_id` no lo duplicó en Bronze.
-
-Si `N ≠ N'`: algo en tu implementación no es realmente idempotente
-(revisa: ¿tu MERGE usa `pedido_id` como condición de match, o estás
-usando `append` en vez de `merge`?). Corrígelo antes de entregar — un
-`N ≠ N'` documentado tal cual, sin corregir, no cumple el criterio de
-"completo" de la rúbrica.
-
-→ [tu interpretación aquí, con tus propios números]
+Sí, `N = 1000` y `N' = 1000`, por lo tanto el conteo no cambió después de reiniciar el consumidor. Esto muestra que no hubo duplicados en Bronze y que el `MERGE` por `pedido_id` fue idempotente.

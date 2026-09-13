@@ -25,10 +25,10 @@ import json
 import os
 from datetime import datetime, timezone
 
+from delta import configure_spark_with_delta_pip
 from delta.tables import DeltaTable
 from kafka import KafkaConsumer
 from pyspark.sql import Row, SparkSession
-
 # ─────────────────────────────────────────────────────────────
 # Configuración -- funciona en local sin cambios; las variables de
 # entorno permiten apuntar a otro clúster/datalake sin tocar código.
@@ -38,12 +38,13 @@ BRONZE_PATH = os.environ.get("BRONZE_PATH", "/tmp/lake/bronze/pedidos")
 TOPIC = "pedidos-ventas"
 GROUP_ID = "analytics-group"
 
-spark = (
+builder = (
     SparkSession.builder.appName("ST1630-Lab2a-Consumidor")
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-    .getOrCreate()
 )
+
+spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
 # ═══════════════════════════════════════════════════════════════
 # TODO 2.1 · Configuración del KafkaConsumer
@@ -80,8 +81,17 @@ spark = (
 #     (json.loads(v.decode("utf-8")))
 #   - key_deserializer: función que reciba bytes (o None) y devuelva
 #     un string (o None)
-consumer = None  # TODO: reemplaza por tu KafkaConsumer(...)
-
+consumer = KafkaConsumer(
+    TOPIC,
+    bootstrap_servers=[KAFKA_BOOTSTRAP],
+    group_id=GROUP_ID,
+    auto_offset_reset="earliest",
+    enable_auto_commit=False,
+    max_poll_interval_ms=3600000,
+    max_poll_records=1,
+    value_deserializer=lambda v: json.loads(v.decode("utf-8")),
+    key_deserializer=lambda k: k.decode("utf-8") if k is not None else None,
+)
 
 def construir_fila_bronze(mensaje) -> dict:
     """A partir de un ConsumerRecord de kafka-python, arma el dict que
@@ -91,14 +101,11 @@ def construir_fila_bronze(mensaje) -> dict:
     Bronze, exactamente de qué topic/partición/offset de Kafka vino --
     útil para debugging y para auditorías de linaje de datos."""
     pedido = dict(mensaje.value)
-    # TODO: agrega estas 4 columnas al dict `pedido` antes de retornarlo:
-    #   - "_kafka_offset": mensaje.offset
-    #   - "_kafka_partition": mensaje.partition
-    #   - "_kafka_topic": mensaje.topic
-    #   - "_ingested_at": timestamp actual en ISO 8601
-    #     (datetime.now(timezone.utc).isoformat())
-    return pedido  # TODO: reemplaza por pedido + las 4 columnas
-
+    pedido["_kafka_offset"] = mensaje.offset
+    pedido["_kafka_partition"] = mensaje.partition
+    pedido["_kafka_topic"] = mensaje.topic
+    pedido["_ingested_at"] = datetime.now(timezone.utc).isoformat()
+    return pedido
 
 def merge_a_bronze(fila: dict):
     """MERGE Delta sobre Bronze por pedido_id (dado -- mismo patrón
@@ -164,9 +171,18 @@ def main():
     print("Ctrl+C para detener (útil para la prueba de idempotencia -- Parte 2.4 del README).\n")
 
     for mensaje in consumer:
-        # TODO: tu try/except aquí (ver especificación arriba)
-        raise NotImplementedError("TODO 2.2/2.3: implementa el try/except de procesamiento + commit")
-
+        try:
+            fila = construir_fila_bronze(mensaje)
+            merge_a_bronze(fila)
+            consumer.commit()
+            contador_procesados += 1
+            print(f"[OK] offset={mensaje.offset} partition={mensaje.partition} "
+                  f"pedido_id={fila['pedido_id']}")
+        except Exception as e:
+            contador_rechazados += 1
+            print(f"[ERROR] offset={mensaje.offset} partition={mensaje.partition} "
+                  f"no se commiteó -- se reprocesará. Causa: {e}")
+            
     print(f"\nProcesados: {contador_procesados}  Rechazados (sin commit): {contador_rechazados}")
 
 

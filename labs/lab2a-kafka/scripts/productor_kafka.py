@@ -70,8 +70,14 @@ N_PEDIDOS = 1000
 #     pequeños antes de enviarlos -- mejora throughput a costa de
 #     latencia mínima (10ms). No es el foco pedagógico de este lab,
 #     pero es buena práctica dejarlo configurado.
-producer = None  # TODO: reemplaza por tu KafkaProducer(...)
-
+producer = KafkaProducer(
+    bootstrap_servers=[KAFKA_BOOTSTRAP],
+    key_serializer=lambda k: k.encode("utf-8") if k is not None else None,
+    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+    acks="all",
+    linger_ms=10,
+    batch_size=16384,
+)
 # ─────────────────────────────────────────────────────────────
 # Generador de pedidos sintéticos (dado -- no hay decisión de diseño
 # aquí, ya está resuelto)
@@ -144,9 +150,9 @@ def generar_pedido() -> dict:
 #   3. usa metadata.partition y metadata.offset para el log de abajo
 def enviar_pedido(pedido: dict):
     """Envía un pedido y devuelve (partition, offset) para logging."""
-    # TODO: tu código aquí (producer.send + future.get)
-    raise NotImplementedError("TODO 1.3: implementa el envío síncrono")
-
+    future = producer.send(TOPIC, key=pedido["region"], value=pedido)
+    metadata = future.get(timeout=10)
+    return metadata.partition, metadata.offset
 
 def main():
     conteo_region_particion = defaultdict(lambda: defaultdict(int))
@@ -162,10 +168,10 @@ def main():
         # el conteo región -> partición (lo necesitas para el resumen
         # final y para responder la Pregunta 2 de kafka_design.md).
         # TODO: acumula conteo_region_particion[pedido["region"]][partition] += 1
+        conteo_region_particion[pedido["region"]][partition] += 1
         if (i + 1) % 100 == 0:
             print(f"  [{i + 1}/{N_PEDIDOS}] región={pedido['region']:<12} "
                   f"partición={partition} offset={offset}")
-
     producer.flush()
 
     # ── Resumen final: región -> partición -> cantidad de mensajes ──

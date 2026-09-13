@@ -24,7 +24,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-dagutierrl-2026"  # EDITAR: el mismo bucket del Lab 1a
 RAW = f"s3a://{BUCKET}/raw/ventas_colombia_raw.csv"
 # Local (si corres contra una copia descargada, sin EMR):
 # RAW = "../datos/ventas_colombia_raw.csv"
@@ -108,18 +108,26 @@ df_num.select(
     F.sum(F.when(F.col("cantidad_num") <= 0, 1).otherwise(0)).alias("cero_o_negativo"),
 ).show(truncate=False)
 
-# ── TODO: vendedor_id -- clasificación de tipos ─────────────────
-# Vas a necesitar exactamente esta misma lógica en 02_silver.py
-# (Parte 3.6), así que vale la pena resolverla bien aquí primero.
-#
-# TODO: usando F.when()/otherwise(), crea una columna "tipo_vendedor"
-# que clasifique cada fila en:
-#   - "entero"    si vendedor_id son solo dígitos (rlike r"^\d+$")
-#   - "prefijado" si empieza con "VEN-" (startswith)
-#   - "mixto"     cualquier otro caso (otherwise)
-# print("\n=== Tipos detectados en 'vendedor_id' ===")
-# df_vend = df.withColumn("tipo_vendedor", ...)  # TODO
-# df_vend.groupBy("tipo_vendedor").count().orderBy(F.desc("count")).show(truncate=False)
+# ── vendedor_id -- clasificación de tipos ──────────────────────
+print("\n=== Tipos detectados en 'vendedor_id' ===")
+
+df_vend = df.withColumn(
+    "tipo_vendedor",
+    F.when(
+        F.col("vendedor_id").rlike(r"^\d+$"),
+        "entero"
+    ).when(
+        F.col("vendedor_id").startswith("VEN-"),
+        "prefijado"
+    ).otherwise(
+        "mixto"
+    )
+)
+
+df_vend.groupBy("tipo_vendedor") \
+    .count() \
+    .orderBy(F.desc("count")) \
+    .show(truncate=False)
 
 # ── TODO: Validación de email ───────────────────────────────────
 # TODO: define un patrón regex razonable de email (usuario@dominio.tld)

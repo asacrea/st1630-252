@@ -36,7 +36,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-dagutierrl-2026"  # EDITAR: el mismo bucket del Lab 1a
 BRONZE = f"s3a://{BUCKET}/bronze/pedidos"
 SILVER = f"s3a://{BUCKET}/silver/pedidos"
 # ─────────────────────────────────────────────────────────────
@@ -69,14 +69,28 @@ print(f"3.1 Deduplicación: {n_bronze:,} -> {n_dedup:,} filas (-{n_bronze - n_de
 # fecha, en el ORDEN en que quieres que Spark los intente (piensa en
 # qué pasa si dos formatos son ambiguos entre sí -- ¿cuál debería ir
 # primero?).
-FORMATOS_FECHA = []  # TODO: completa con los 5 patrones, en el orden que decidas
+FORMATOS_FECHA = [
+    "yyyy/MM/dd",
+    "yyyy-MM-dd",
+    "dd-MM-yyyy",
+    "dd/MM/yyyy",
+] # TODO: completa con los 5 patrones, en el orden que decidas
 
 # TODO: usa F.coalesce(...) combinando un F.to_date(F.col("fecha"), fmt)
 # por cada formato de FORMATOS_FECHA, y guarda el resultado en una
 # columna nueva llamada EXACTAMENTE "fecha_parsed" (withColumn).
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_fechas = df_dedup  # TODO: reemplaza por df_dedup + la columna "fecha_parsed"
+
+df_fechas = df_dedup.withColumn(
+    "fecha_parsed",
+    F.coalesce(
+        *[
+            F.to_date(F.col("fecha"), formato)
+            for formato in FORMATOS_FECHA
+        ]
+    )
+)  # TODO: reemplaza por df_dedup + la columna "fecha_parsed"
 
 n_sin_fecha = df_fechas.filter(F.col("fecha_parsed").isNull()).count()
 print(f"3.2 Fechas: {n_sin_fecha:,} filas sin ningún formato reconocido (se descartan)")
@@ -104,18 +118,51 @@ df_fechas = df_fechas.filter(F.col("fecha_parsed").isNotNull())
 # una) para que veas el patrón -- te falta completar el resto de las
 # variantes de cada región, más toda la categoría "Otro":
 MAPA_REGION = {
-    "Bogotá": "BOGOTÁ",       # ejemplo: la forma "ya correcta" también necesita estar en el mapa
-    "BTA": "BOGOTÁ",           # ejemplo: abreviatura de Bogotá
-    "MDE": "MEDELLÍN",         # ejemplo: abreviatura de Medellín
-    "CLO": "CALI",             # ejemplo: abreviatura de Cali (código de aeropuerto)
-    "BAQ": "BARRANQUILLA",     # ejemplo: abreviatura de Barranquilla (código de aeropuerto)
-    "BGA": "BUCARAMANGA",      # ejemplo: abreviatura de Bucaramanga (código de aeropuerto)
-    # TODO: agrega aquí el resto de las variantes que encontraste en tu
-    # profiling para las 6 regiones -- Bogotá, Medellín, Cali,
-    # Barranquilla, Bucaramanga y Otro. Ojo con los acentos: upper()
-    # NO le quita la tilde a una palabra, así que "BOGOTA" (sin tilde)
-    # y "BOGOTÁ" (con tilde) son dos entradas DISTINTAS que ambas
-    # necesitan estar en el mapa si tu dataset trae las dos formas.
+    # ── Bogotá ─────────────────────────────────────────────
+    "BOGOTÁ": "BOGOTÁ",
+    "Bogota": "BOGOTÁ",
+    "bogota": "BOGOTÁ",
+    "BTA": "BOGOTÁ",
+    "Bta": "BOGOTÁ",
+    "BOGOTA": "BOGOTÁ",
+    " Bogotá": "BOGOTÁ",
+    "Bogotá": "BOGOTÁ",
+
+    # ── Medellín ───────────────────────────────────────────
+    "Medellín": "MEDELLÍN",
+    "MEDELLÍN": "MEDELLÍN",
+    "medellin": "MEDELLÍN",
+    "Medellin": "MEDELLÍN",
+    "MDE": "MEDELLÍN",
+    "medellín": "MEDELLÍN",
+
+    # ── Cali ───────────────────────────────────────────────
+    "CALI": "CALI",
+    "Cali": "CALI",
+    " Cali": "CALI",
+    "CLO": "CALI",
+    "cali": "CALI",
+
+    # ── Barranquilla ───────────────────────────────────────
+    "BARRANQUILLA": "BARRANQUILLA",
+    "Bquilla": "BARRANQUILLA",
+    "Barranquilla": "BARRANQUILLA",
+    "BAQ": "BARRANQUILLA",
+    "barranquilla": "BARRANQUILLA",
+
+    # ── Bucaramanga ────────────────────────────────────────
+    "BGA": "BUCARAMANGA",
+    "Bucaramanga": "BUCARAMANGA",
+    "Buca": "BUCARAMANGA",
+    "bucaramanga": "BUCARAMANGA",
+    "BUCARAMANGA": "BUCARAMANGA",
+
+    # ── Otros ───────────────────────────────────────────────
+    "Desconocido": "OTRO",
+    "otro": "OTRO",
+    "N/A": "OTRO",
+    "NA": "OTRO",
+    "OTRO": "OTRO",
 }
 
 
@@ -140,8 +187,20 @@ def construir_mapa(col, mapa: dict, valor_por_defecto: str):
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (pista:
 # aunque construir_mapa() encadena decenas de when(), ¿cada fila de
 # salida depende de otras filas para resolverse, o solo de sí misma?).
-df_region = df_fechas  # TODO: reemplaza por df_fechas + la columna "region_silver"
+df_region = df_fechas.withColumn(
+    "region_silver",
+    construir_mapa(
+        F.col("region"),
+        MAPA_REGION,
+        "OTRO"
+    )
+)
 
+# NARROW
+# La normalización de region se realiza fila por fila utilizando
+# únicamente el valor de la columna region de cada registro.
+# No se necesita comparar filas entre sí ni redistribuir datos entre
+# particiones, por lo que es una transformación NARROW.
 # PASO 3 (dado): verificación -- si tu MAPA_REGION está completo, esto
 # debe imprimir exactamente 6.
 n_valores_region = df_region.select("region_silver").distinct().count()
@@ -164,11 +223,33 @@ if n_valores_region != 6:
 #
 # Un ejemplo para que veas el patrón:
 MAPA_CANAL = {
-    "APP_MOVIL": "app_movil",  # ejemplo
-    # TODO: agrega aquí el resto de las variantes que encontraste en tu
-    # profiling (Pregunta 4: variantes de "app_movil", y lo que hayas
-    # visto del resto de canales) para los 4 canales: app_movil, web,
-    # tienda_fisica, telefono.
+    # ── App móvil ───────────────────────────────────────────
+    "App Móvil": "app_movil",
+    "móvil": "app_movil",
+    "app movil": "app_movil",
+    "APP MOVIL": "app_movil",
+    "APP_MOVIL": "app_movil",
+
+    # ── Web ─────────────────────────────────────────────────
+    "online": "web",
+    "pagina_web": "web",
+    "WEB": "web",
+    "sitio_web": "web",
+    "Web": "web",
+
+    # ── Tienda física ───────────────────────────────────────
+    "TIENDA FISICA": "tienda_fisica",
+    "Tienda Física": "tienda_fisica",
+    "tienda": "tienda_fisica",
+    "TIENDA": "tienda_fisica",
+    "físico": "tienda_fisica",
+
+    # ── Teléfono ────────────────────────────────────────────
+    "call_center": "telefono",
+    "llamada": "telefono",
+    "TELEFONO": "telefono",
+    "tel": "telefono",
+    "Teléfono": "telefono",
 }
 
 # TODO: usa construir_mapa() para crear la columna "canal_silver" a
@@ -177,7 +258,20 @@ MAPA_CANAL = {
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica (mismo
 # razonamiento que aplicaste para region_silver).
-df_canal = df_region  # TODO: reemplaza por df_region + la columna "canal_silver"
+df_canal = df_region.withColumn(
+    "canal_silver",
+    construir_mapa(
+        F.col("canal"),
+        MAPA_CANAL,
+        "otro_canal"
+    )
+)
+
+# NARROW
+# La normalización de canal se realiza fila por fila utilizando
+# únicamente el valor de la columna canal de cada registro.
+# No es necesario comparar filas ni redistribuir registros entre
+# particiones, por lo que es una transformación NARROW.
 
 n_valores_canal = df_canal.select("canal_silver").distinct().count()
 print(f"3.4 Canal: {n_valores_canal} valores distintos después de normalizar (debe ser 4)")
@@ -194,24 +288,42 @@ if n_valores_canal != 4:
 #
 # TODO paso 1: castea "cantidad" y "precio_unit" a double, en columnas
 # nuevas llamadas EXACTAMENTE "cantidad_num" y "precio_num".
-df_cast = df_canal  # TODO: reemplaza por df_canal + "cantidad_num" + "precio_num"
+df_cast = (
+    df_canal
+    .withColumn("cantidad_num", F.col("cantidad").cast("double"))
+    .withColumn("precio_num", F.col("precio_unit").cast("double"))
+) # TODO: reemplaza por df_canal + "cantidad_num" + "precio_num"
 
 # TODO paso 2: filtra para quedarte solo con las filas donde
 # cantidad_num > 0 AND precio_num > 0 (ambos deben existir con valor
 # válido para que el recálculo tenga sentido de negocio).
-df_validado = df_cast  # TODO: reemplaza por el filtro
+df_validado = df_cast.filter(
+    (F.col("cantidad_num") > 0) &
+    (F.col("precio_num") > 0)
+)  # TODO: reemplaza por el filtro
 
 # TODO paso 3: agrega la columna "total_silver" =
 # round(cantidad_num * precio_num, 2).
 #
 # Clasificación de los 3 pasos de arriba: → [tu respuesta: NARROW ✅ o
 # WIDE ❌] -- justifica.
-df_total = df_validado  # TODO: reemplaza por df_validado + "total_silver"
+df_total = df_validado.withColumn(
+    "total_silver",
+    F.round(
+        F.col("cantidad_num") * F.col("precio_num"),
+        2
+    )
+)  # TODO: reemplaza por df_validado + "total_silver"
 
 n_antes_35 = df_canal.count()
 n_despues_35 = df_total.count()
-print(f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras filtrar cantidad/precio inválidos")
+n_total_valido = df_canal.filter(
+    F.col("total").cast("double").isNotNull() &
+    (F.col("total").cast("double") > 0)
+).count()
 
+print(f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras filtrar cantidad/precio inválidos")
+print(f"Filas conservadas filtrando directamente por total válido: {n_total_valido:,}")
 # Cuando termines: responde en pipeline_analysis.md (Pregunta 2)
 # cuántas filas preservaste con esta estrategia vs. si hubieras
 # filtrado directamente por 'total' inválido -- compáralas.
@@ -227,7 +339,19 @@ print(f"3.5 Total: {n_antes_35:,} -> {n_despues_35:,} filas tras filtrar cantida
 # Sobreescribe la columna "vendedor_id" con el resultado.
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_vendedor = df_total  # TODO: reemplaza por df_total con "vendedor_id" limpio
+df_vendedor = df_total.withColumn(
+    "vendedor_id",
+    F.regexp_extract(
+        F.col("vendedor_id"),
+        r"(\d+)",
+        1
+    )
+)
+
+# NARROW
+# regexp_extract() procesa únicamente el vendedor_id de cada fila y
+# devuelve la parte numérica encontrada. No necesita comparar filas ni
+# mover registros entre particiones, por lo que es NARROW.  # TODO: reemplaza por df_total con "vendedor_id" limpio
 
 # TODO: valida "email_cliente" con una expresión regular de email
 # razonable (usuario@dominio.tld) usando F.rlike(). Crea una columna
@@ -235,7 +359,17 @@ df_vendedor = df_total  # TODO: reemplaza por df_total con "vendedor_id" limpio
 # los emails inválidos -- solo márcalos.
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica.
-df_tipos = df_vendedor  # TODO: reemplaza por df_vendedor + "email_valido"
+df_tipos = df_vendedor.withColumn(
+    "email_valido",
+    F.col("email_cliente").rlike(
+        r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    )
+)
+
+# NARROW
+# rlike() valida el email de cada fila de forma independiente. No
+# necesita comparar registros ni realizar un shuffle, por lo que es
+# NARROW.  # TODO: reemplaza por df_vendedor + "email_valido"
 
 # ═══════════════════════════════════════════════════════════════
 # Selección final de columnas de Silver (dado -- asume los nombres de
@@ -280,6 +414,17 @@ df_silver = df_tipos.select(
 if DeltaTable.isDeltaTable(spark, SILVER):
     print("3.7 Tabla Silver existe -- ejecutando MERGE")
     silver_table = DeltaTable.forPath(spark, SILVER)
+
+    (
+        silver_table.alias("s")
+        .merge(
+            df_silver.alias("n"),
+            "s.pedido_id = n.pedido_id"
+        )
+        .whenMatchedUpdateAll()
+        .whenNotMatchedInsertAll()
+        .execute()
+    )
     # TODO: tu código de MERGE aquí (silver_table.alias("s").merge(...)....execute())
 else:
     # Primera ejecución -- no hay tabla Silver todavía contra la cual
@@ -316,3 +461,67 @@ spark.stop()
 # ### Cuando termines: no olvides apagar el clúster EMR si ya no lo
 # ### vas a usar en las próximas horas:
 # ###   aws emr terminate-clusters --cluster-ids <tu-cluster-id> --region us-east-1
+
+
+"""
+
+
+=== Historial de versiones de Silver ===
+26/08/23 01:15:13 INFO CodeGenerator: Code generated in 4.138025 ms
+26/08/23 01:15:13 INFO CodeGenerator: Code generated in 3.881421 ms
++-------+-------------------+---------+
+|version|timestamp          |operation|
++-------+-------------------+---------+
+|0      |2026-08-23 01:15:10|WRITE    |
++-------+-------------------+---------+
+
+== Physical Plan ==
+AdaptiveSparkPlan (7)
++- Project (6)
+   +- HashAggregate (5)
+      +- Exchange (4)
+         +- HashAggregate (3)
+            +- Filter (2)
+               +- Scan parquet  (1)
+
+
+(1) Scan parquet
+Output [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Batched: true
+Location: PreparedDeltaFileIndex [s3a://st1630-ealvarezc1-2026/bronze/pedidos]
+PushedFilters: [IsNotNull(cantidad), IsNotNull(precio_unit), IsNotNull(pedido_id)]
+ReadSchema: struct<pedido_id:string,fecha:string,categoria:string,producto:string,cantidad:string,precio_unit:string,total:string,email_cliente:string,metodo_pago:string,devuelto:string,calificacion:string,region:string,canal:string,vendedor_id:string,_ingested_at:timestamp,_source_file:string>
+
+(2) Filter
+Input [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Condition : (((((isnotnull(cantidad#41) AND isnotnull(precio_unit#42)) AND isnotnull(coalesce(cast(gettimestamp(fecha#38, yyyy/MM/dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, yyyy-MM-dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd-MM-yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd/MM/yyyy, TimestampType, Some(UTC), false) as date)))) AND (cast(cantidad#41 as double) > 0.0)) AND (cast(precio_unit#42 as double) > 0.0)) AND isnotnull(pedido_id#37))
+
+(3) HashAggregate
+Input [16]: [pedido_id#37, fecha#38, categoria#39, producto#40, cantidad#41, precio_unit#42, total#43, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, region#48, canal#49, vendedor_id#50, _ingested_at#51, _source_file#52]
+Keys [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Functions: []
+Aggregate Attributes: []
+Results [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+
+(4) Exchange
+Input [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Arguments: hashpartitioning(calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40, 32), ENSURE_REQUIREMENTS, [plan_id=1435]
+
+(5) HashAggregate
+Input [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Keys [16]: [calificacion#47, categoria#39, devuelto#46, _ingested_at#51, total#43, pedido_id#37, cantidad#41, fecha#38, _source_file#52, email_cliente#44, precio_unit#42, region#48, metodo_pago#45, vendedor_id#50, canal#49, producto#40]
+Functions: []
+Aggregate Attributes: []
+Results [13]: [pedido_id#37, categoria#39, producto#40, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, vendedor_id#50, coalesce(cast(gettimestamp(fecha#38, yyyy/MM/dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, yyyy-MM-dd, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd-MM-yyyy, TimestampType, Some(UTC), false) as date), cast(gettimestamp(fecha#38, dd/MM/yyyy, TimestampType, Some(UTC), false) as date)) AS fecha_parsed#621, CASE WHEN (upper(trim(region#48, None)) = BOGOTÁ) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTA) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTÁ) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = BOGOTÁ) THEN BOGOTÁ WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLIN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLIN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MDE) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = MEDELLÍN) THEN MEDELLÍN WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = CLO) THEN CALI WHEN (upper(trim(region#48, None)) = CALI) THEN CALI WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BAQ) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BARRANQUILLA) THEN BARRANQUILLA WHEN (upper(trim(region#48, None)) = BGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = BUCARAMANGA) THEN BUCARAMANGA WHEN (upper(trim(region#48, None)) = DESCONOCIDO) THEN OTRO WHEN (upper(trim(region#48, None)) = OTRO) THEN OTRO WHEN (upper(trim(region#48, None)) = N/A) THEN OTRO WHEN (upper(trim(region#48, None)) = NA) THEN OTRO WHEN (upper(trim(region#48, None)) = OTRO) THEN OTRO ELSE OTRO END AS region_silver#745, CASE WHEN (upper(trim(canal#49, None)) = APP MÓVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = MÓVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = APP_MOVIL) THEN app_movil WHEN (upper(trim(canal#49, None)) = ONLINE) THEN web WHEN (upper(trim(canal#49, None)) = PAGINA_WEB) THEN web WHEN (upper(trim(canal#49, None)) = WEB) THEN web WHEN (upper(trim(canal#49, None)) = SITIO_WEB) THEN web WHEN (upper(trim(canal#49, None)) = WEB) THEN web WHEN (upper(trim(canal#49, None)) = TIENDA FISICA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA FÍSICA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = TIENDA) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = FÍSICO) THEN tienda_fisica WHEN (upper(trim(canal#49, None)) = CALL_CENTER) THEN telefono WHEN (upper(trim(canal#49, None)) = LLAMADA) THEN telefono WHEN (upper(trim(canal#49, None)) = TELEFONO) THEN telefono WHEN (upper(trim(canal#49, None)) = TEL) THEN telefono WHEN (upper(trim(canal#49, None)) = TELÉFONO) THEN telefono ELSE otro_canal END AS canal_silver#856, cast(cantidad#41 as double) AS cantidad_num#968, cast(precio_unit#42 as double) AS precio_num#989]
+
+(6) Project
+Output [15]: [pedido_id#37, fecha_parsed#621 AS fecha#1300, region_silver#745 AS region#1301, canal_silver#856 AS canal#1302, categoria#39, producto#40, cast(cantidad_num#968 as int) AS cantidad#1303, precio_num#989 AS precio_unit#1304, round((cantidad_num#968 * precio_num#989), 2) AS total_silver#1011, regexp_extract(vendedor_id#50, (\d+), 1) AS vendedor_id#1253, email_cliente#44, RLIKE(email_cliente#44, ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$) AS email_valido#1276, metodo_pago#45, devuelto#46, calificacion#47]
+Input [13]: [pedido_id#37, categoria#39, producto#40, email_cliente#44, metodo_pago#45, devuelto#46, calificacion#47, vendedor_id#50, fecha_parsed#621, region_silver#745, canal_silver#856, cantidad_num#968, precio_num#989]
+
+(7) AdaptiveSparkPlan
+Output [15]: [pedido_id#37, fecha#1300, region#1301, canal#1302, categoria#39, producto#40, cantidad#1303, precio_unit#1304, total_silver#1011, vendedor_id#1253, email_cliente#44, email_valido#1276, metodo_pago#45, devuelto#46, calificacion#47]
+Arguments: isFinalPlan=false
+
+
+
+"""

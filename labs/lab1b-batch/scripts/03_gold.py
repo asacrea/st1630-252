@@ -26,7 +26,7 @@ spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 ex
 # ─────────────────────────────────────────────────────────────
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
-BUCKET = "st1630-tu-usuario"  # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-dagutierrl-2026"  # EDITAR: el mismo bucket del Lab 1a
 SILVER = f"s3a://{BUCKET}/silver/pedidos"
 GOLD = f"s3a://{BUCKET}/gold/kpis"
 # ─────────────────────────────────────────────────────────────
@@ -48,7 +48,27 @@ print(f"Filas en Silver: {df_silver.count():,}")
 #
 # Clasificación: → [tu respuesta: NARROW ✅ o WIDE ❌] -- justifica: ¿por
 # qué un groupBy + agg necesita mover filas entre executors?
-kpi_ventas = None  # TODO: reemplaza por tu groupBy + agg
+kpi_ventas = (
+    df_silver
+    .groupBy("region", "fecha")
+    .agg(
+        F.sum("total_silver").alias("ventas_totales"),
+        F.count("pedido_id").alias("num_pedidos"),
+        F.avg("total_silver").alias("ticket_promedio"),
+        F.avg(
+            F.col("devuelto").cast("double")
+        ).alias("tasa_devolucion"),
+        F.avg(
+            F.col("calificacion").cast("double")
+        ).alias("calificacion_promedio")
+    )
+)
+
+# WIDE
+# groupBy + agg necesita reunir las filas que pertenecen a la misma
+# combinación de región y fecha. Para hacerlo, Spark debe redistribuir
+# filas entre particiones mediante un shuffle/exchange.
+#   # TODO: reemplaza por tu groupBy + agg
 print(f"4.1 KPI ventas por región/fecha: {kpi_ventas.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -58,7 +78,18 @@ print(f"4.1 KPI ventas por región/fecha: {kpi_ventas.count():,} filas")
 # total_silver en una columna llamada "ventas_producto".
 #
 # Clasificación: → [tu respuesta] -- justifica.
-ventas_por_producto = None  # TODO: reemplaza por tu groupBy + agg
+ventas_por_producto = (
+    df_silver
+    .groupBy("categoria", "producto")
+    .agg(
+        F.sum("total_silver").alias("ventas_producto")
+    )
+)
+
+# WIDE
+# groupBy necesita reunir en una misma partición los registros que
+# tienen la misma combinación de categoria y producto para poder
+# calcular la suma.  # TODO: reemplaza por tu groupBy + agg
 
 # TODO paso 2: usando pyspark.sql.window.Window, define una ventana
 # particionada por "categoria" y ordenada descendentemente por
@@ -68,7 +99,28 @@ ventas_por_producto = None  # TODO: reemplaza por tu groupBy + agg
 # Clasificación: → [tu respuesta] -- justifica (pista: ¿por qué esta
 # Window necesita OTRO shuffle además del que ya hizo el groupBy del
 # paso 1, si la clave de partición es distinta?).
-kpi_top_productos = None  # TODO: reemplaza por tu Window + rank + filter + drop
+ventana_categoria = (
+    Window
+    .partitionBy("categoria")
+    .orderBy(F.desc("ventas_producto"))
+)
+
+kpi_top_productos = (
+    ventas_por_producto
+    .withColumn(
+        "rank",
+        F.rank().over(ventana_categoria)
+    )
+    .filter(F.col("rank") <= 3)
+    .drop("rank")
+)
+
+# WIDE
+# La Window particiona los productos por categoria y necesita que los
+# registros de una misma categoria queden organizados juntos para
+# calcular el rank. Esto puede requerir un shuffle adicional, porque
+# la distribución de la Window no necesariamente coincide con la
+# distribución producida por el groupBy anterior.  # TODO: reemplaza por tu Window + rank + filter + drop
 print(f"4.2 KPI top 3 productos por categoría: {kpi_top_productos.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -86,7 +138,26 @@ print(f"4.2 KPI top 3 productos por categoría: {kpi_top_productos.count():,} fi
 #
 # Clasificación: → [tu respuesta] -- cualquier groupBy/agg que uses
 # aquí, justifica por qué es NARROW o WIDE.
-kpi_cohortes = None  # TODO: tu diseño completo aquí (groupBy + agg + lo que necesites)
+kpi_cohortes = (
+    df_silver
+    .groupBy("canal", "metodo_pago")
+    .agg(
+        F.countDistinct("pedido_id").alias("pedidos_unicos"),
+        F.sum("total_silver").alias("ventas_totales"),
+        F.avg("total_silver").alias("ticket_promedio"),
+        F.avg(
+            F.col("devuelto").cast("double")
+        ).alias("tasa_devolucion"),
+        F.avg(
+            F.col("calificacion").cast("double")
+        ).alias("calificacion_promedio")
+    )
+)
+
+# WIDE
+# El groupBy necesita reunir los pedidos que pertenecen a la misma
+# combinación de canal y metodo_pago para calcular las métricas
+# agregadas. Esto requiere un shuffle/exchange.  # TODO: tu diseño completo aquí (groupBy + agg + lo que necesites)
 print(f"4.3 KPI cohortes: {kpi_cohortes.count():,} filas")
 
 # ═══════════════════════════════════════════════════════════════
@@ -121,6 +192,10 @@ print(f"4.3 KPI cohortes: {kpi_cohortes.count():,} filas")
 # negocio de la Parte 5.1 del lab?).
 #
 # (tu código aquí)
+spark.sql(f"""
+    OPTIMIZE delta.`{GOLD}/ventas_region_fecha`
+    ZORDER BY (region, fecha)
+""")
 
 print("4.4 OPTIMIZE + ZORDER BY aplicado sobre ventas_region_fecha")
 
@@ -136,7 +211,17 @@ spark.sql(f"""
 # TODO: registra las otras dos tablas Gold en Glue Catalog con el
 # mismo patrón que el ejemplo de arriba, con nombres
 # "gold_top_productos_categoria" y "gold_cohortes_canal_pago".
-# (tu código aquí)
+spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS gold_top_productos_categoria
+    USING DELTA
+    LOCATION '{GOLD}/top_productos_categoria'
+""")
+
+spark.sql(f"""
+    CREATE TABLE IF NOT EXISTS gold_cohortes_canal_pago
+    USING DELTA
+    LOCATION '{GOLD}/cohortes_canal_pago'
+""")    
 
 print("4.5 Tablas registradas en Glue Catalog -- listas para consultar desde Athena")
 
