@@ -31,7 +31,7 @@ import boto3
 # EDITAR ANTES DE EJECUTAR
 # ─────────────────────────────────────────────────────────────
 REGION = "us-east-1"                     # EDITAR si tu región es otra
-BUCKET = "st1630-tu-usuario"              # EDITAR: el mismo bucket del Lab 1a
+BUCKET = "st1630-jjdiazr-2026"              # EDITAR: el mismo bucket del Lab 1a
 ATHENA_DATABASE = "default"               # EDITAR si registraste las tablas en otra base
 ATHENA_OUTPUT = f"s3://{BUCKET}/athena-results/"
 CSV_10K_LOCATION = f"s3://{BUCKET}/benchmark/csv_10k/"  # ver Parte 5.2 del README
@@ -39,7 +39,11 @@ CSV_10K_LOCATION = f"s3://{BUCKET}/benchmark/csv_10k/"  # ver Parte 5.2 del READ
 
 athena = boto3.client("athena", region_name=REGION)
 
-RESULTADOS_PATH = Path(__file__).resolve().parent.parent / "benchmark_resultados.md"
+# La rúbrica pide este archivo en la RAÍZ de la carpeta de entrega
+# (README, Parte 5.2: "debe existir en la raíz de tu carpeta de entrega")
+RESULTADOS_PATH = (
+    Path(__file__).resolve().parent.parent / "entregas" / "jjdiazr" / "benchmark_resultados.md"
+)
 
 
 def ejecutar_query(sql: str, nombre: str) -> dict:
@@ -98,8 +102,18 @@ def main() -> None:
     # Glue Catalog (03_gold.py, Parte 4.5). Pistas de funciones útiles
     # de Presto: date_add('month', -3, current_date), GROUP BY, ORDER
     # BY ... DESC, LIMIT.
+    # TU RESPUESTA:
+    # Gold ya viene agregada por (region, fecha), así que aquí se suma
+    # 'ventas_totales' -- la métrica pre-calculada, no filas crudas.
     query_negocio = """
-        -- TODO: tu query aquí
+        SELECT
+            region,
+            SUM(ventas_totales) AS ventas_totales
+        FROM gold_ventas_region_fecha
+        WHERE fecha >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_totales DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_negocio, "5.1 Top 5 regiones (Gold Parquet, Z-ordered)"))
 
@@ -127,8 +141,19 @@ def main() -> None:
     # tabla no tiene la columna `ventas_totales` ya agregada como Gold
     # -- tienes `total_silver` fila por fila, así que necesitas
     # SUM(total_silver) en vez de SUM(ventas_totales).
+    # TU RESPUESTA:
+    # Misma pregunta de negocio, pero el CSV está a nivel de pedido
+    # individual -- no hay 'ventas_totales' pre-agregada, hay que sumar
+    # 'total_silver' fila por fila.
     query_csv = """
-        -- TODO: tu query aquí
+        SELECT
+            region,
+            SUM(total_silver) AS ventas_totales
+        FROM benchmark_csv_10k
+        WHERE fecha >= date_add('month', -3, current_date)
+        GROUP BY region
+        ORDER BY ventas_totales DESC
+        LIMIT 5
     """
     resultados.append(ejecutar_query(query_csv, "5.2 Misma query (CSV sin particionar)"))
 
@@ -142,6 +167,12 @@ def main() -> None:
     contenido = f"""# Resultados del benchmark Athena — Lab 1b
 
 **Curso:** ST1630-2026-2 · **Semana:** S5-S6 · **Generado:** ejecución de `04_athena_benchmark.py`
+
+**Estudiantes:**
+- Juan José Díaz Rodríguez — jjdiazr@eafit.edu.co
+- Juan Simón Ospina Martínez — jsospinam@eafit.edu.co
+- Sebastián Durán Fernández — sduranf@eafit.edu.co
+- Daniel Arcila Salazar — darcilas1@eafit.edu.co
 
 ## Resultados crudos
 

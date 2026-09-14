@@ -1,0 +1,118 @@
+================================================================================
+Lab 2a · Parte 0 — Exploración previa (evidencia cruda de terminal)
+Estudiantes: Juan José Díaz Rodríguez (jjdiazr) · Juan Simón Ospina Martínez (jsospinam)
+             Sebastián Durán Fernández (sduranf) · Daniel Arcila Salazar (darcilas1)
+Fecha: 2026-08-31
+================================================================================
+
+NOTA: esta exploración se hizo sobre una primera instancia del topic. Al
+terminar la Parte 0 el topic se borró y se recreó vacío antes de correr el
+productor, para que los 9 mensajes de prueba de aquí (que no tienen
+pedido_id y por tanto romperían el MERGE) no contaminaran los conteos de
+Bronze de la Parte 2. Ver kafka_design.md, Anexo Parte 0, punto 6.
+
+--------------------------------------------------------------------------------
+[0] Estado de la infraestructura
+--------------------------------------------------------------------------------
+$ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+NAMES                   STATUS                    PORTS
+st1630-lab2a-kafka-ui   Up 8 seconds              0.0.0.0:8080->8080/tcp
+st1630-lab2a-kafka      Up 21 seconds (healthy)   0.0.0.0:9092->9092/tcp
+
+--------------------------------------------------------------------------------
+[1] Topics ANTES de crear nada
+--------------------------------------------------------------------------------
+$ docker exec st1630-lab2a-kafka kafka-topics --bootstrap-server localhost:9092 --list
+(sin salida — lista vacía, sin error)
+
+--------------------------------------------------------------------------------
+[2] Creación del topic (Parte 0, paso 1)
+--------------------------------------------------------------------------------
+$ docker exec st1630-lab2a-kafka kafka-topics --create \
+    --topic pedidos-ventas --partitions 4 --replication-factor 1 \
+    --bootstrap-server localhost:9092
+Created topic pedidos-ventas.
+
+--------------------------------------------------------------------------------
+[3] Topics DESPUÉS de crear (Parte 0, paso 2)
+--------------------------------------------------------------------------------
+$ docker exec st1630-lab2a-kafka kafka-topics --bootstrap-server localhost:9092 --list
+pedidos-ventas
+
+$ docker exec st1630-lab2a-kafka kafka-topics --bootstrap-server localhost:9092 \
+    --list --exclude-internal false
+pedidos-ventas
+
+>>> En este momento __consumer_offsets NO existe todavía. Kafka lo crea de
+>>> forma perezosa, la primera vez que ALGÚN consumer group commitea un
+>>> offset — y hasta aquí no se había ejecutado ningún consumidor.
+>>> La verificación de que aparece después está en parte0_consumer_offsets.txt.
+
+--------------------------------------------------------------------------------
+[4] Descripción de particiones (Parte 0, paso 3 — equivalente CLI de Kafka UI)
+--------------------------------------------------------------------------------
+$ docker exec st1630-lab2a-kafka kafka-topics --bootstrap-server localhost:9092 \
+    --describe --topic pedidos-ventas
+Topic: pedidos-ventas   TopicId: X13LgXF6Qt2D5kds7sKhiw   PartitionCount: 4   ReplicationFactor: 1   Configs:
+    Topic: pedidos-ventas   Partition: 0    Leader: 1   Replicas: 1   Isr: 1
+    Topic: pedidos-ventas   Partition: 1    Leader: 1   Replicas: 1   Isr: 1
+    Topic: pedidos-ventas   Partition: 2    Leader: 1   Replicas: 1   Isr: 1
+    Topic: pedidos-ventas   Partition: 3    Leader: 1   Replicas: 1   Isr: 1
+
+--------------------------------------------------------------------------------
+[5] Tres mensajes con la MISMA key (Parte 0, paso 4)
+--------------------------------------------------------------------------------
+$ printf 'Bogotá:{"nota":"prueba 1"}\nBogotá:{"nota":"prueba 2"}\nBogotá:{"nota":"prueba 3"}\n' \
+  | docker exec -i st1630-lab2a-kafka kafka-console-producer \
+      --topic pedidos-ventas --bootstrap-server localhost:9092 \
+      --property "parse.key=true" --property "key.separator=:"
+
+--------------------------------------------------------------------------------
+[6] Dos mensajes SIN key (Parte 0, paso 5)
+--------------------------------------------------------------------------------
+$ printf '{"nota":"sin key A"}\n{"nota":"sin key B"}\n' \
+  | docker exec -i st1630-lab2a-kafka kafka-console-producer \
+      --topic pedidos-ventas --bootstrap-server localhost:9092
+
+--------------------------------------------------------------------------------
+[7] ¿Dónde cayó cada mensaje?
+--------------------------------------------------------------------------------
+$ docker exec st1630-lab2a-kafka kafka-console-consumer --topic pedidos-ventas \
+    --bootstrap-server localhost:9092 --from-beginning --max-messages 5 \
+    --property print.key=true --property print.partition=true \
+    --property print.offset=true --property key.separator=" | "
+Partition:0 | Offset:0 | Bogotá | {"nota":"prueba 1"}
+Partition:0 | Offset:1 | Bogotá | {"nota":"prueba 2"}
+Partition:0 | Offset:2 | Bogotá | {"nota":"prueba 3"}
+Partition:0 | Offset:3 | null   | {"nota":"sin key A"}
+Partition:0 | Offset:4 | null   | {"nota":"sin key B"}
+Processed a total of 5 messages
+
+$ docker exec st1630-lab2a-kafka kafka-run-class kafka.tools.GetOffsetShell \
+    --bootstrap-server localhost:9092 --topic pedidos-ventas
+pedidos-ventas:0:5
+pedidos-ventas:1:0
+pedidos-ventas:2:0
+pedidos-ventas:3:0
+
+--------------------------------------------------------------------------------
+[8] Repetición del envío SIN key (Parte 0, paso 5 — "repite un par de veces")
+--------------------------------------------------------------------------------
+Cuatro mensajes más, cada uno en una INVOCACIÓN SEPARADA del console-producer
+(es decir, cuatro sesiones de productor distintas):
+
+$ for i in 1 2 3 4; do printf '{"nota":"ronda %s"}\n' "$i" \
+    | docker exec -i st1630-lab2a-kafka kafka-console-producer \
+        --topic pedidos-ventas --bootstrap-server localhost:9092; done
+
+$ docker exec st1630-lab2a-kafka kafka-run-class kafka.tools.GetOffsetShell \
+    --bootstrap-server localhost:9092 --topic pedidos-ventas
+pedidos-ventas:0:6      <- +1 respecto a [7]
+pedidos-ventas:1:1      <- +1
+pedidos-ventas:2:2      <- +2
+pedidos-ventas:3:0      <- +0
+
+>>> Los 4 mensajes sin key se repartieron entre P0, P1 y P2 (uno, uno y dos).
+>>> Con key=Bogotá los 3 mensajes fueron SIEMPRE a P0. Comportamiento
+>>> distinto y observable: ver kafka_design.md, Anexo Parte 0, punto 5.
+================================================================================

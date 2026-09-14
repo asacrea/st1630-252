@@ -1,0 +1,73 @@
+================================================================================
+Lab 2a - Verificacion final de Bronze
+Estudiantes: Juan José Díaz Rodríguez (jjdiazr) · Juan Simón Ospina Martínez (jsospinam)
+             Sebastián Durán Fernández (sduranf) · Daniel Arcila Salazar (darcilas1)
+Fecha: 2026-08-31
+================================================================================
+
+### Estado final del consumer group (lag = 0 en las 4 particiones)
+
+$ docker exec st1630-lab2a-kafka kafka-consumer-groups \
+    --bootstrap-server localhost:9092 --describe --group analytics-group
+
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                              HOST            CLIENT-ID
+analytics-group pedidos-ventas  0          556             556             0               kafka-python-3.0.11-7cc4c579-bf86-43eb-9490-faeb6dbd74ba /172.21.0.4     kafka-python-3.0.11
+analytics-group pedidos-ventas  1          263             263             0               kafka-python-3.0.11-7cc4c579-bf86-43eb-9490-faeb6dbd74ba /172.21.0.4     kafka-python-3.0.11
+analytics-group pedidos-ventas  2          85              85              0               kafka-python-3.0.11-7cc4c579-bf86-43eb-9490-faeb6dbd74ba /172.21.0.4     kafka-python-3.0.11
+analytics-group pedidos-ventas  3          96              96              0               kafka-python-3.0.11-7cc4c579-bf86-43eb-9490-faeb6dbd74ba /172.21.0.4     kafka-python-3.0.11
+
+### Conteo de la tabla Delta de Bronze
+
+=== CONTEO BRONZE [VERIFICACION FINAL] ===
+filas_totales      = 1000
+pedido_id_distintos= 1000
+duplicados         = 0
+
+--- filas por particion de Kafka de origen ---
++----------------+-----+
+|_kafka_partition|count|
++----------------+-----+
+|               0|  556|
+|               1|  263|
+|               2|   85|
+|               3|   96|
++----------------+-----+
+
+--- rango de offsets ingestados por particion ---
++----------------+----------+----------+
+|_kafka_partition|offset_min|offset_max|
++----------------+----------+----------+
+|               0|         0|       555|
+|               1|         0|       262|
+|               2|         0|        84|
+|               3|         0|        95|
++----------------+----------+----------+
+
+Cada particion tiene TODOS sus offsets, de 0 a (n-1), sin huecos:
+  556 + 263 + 85 + 96 = 1000 filas = los 1000 mensajes publicados.
+
+### Por que estos 1000 con 0 duplicados son el resultado importante
+
+A lo largo del laboratorio el pipeline sufrio CUATRO interrupciones,
+y todas provocaron reentregas de Kafka:
+
+  1. SIGKILL deliberado a los 15 mensajes (prueba de idempotencia).
+     -> reproceso del offset 15 de la particion 1.
+  2. Corte manual tras 6 mensajes para medir N'.
+  3. Expulsion del consumer group por max_poll_interval_ms:
+     10 mensajes con MERGE hecho y commit rechazado.
+     (ver consumidor_expulsion_evidencia.txt)
+  4. Reinicio para aplicar el tuning de Spark/Delta y mover el
+     datalake a un volumen Docker nativo.
+
+Sumando las lineas [OK] de todas las corridas se procesaron ~998
+mensajes mas los 10 que fallaron el commit tras hacer el MERGE, sobre
+un topic de 1000 mensajes. Es decir: hubo decenas de reprocesamientos
+reales, no simulados.
+
+Bronze quedo con 1000 filas y 1000 pedido_id distintos: duplicados = 0.
+
+Eso es la garantia at-least-once funcionando de punta a punta -- Kafka
+reentrego cuando tuvo que reentregar, y el MERGE ... ON pedido_id
+absorbio cada reentrega sin duplicar una sola fila.
+================================================================================
