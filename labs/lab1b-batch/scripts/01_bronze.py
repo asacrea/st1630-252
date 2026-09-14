@@ -11,7 +11,14 @@ resuelto para que puedas concentrarte en las partes que de verdad
 enseñan algo nuevo esta semana.
 
 Uso:
-    spark-submit 01_bronze.py
+    python3 01_bronze.py
+    # o: spark-submit 01_bronze.py
+
+Prerequisito de entorno: pip install pyspark delta-spark==2.4.0 (esa
+versión de Delta es la compatible con Spark 3.4.1, la que trae el
+clúster EMR 6.15.0 del Lab 1a -- si tu clúster corre otra versión de
+Spark, ajusta la versión de delta-spark según la tabla de
+compatibilidad de delta.io antes de instalar).
 
 Qué puedes delegar: dudas de sintaxis puntuales si te trabas en un
 TODO (¿cómo se llama el método para X?). Qué NO puedes delegar: por
@@ -19,11 +26,22 @@ qué el schema es 100% string -- tienes que poder explicarlo con tus
 propias palabras (te lo preguntamos en la defensa del lab).
 """
 
-from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType
+from delta import configure_spark_with_delta_pip
+from pyspark.sql import SparkSession
 
-spark = SparkSession.builder.appName("ST1630-Lab1b-Bronze").getOrCreate()
+# configure_spark_with_delta_pip lee la versión de delta-spark que
+# tengas instalada (pip install delta-spark==2.4.0) y le dice a Spark
+# dónde descargar/encontrar el JAR de Delta que le corresponde -- sin
+# esto, `.format("delta")` falla con
+# "Failed to find the data source: delta" apenas intentas leer/escribir.
+_builder = (
+    SparkSession.builder.appName("ST1630-Lab1b-Bronze")
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+)
+spark = configure_spark_with_delta_pip(_builder).getOrCreate()
 spark.conf.set("spark.sql.shuffle.partitions", "32")  # clúster del curso: 4 executors x 8 cores
 
 # ─────────────────────────────────────────────────────────────
@@ -79,6 +97,15 @@ BRONZE_SCHEMA = StructType([
 # ═══════════════════════════════════════════════════════════════
 # TODO: usa spark.read, con .option("header", "true"), .schema(BRONZE_SCHEMA)
 # y .csv(RAW) para leer el archivo crudo en df_raw.
+#
+# Además, agrega .option("enforceSchema", "false"): por defecto Spark
+# aplica el schema por POSICIÓN e ignora si los nombres del header
+# realmente coinciden -- si el orden de columnas de arriba está mal
+# (a alguien se le pasó, o el CSV cambió), terminas con datos
+# silenciosamente mal etiquetados sin ningún error. Con
+# enforceSchema=false, Spark valida el header contra tu schema y
+# falla fuerte y claro si no coinciden, en vez de corromper todo el
+# pipeline sin que te enteres.
 #
 # Clasificación: → [NARROW ✅ / WIDE ❌] -- justifica en un comentario
 # por qué (pista: ¿esta lectura necesita comparar o mover datos entre
