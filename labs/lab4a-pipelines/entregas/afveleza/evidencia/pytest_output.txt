@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.9, pytest-9.1.1, pluggy-1.5.0 -- /home/airflow/.local/bin/python
+rootdir: /opt/airflow
+plugins: anyio-4.4.0, time-machine-2.14.2
+collecting ... collected 3 items
+
+dags/tests/test_ventas_pipeline.py::test_validate_no_nulls_passes PASSED [ 33%]
+dags/tests/test_ventas_pipeline.py::test_validate_nulls_fails PASSED     [ 66%]
+dags/tests/test_ventas_pipeline.py::test_validate_negative_totals_fails PASSED [100%]
+
+============================== 3 passed in 13.71s ==============================
+Closing down clientserver connection

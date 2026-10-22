@@ -1,0 +1,31 @@
+Conteos tras el FALLO PROVOCADO (2026-01-08 con 51 de 510 'total' vacios = 10%) - 2026-10-15 ~07:40 UTC
+
+Resultado del DAG para 2026-01-08:
+  ingest_bronze    -> success         (Bronze guarda el dato crudo, sin juzgarlo)
+  validate_bronze  -> failed (3 intentos: retries=2) con
+                      ValueError: Check nulos críticos FALLÓ: la columna 'total' tiene 51 nulos de 510 filas (10.0%), supera el umbral de 5%.
+  transform_silver -> upstream_failed (NO se ejecuto)
+  build_gold       -> upstream_failed (NO se ejecuto)
+
+===== BRONZE (filas por particion) =====
+  fecha=2026-01-01: 325
+  fecha=2026-01-02: 399
+  fecha=2026-01-03: 529
+  fecha=2026-01-04: 398
+  fecha=2026-01-05: 311
+  fecha=2026-01-06: 474
+  fecha=2026-01-07: 521
+  fecha=2026-01-08: 510      <- particion corrupta, queda aislada en Bronze
+  TOTAL BRONZE: 3467
+
+===== SILVER =====
+  TOTAL SILVER: 2820         <- igual que antes del fallo: el dato corrupto NO llego
+  pedido_id distintos: 2820
+  (no aparece ninguna fila con fecha 2026-01-08)
+
+===== SILVER: historial Delta =====
+  Ultima version: 13 (MERGE de 07:17:49 UTC, del segundo backfill)
+  -> NINGUNA version nueva tras el fallo: transform_silver nunca corrio.
+
+===== GOLD: ventas_por_region =====
+  Identico al de antes del fallo (suma n_transacciones = 2,820).
