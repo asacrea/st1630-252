@@ -43,13 +43,13 @@ from airflow.operators.python import PythonOperator
 
 # ─────────────────────────────────────────────────────────────
 # Rutas dentro del contenedor (dadas por el docker-compose.yml de este
-# lab -- no las edites, ya están montadas correctamente)
-# ─────────────────────────────────────────────────────────────
-RAW_CSV = "/opt/airflow/data/raw/ventas_colombia_lab4a.csv"
-BRONZE_DIR = "/opt/airflow/data/output/bronze/ventas_partitioned"
-SILVER_DIR = "/opt/airflow/data/output/silver/ventas"
-GOLD_REGION_DIR = "/opt/airflow/data/output/gold/ventas_por_region"
-GOLD_TOP_PRODUCTOS_DIR = "/opt/airflow/data/output/gold/top_productos"
+import os
+
+RAW_CSV = os.environ.get("RAW_CSV", "/opt/airflow/data/raw/ventas_colombia_lab4a.csv")
+BRONZE_DIR = os.environ.get("BRONZE_DIR", "/opt/airflow/data/output/bronze/ventas_partitioned")
+SILVER_DIR = os.environ.get("SILVER_DIR", "/opt/airflow/data/output/silver/ventas")
+GOLD_REGION_DIR = os.environ.get("GOLD_REGION_DIR", "/opt/airflow/data/output/gold/ventas_por_region")
+GOLD_TOP_PRODUCTOS_DIR = os.environ.get("GOLD_TOP_PRODUCTOS_DIR", "/opt/airflow/data/output/gold/top_productos")
 
 logger = logging.getLogger(__name__)
 
@@ -111,14 +111,7 @@ def ingest_bronze(ds: str, **context):
         # corrido antes), escribir DOS veces el mismo día NO debe
         # duplicar filas en Bronze.
         #
-        # TODO: escribe df_dia en formato "parquet", en modo
-        # "overwrite" (no "append"), en la ruta `destino`. Pista: estás
-        # sobreescribiendo SOLO la carpeta de este día
-        # (`.../fecha={ds}`), no toda la tabla Bronze completa -- por
-        # eso "overwrite" acá es seguro y no borra los demás días ya
-        # ingeridos.
-        #
-        # (tu código aquí)
+        df_dia.write.format("parquet").mode("overwrite").save(destino)
 
         logger.info("Bronze escrito en %s (%s filas)", destino, f"{n_filas:,}")
         context["ti"].xcom_push(key="n_filas_bronze", value=n_filas)
@@ -140,32 +133,33 @@ CANALES_ESPERADOS_MAX = 4
 
 
 def check_nulos_criticos(df):
-    """TODO: por cada columna de COLUMNAS_CRITICAS, calcula qué
-    fracción de sus filas son nulas (nulos de esa columna / total de
-    filas). Si CUALQUIERA de esas columnas supera UMBRAL_NULOS (5%),
-    lanza:
+    from pyspark.sql import functions as F
 
-        raise ValueError(f"...")
+    total_filas = df.count()
+    if total_filas == 0:
+        return
 
-    con un mensaje que diga explícitamente cuál columna falló y qué
-    porcentaje de nulos tenía (lo vas a necesitar para leer el log del
-    fallo que provocas a propósito en la Parte 4 del README).
-
-    Pista: df.count() te da el total de filas; para los nulos de una
-    columna usa `from pyspark.sql import functions as F` y
-    `df.filter(F.col(columna).isNull()).count()`.
-    """
-    # (tu código aquí)
-    pass
+    for col_name in COLUMNAS_CRITICAS:
+        if col_name in df.columns:
+            n_nulos = df.filter(F.col(col_name).isNull()).count()
+            fraccion = n_nulos / total_filas
+            if fraccion > UMBRAL_NULOS:
+                porcentaje = fraccion * 100
+                raise ValueError(
+                    f"Check nulos críticos FALLÓ: la columna '{col_name}' tiene {n_nulos} nulos "
+                    f"de {total_filas} filas ({porcentaje:.2f}%), superando el umbral permitido de {UMBRAL_NULOS * 100:.1f}%."
+                )
 
 
 def check_rango_monto(df):
-    """TODO: cuenta cuántas filas tienen total <= 0 (un monto negativo
-    o cero no tiene sentido de negocio para una venta). Si hay AL
-    MENOS UNA, lanza ValueError con el conteo exacto en el mensaje.
-    """
-    # (tu código aquí)
-    pass
+    from pyspark.sql import functions as F
+
+    filas_invalidas = df.filter(F.col("total") <= 0).count()
+    if filas_invalidas > 0:
+        raise ValueError(
+            f"Check rango de monto FALLÓ: se encontraron {filas_invalidas} filas con total <= 0. "
+            f"El monto de venta debe ser estrictamente positivo."
+        )
 
 
 def check_cardinalidad_canal(df):
@@ -252,8 +246,16 @@ def transform_silver(ds: str, **context):
         # Encadénalo como quieras (un withColumn()/filter() a la vez, o
         # todo junto con pyspark.sql.functions, que puedes importar
         # arriba como F) -- el resultado final debe llamarse
-        # df_transformado.
-        df_transformado = df_bronze  # TODO: reemplaza por las 3 transformaciones de arriba
+        from pyspark.sql import functions as F
+        from pyspark.sql.types import DateType, DoubleType
+
+        df_transformado = (
+            df_bronze
+            .withColumn("fecha", F.col("fecha").cast(DateType()))
+            .withColumn("total", F.col("total").cast(DoubleType()))
+            .filter(F.col("devuelto") == False)
+            .withColumn("anio_mes", F.date_format(F.col("fecha"), "yyyy-MM"))
+        )
 
         n_tras_filtro = df_transformado.count()
         logger.info(
@@ -264,26 +266,18 @@ def transform_silver(ds: str, **context):
         # ═══════════════════════════════════════════════════════════
         # TODO 3 · MERGE a Silver -- el reto principal de esta semana
         # ═══════════════════════════════════════════════════════════
-        # Mismo patrón que aprendiste en Lab 1b (02_silver.py, Parte
-        # 3.7), ahora dentro de un DAG que se reintenta solo y se puede
-        # backfillear. La clave de negocio es "pedido_id".
-        #
-        #   delta_table.alias("target").merge(
-        #       df_transformado.alias("source"),
-        #       "target.pedido_id = source.pedido_id"
-        #   ).whenMatchedUpdateAll().whenNotMatchedInsertAll().execute()
-        #
-        # TODO: completa la rama `if` de abajo con ese patrón.
-        #
-        # Para dag_design.md: si Airflow marca este task como "failed"
-        # DESPUÉS de que el MERGE ya se ejecutó pero ANTES de que
-        # Airflow registre el éxito (p. ej. el contenedor se cae justo
-        # ahí) y luego lo reintenta automáticamente, ¿el segundo MERGE
-        # duplica algo? ¿Por qué el MERGE es justamente la herramienta
-        # que evita ese problema, a diferencia de un "append" simple?
         if DeltaTable.isDeltaTable(spark, SILVER_DIR):
             silver_table = DeltaTable.forPath(spark, SILVER_DIR)
-            # TODO: tu código de MERGE aquí
+            (
+                silver_table.alias("target")
+                .merge(
+                    df_transformado.alias("source"),
+                    "target.pedido_id = source.pedido_id"
+                )
+                .whenMatchedUpdateAll()
+                .whenNotMatchedInsertAll()
+                .execute()
+            )
         else:
             logger.info("Silver no existe todavía -- primera escritura (sin MERGE).")
             df_transformado.write.format("delta").mode("overwrite").save(SILVER_DIR)
@@ -318,13 +312,22 @@ def build_gold(**context):
         #   - "n_transacciones": conteo de filas
         # Pista: .groupBy("region", "anio_mes").agg(
         #            F.sum("total").alias("total_ventas"),
-        #            F.count("*").alias("n_transacciones"))
-        df_ventas_por_region = None  # TODO: reemplaza por tu agregación
+        df_ventas_por_region = (
+            df_silver
+            .groupBy("region", "anio_mes")
+            .agg(
+                F.sum("total").alias("total_ventas"),
+                F.count("*").alias("n_transacciones"),
+            )
+        )
 
-        # TODO top_productos: agrupa df_silver por "producto", suma
-        # "total" como "total_ventas", ordena descendente y quédate con
-        # las primeras 20 filas.
-        df_top_productos = None  # TODO: reemplaza por tu agregación
+        df_top_productos = (
+            df_silver
+            .groupBy("producto")
+            .agg(F.sum("total").alias("total_ventas"))
+            .orderBy(F.desc("total_ventas"))
+            .limit(20)
+        )
 
         df_ventas_por_region.write.format("delta").mode("overwrite").save(GOLD_REGION_DIR)
         df_top_productos.write.format("delta").mode("overwrite").save(GOLD_TOP_PRODUCTOS_DIR)
