@@ -1,0 +1,44 @@
+2026-08-31T22:50:40.978045097Z :: loading settings :: url = jar:file:/usr/local/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+2026-08-31T22:50:41.036780243Z Ivy Default Cache set to: /root/.ivy2/cache
+2026-08-31T22:50:41.036811752Z The jars for the packages stored in: /root/.ivy2/jars
+2026-08-31T22:50:41.041565445Z io.delta#delta-spark_2.12 added as a dependency
+2026-08-31T22:50:41.042440515Z :: resolving dependencies :: org.apache.spark#spark-submit-parent-5a1f9d59-26db-433c-970d-797724fd2aab;1.0
+2026-08-31T22:50:41.042452813Z 	confs: [default]
+2026-08-31T22:50:41.143157032Z 	found io.delta#delta-spark_2.12;3.3.0 in central
+2026-08-31T22:50:41.167506956Z 	found io.delta#delta-storage;3.3.0 in central
+2026-08-31T22:50:41.187140726Z 	found org.antlr#antlr4-runtime;4.9.3 in central
+2026-08-31T22:50:41.206061546Z :: resolution report :: resolve 156ms :: artifacts dl 7ms
+2026-08-31T22:50:41.206082892Z 	:: modules in use:
+2026-08-31T22:50:41.206210480Z 	io.delta#delta-spark_2.12;3.3.0 from central in [default]
+2026-08-31T22:50:41.206236436Z 	io.delta#delta-storage;3.3.0 from central in [default]
+2026-08-31T22:50:41.206428295Z 	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+2026-08-31T22:50:41.206442998Z 	---------------------------------------------------------------------
+2026-08-31T22:50:41.206456631Z 	|                  |            modules            ||   artifacts   |
+2026-08-31T22:50:41.206544455Z 	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+2026-08-31T22:50:41.206549688Z 	---------------------------------------------------------------------
+2026-08-31T22:50:41.206841869Z 	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+2026-08-31T22:50:41.206854092Z 	---------------------------------------------------------------------
+2026-08-31T22:50:41.210766363Z :: retrieving :: org.apache.spark#spark-submit-parent-5a1f9d59-26db-433c-970d-797724fd2aab
+2026-08-31T22:50:41.210970691Z 	confs: [default]
+2026-08-31T22:50:41.215285349Z 	0 artifacts copied, 3 already retrieved (0kB/5ms)
+2026-08-31T22:50:41.368786239Z 26/08/31 22:50:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-08-31T22:50:41.554328355Z Setting default log level to "WARN".
+2026-08-31T22:50:41.554357719Z To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+2026-08-31T22:50:42.956147860Z /scripts/consumidor_kafka.py:83: DeprecationWarning: key_deserializer does not implement kafka.serializer.Deserializer
+2026-08-31T22:50:42.956189714Z   consumer = KafkaConsumer(
+2026-08-31T22:50:42.956193524Z /scripts/consumidor_kafka.py:83: DeprecationWarning: value_deserializer does not implement kafka.serializer.Deserializer
+2026-08-31T22:50:42.956196498Z   consumer = KafkaConsumer(
+2026-08-31T22:51:08.598911701Z [Stage 0:>                                                        (0 + 20) / 20]                                                                                26/08/31 22:51:08 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+2026-08-31T22:51:17.764709709Z Escuchando 'pedidos-ventas' como grupo 'analytics-group' (bootstrap: kafka:29092)...
+2026-08-31T22:51:17.764754139Z Escribiendo a Bronze en: /lake/bronze/pedidos
+2026-08-31T22:51:17.764758887Z Ctrl+C para detener (útil para la prueba de idempotencia -- Parte 2.4 del README).
+2026-08-31T22:51:17.764762616Z 
+2026-08-31T22:51:17.764765681Z [OK] offset=44 partition=1 pedido_id=dd875739-3280-4edb-b7e5-bd82877137a0
+2026-08-31T22:51:34.215972769Z [OK] offset=45 partition=1 pedido_id=ff6bbc83-b70f-4814-8a4c-770b0f4b113a
+2026-08-31T22:51:52.677207617Z [OK] offset=46 partition=1 pedido_id=73f89bb7-176b-4fc6-960d-f01db63d3986
+2026-08-31T22:52:11.151900186Z [OK] offset=47 partition=1 pedido_id=4854822d-9514-4f13-af33-53f83028e2a8
+2026-08-31T22:52:23.298162299Z [OK] offset=48 partition=1 pedido_id=75c1582b-ce90-4ab0-a752-41e36db171ef
+2026-08-31T22:52:54.654781746Z [OK] offset=49 partition=1 pedido_id=2968a94a-a8eb-4a91-9e90-6f026e1e7d8a
+2026-08-31T22:53:16.255810325Z [OK] offset=50 partition=1 pedido_id=1f378d91-7e9b-4849-b824-a3c9c992fee2
+2026-08-31T22:53:37.196550818Z [OK] offset=51 partition=1 pedido_id=64db7e07-12c3-42d4-830a-7c406eb1a387
+2026-08-31T22:53:58.613554307Z [OK] offset=52 partition=1 pedido_id=cf23dd3c-2e6e-40df-a475-e9e6f3ebf8b8

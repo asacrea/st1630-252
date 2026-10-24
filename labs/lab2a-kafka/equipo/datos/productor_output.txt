@@ -1,0 +1,19 @@
+Publicando 1000 pedidos en 'pedidos-ventas' (bootstrap: localhost:9092)...
+  [100/1000] región=Bogotá       partición=0 offset=61
+  [200/1000] región=Bogotá       partición=0 offset=118
+  [300/1000] región=Bogotá       partición=0 offset=174
+  [400/1000] región=Cali         partición=0 offset=229
+  [500/1000] región=Cali         partición=0 offset=277
+  [600/1000] región=Otro         partición=2 offset=52
+  [700/1000] región=Bogotá       partición=0 offset=381
+  [800/1000] región=Bogotá       partición=0 offset=439
+  [900/1000] región=Otro         partición=2 offset=74
+  [1000/1000] región=Bucaramanga  partición=1 offset=262
+
+=== Resumen: región -> partición -> mensajes ===
+  Bogotá         P0=403
+  Medellín       P1=196
+  Cali           P0=153
+  Barranquilla   P3=96
+  Bucaramanga    P1=67
+  Otro           P2=85

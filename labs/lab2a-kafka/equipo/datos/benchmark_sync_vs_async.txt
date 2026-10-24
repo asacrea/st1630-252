@@ -1,0 +1,28 @@
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:37: DeprecationWarning: key_serializer does not implement kafka.serializer.Serializer
+  from productor_kafka import generar_pedido, REGIONES  # noqa: E402
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:37: DeprecationWarning: value_serializer does not implement kafka.serializer.Serializer
+  from productor_kafka import generar_pedido, REGIONES  # noqa: E402
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:72: DeprecationWarning: key_serializer does not implement kafka.serializer.Serializer
+  producer = nuevo_producer()
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:72: DeprecationWarning: value_serializer does not implement kafka.serializer.Serializer
+  producer = nuevo_producer()
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:89: DeprecationWarning: key_serializer does not implement kafka.serializer.Serializer
+  producer = nuevo_producer()
+C:\Users\sebas\OneDrive\Escritorio\sistemas intensivos\labs\lab2a-kafka\sduranf\scripts\benchmark_sync_vs_async.py:89: DeprecationWarning: value_serializer does not implement kafka.serializer.Serializer
+  producer = nuevo_producer()
+Topic 'pedidos-ventas-benchmark' creado (4 particiones).
+Generando 1000 pedidos...
+
+[1/2] Enviando 1000 pedidos en modo SÍNCRONO...
+      16.35 s  (61.2 msg/s)
+
+[2/2] Enviando 1000 pedidos en modo ASÍNCRONO...
+      0.56 s  (1789.0 msg/s)
+
+=== Comparación ===
+  Síncrono   :    16.35 s       61.2 msg/s
+  Asíncrono  :     0.56 s     1789.0 msg/s
+  Aceleración:    29.25x
+
+  Misma distribución región->partición en ambos modos: True
+  Distribución: {'Bogotá': {0: 395}, 'Medellín': {1: 221}, 'Cali': {0: 156}, 'Barranquilla': {3: 88}, 'Bucaramanga': {1: 85}, 'Otro': {2: 55}}

@@ -1,0 +1,69 @@
+:: loading settings :: url = jar:file:/usr/local/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /root/.ivy2/cache
+The jars for the packages stored in: /root/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-2934babf-96d6-4952-ae28-b9147c586a53;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.3.0 in central
+	found io.delta#delta-storage;3.3.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 159ms :: artifacts dl 6ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.3.0 from central in [default]
+	io.delta#delta-storage;3.3.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-2934babf-96d6-4952-ae28-b9147c586a53
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/4ms)
+26/08/31 22:42:43 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+/scripts/consumidor_kafka.py:83: DeprecationWarning: key_deserializer does not implement kafka.serializer.Deserializer
+  consumer = KafkaConsumer(
+/scripts/consumidor_kafka.py:83: DeprecationWarning: value_deserializer does not implement kafka.serializer.Deserializer
+  consumer = KafkaConsumer(
+[Stage 0:>                                                        (0 + 20) / 20]                                                                                26/08/31 22:43:00 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+Escuchando 'pedidos-ventas' como grupo 'analytics-group' (bootstrap: kafka:29092)...
+Escribiendo a Bronze en: /lake/bronze/pedidos
+Ctrl+C para detener (útil para la prueba de idempotencia -- Parte 2.4 del README).
+
+[OK] offset=21 partition=1 pedido_id=4dd458fa-09cd-4894-b39a-505621cc7077
+[OK] offset=22 partition=1 pedido_id=d23b57dc-f5de-4401-9297-06d42708bd19
+[OK] offset=23 partition=1 pedido_id=b41fb9f5-8e6f-483d-9561-9c087d818907
+[OK] offset=24 partition=1 pedido_id=e2d665ff-09b1-4839-b24a-48a4e67667dc
+[OK] offset=25 partition=1 pedido_id=ebb4bc77-bd73-450a-ae9a-fec23eed6a2c
+[OK] offset=26 partition=1 pedido_id=0e676da2-078a-4eaa-a33c-a713f6f2c46f
+[OK] offset=27 partition=1 pedido_id=ee9cd9e3-a65a-4bff-b4f2-8f6468cffdbf
+[OK] offset=28 partition=1 pedido_id=51d11f01-a751-467e-8f8c-41005f607a3c
+[OK] offset=29 partition=1 pedido_id=f42d2273-a442-4c00-a105-ddad28d40710
+[OK] offset=30 partition=1 pedido_id=a0ecc1a8-308b-4d3a-91ca-e1cb92f54bb7
+[OK] offset=31 partition=1 pedido_id=9a6e3464-e18d-45af-8a4d-ec70aabef470
+[OK] offset=32 partition=1 pedido_id=fbd9c91c-6831-40a6-bca7-d2780ff9b4b8
+[OK] offset=33 partition=1 pedido_id=010cbcf3-f6d0-45b3-a750-66719f80bb0a
+[OK] offset=34 partition=1 pedido_id=3351c14d-9d6f-42f3-b7f4-7f73021b8aef
+[OK] offset=35 partition=1 pedido_id=a225954d-276a-49c2-aaeb-bf757468afd8
+[OK] offset=36 partition=1 pedido_id=48355f49-87a2-47f4-8e14-045e8634fd6f
+[OK] offset=37 partition=1 pedido_id=7e7bcffb-f6b4-4dec-b744-e0bd37608d9f
+[OK] offset=38 partition=1 pedido_id=73f137ab-725a-4eb0-9ca6-cea80a1bef20
+[OK] offset=39 partition=1 pedido_id=79ca260f-2af5-47a0-9a2b-22208807e047
+[OK] offset=40 partition=1 pedido_id=be403d59-cefd-40f3-b673-9b9ec64ef1e5
+[OK] offset=41 partition=1 pedido_id=5ee59d88-ff79-471e-905a-9d5c19a264e1
+[OK] offset=42 partition=1 pedido_id=147745f0-cf51-48f4-b0d4-f837413f4aff
+[OK] offset=43 partition=1 pedido_id=74410889-8a33-4572-a9c2-e5022fafe3b8
+[ERROR] offset=44 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=45 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=46 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=47 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=48 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=49 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=50 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=51 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=52 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[ERROR] offset=53 partition=1 no se commiteó -- se reprocesará. Causa: CommitFailedError: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+[Stage 1:=============================>                             (1 + 1) / 2][Stage 3:>                                                        (0 + 20) / 50][Stage 3:===>                                                     (3 + 21) / 50][Stage 3:========================>                               (22 + 21) / 50]                                                                                [Stage 93:====>                                                   (1 + 13) / 14]                                                                                [Stage 148:>                                                      (0 + 15) / 15]                                                                                [Stage 176:>                                                      (0 + 16) / 16]                                                                                [Stage 190:===>                                                   (1 + 16) / 17]                                                                                [Stage 218:===>                                                   (1 + 17) / 18]                                                                                [Stage 246:==>                                                    (1 + 18) / 19]                                                                                [Stage 260:>                                                      (0 + 19) / 19]                                                                                [Stage 274:==============================================>        (17 + 3) / 20]                                                                                [Stage 315:>                                                      (0 + 14) / 14][Stage 315:===>                                                   (1 + 13) / 14]                                                                                [Stage 329:>                                                      (0 + 14) / 14]                                                                                [Stage 343:===>                                                   (1 + 14) / 15]                                                                                [Stage 357:===>                                                   (1 + 14) / 15]                                                                                [Stage 371:>                                                      (0 + 15) / 15]                                                                                [Stage 385:===>                                                   (1 + 15) / 16]                                                                                [Stage 399:>                                                      (0 + 16) / 16][Stage 399:===>                                                   (1 + 15) / 16][Stage 399:=======================================================(16 + 0) / 16]                                                                                [Stage 413:>                                                      (0 + 16) / 16]                                                                                [Stage 427:===>                                                   (1 + 16) / 17]                                                                                [Stage 454:>                                                      (0 + 17) / 17][Stage 454:===>                                                   (1 + 16) / 17]                                                                                [Stage 468:>                                                      (0 + 17) / 17]                                                                                [Stage 482:===>                                                   (1 + 17) / 18]                                                                                [Stage 496:>                                                      (0 + 18) / 18][Stage 496:===>                                                   (1 + 17) / 18]                                                                                
