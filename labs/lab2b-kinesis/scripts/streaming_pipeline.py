@@ -35,6 +35,7 @@ Qué puedes delegar: boilerplate de sintaxis de Structured Streaming si
 te trabas. Qué NO puedes delegar: el tamaño de ventana y el watermark
 que elijas, y por qué el MERGE del sink usa una llave distinta a la
 del Lab 2a -- ver ../README.md, "Bitácora de delegación".
+
 """
 
 import os
