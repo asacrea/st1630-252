@@ -111,14 +111,9 @@ def ingest_bronze(ds: str, **context):
         # corrido antes), escribir DOS veces el mismo día NO debe
         # duplicar filas en Bronze.
         #
-        # TODO: escribe df_dia en formato "parquet", en modo
-        # "overwrite" (no "append"), en la ruta `destino`. Pista: estás
-        # sobreescribiendo SOLO la carpeta de este día
-        # (`.../fecha={ds}`), no toda la tabla Bronze completa -- por
-        # eso "overwrite" acá es seguro y no borra los demás días ya
-        # ingeridos.
-        #
-        # (tu código aquí)
+        # Escribe df_dia en formato "parquet", en modo "overwrite" (no "append"),
+        # en la ruta `destino`. Sobreescribe SOLO la partición de este día.
+        df_dia.write.mode("overwrite").parquet(destino)
 
         logger.info("Bronze escrito en %s (%s filas)", destino, f"{n_filas:,}")
         context["ti"].xcom_push(key="n_filas_bronze", value=n_filas)
@@ -140,32 +135,37 @@ CANALES_ESPERADOS_MAX = 4
 
 
 def check_nulos_criticos(df):
-    """TODO: por cada columna de COLUMNAS_CRITICAS, calcula qué
+    """Por cada columna de COLUMNAS_CRITICAS, calcula qué
     fracción de sus filas son nulas (nulos de esa columna / total de
     filas). Si CUALQUIERA de esas columnas supera UMBRAL_NULOS (5%),
-    lanza:
+    lanza ValueError."""
+    from pyspark.sql import functions as F
 
-        raise ValueError(f"...")
+    total_filas = df.count()
+    if total_filas == 0:
+        return
 
-    con un mensaje que diga explícitamente cuál columna falló y qué
-    porcentaje de nulos tenía (lo vas a necesitar para leer el log del
-    fallo que provocas a propósito en la Parte 4 del README).
-
-    Pista: df.count() te da el total de filas; para los nulos de una
-    columna usa `from pyspark.sql import functions as F` y
-    `df.filter(F.col(columna).isNull()).count()`.
-    """
-    # (tu código aquí)
-    pass
+    for col in COLUMNAS_CRITICAS:
+        n_nulos = df.filter(F.col(col).isNull()).count()
+        frac_nulos = n_nulos / total_filas
+        if frac_nulos > UMBRAL_NULOS:
+            raise ValueError(
+                f"Check nulos críticos falló en columna '{col}': {frac_nulos:.2%} de nulos "
+                f"({n_nulos:,}/{total_filas:,} filas) supera el umbral permitido de {UMBRAL_NULOS:.2%}"
+            )
 
 
 def check_rango_monto(df):
-    """TODO: cuenta cuántas filas tienen total <= 0 (un monto negativo
+    """Cuenta cuántas filas tienen total <= 0 (un monto negativo
     o cero no tiene sentido de negocio para una venta). Si hay AL
-    MENOS UNA, lanza ValueError con el conteo exacto en el mensaje.
-    """
-    # (tu código aquí)
-    pass
+    MENOS UNA, lanza ValueError con el conteo exacto en el mensaje."""
+    from pyspark.sql import functions as F
+
+    n_invalidos = df.filter(F.col("total") <= 0).count()
+    if n_invalidos > 0:
+        raise ValueError(
+            f"Check rango de monto falló: se encontraron {n_invalidos:,} filas con total <= 0."
+        )
 
 
 def check_cardinalidad_canal(df):
@@ -235,25 +235,19 @@ def transform_silver(ds: str, **context):
         # ═══════════════════════════════════════════════════════════
         # TODO 2 · Casts y filtro de negocio
         # ═══════════════════════════════════════════════════════════
-        # TODO paso 1: castea "fecha" a DateType y "total" a
-        # DoubleType (llegan tipados por inferSchema desde el CSV, pero
-        # Parquet/Bronze no garantiza que el tipo inferido sea el que
-        # de verdad quieres en Silver -- hazlo explícito).
-        #
-        # TODO paso 2: excluye del DataFrame las filas donde
-        # devuelto == True -- un pedido devuelto no debe contar como
-        # venta real en Silver/Gold.
-        #
-        # TODO paso 3: agrega la columna "anio_mes" con el formato
-        # "yyyy-MM" a partir de "fecha" (pista: busca la función de
-        # pyspark.sql.functions que formatea una fecha con un patrón de
-        # texto).
-        #
-        # Encadénalo como quieras (un withColumn()/filter() a la vez, o
-        # todo junto con pyspark.sql.functions, que puedes importar
-        # arriba como F) -- el resultado final debe llamarse
-        # df_transformado.
-        df_transformado = df_bronze  # TODO: reemplaza por las 3 transformaciones de arriba
+        # Paso 1: castea "fecha" a DateType y "total" a DoubleType
+        # Paso 2: excluye filas donde devuelto == True
+        # Paso 3: agrega columna "anio_mes" con formato "yyyy-MM"
+        from pyspark.sql import functions as F
+        from pyspark.sql.types import DateType, DoubleType
+
+        df_transformado = (
+            df_bronze
+            .withColumn("fecha", F.col("fecha").cast(DateType()))
+            .withColumn("total", F.col("total").cast(DoubleType()))
+            .filter(F.col("devuelto") == False)
+            .withColumn("anio_mes", F.date_format(F.col("fecha"), "yyyy-MM"))
+        )
 
         n_tras_filtro = df_transformado.count()
         logger.info(
@@ -264,26 +258,18 @@ def transform_silver(ds: str, **context):
         # ═══════════════════════════════════════════════════════════
         # TODO 3 · MERGE a Silver -- el reto principal de esta semana
         # ═══════════════════════════════════════════════════════════
-        # Mismo patrón que aprendiste en Lab 1b (02_silver.py, Parte
-        # 3.7), ahora dentro de un DAG que se reintenta solo y se puede
-        # backfillear. La clave de negocio es "pedido_id".
-        #
-        #   delta_table.alias("target").merge(
-        #       df_transformado.alias("source"),
-        #       "target.pedido_id = source.pedido_id"
-        #   ).whenMatchedUpdateAll().whenNotMatchedInsertAll().execute()
-        #
-        # TODO: completa la rama `if` de abajo con ese patrón.
-        #
-        # Para dag_design.md: si Airflow marca este task como "failed"
-        # DESPUÉS de que el MERGE ya se ejecutó pero ANTES de que
-        # Airflow registre el éxito (p. ej. el contenedor se cae justo
-        # ahí) y luego lo reintenta automáticamente, ¿el segundo MERGE
-        # duplica algo? ¿Por qué el MERGE es justamente la herramienta
-        # que evita ese problema, a diferencia de un "append" simple?
         if DeltaTable.isDeltaTable(spark, SILVER_DIR):
             silver_table = DeltaTable.forPath(spark, SILVER_DIR)
-            # TODO: tu código de MERGE aquí
+            (
+                silver_table.alias("target")
+                .merge(
+                    df_transformado.alias("source"),
+                    "target.pedido_id = source.pedido_id"
+                )
+                .whenMatchedUpdateAll()
+                .whenNotMatchedInsertAll()
+                .execute()
+            )
         else:
             logger.info("Silver no existe todavía -- primera escritura (sin MERGE).")
             df_transformado.write.format("delta").mode("overwrite").save(SILVER_DIR)
@@ -312,19 +298,22 @@ def build_gold(**context):
         # ═══════════════════════════════════════════════════════════
         # TODO 4 · Agregaciones de Gold
         # ═══════════════════════════════════════════════════════════
-        # TODO ventas_por_region: agrupa df_silver por "region" y
-        # "anio_mes", y calcula dos métricas:
-        #   - "total_ventas": suma de "total"
-        #   - "n_transacciones": conteo de filas
-        # Pista: .groupBy("region", "anio_mes").agg(
-        #            F.sum("total").alias("total_ventas"),
-        #            F.count("*").alias("n_transacciones"))
-        df_ventas_por_region = None  # TODO: reemplaza por tu agregación
+        # ventas_por_region: agrupa por "region" y "anio_mes"
+        df_ventas_por_region = (
+            df_silver.groupBy("region", "anio_mes")
+            .agg(
+                F.sum("total").alias("total_ventas"),
+                F.count("*").alias("n_transacciones")
+            )
+        )
 
-        # TODO top_productos: agrupa df_silver por "producto", suma
-        # "total" como "total_ventas", ordena descendente y quédate con
-        # las primeras 20 filas.
-        df_top_productos = None  # TODO: reemplaza por tu agregación
+        # top_productos: agrupa por "producto", suma "total" como "total_ventas", desc, limit 20
+        df_top_productos = (
+            df_silver.groupBy("producto")
+            .agg(F.sum("total").alias("total_ventas"))
+            .orderBy(F.col("total_ventas").desc())
+            .limit(20)
+        )
 
         df_ventas_por_region.write.format("delta").mode("overwrite").save(GOLD_REGION_DIR)
         df_top_productos.write.format("delta").mode("overwrite").save(GOLD_TOP_PRODUCTOS_DIR)
