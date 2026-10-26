@@ -1,0 +1,87 @@
+<mxfile host="app.diagrams.net" modified="2026-10-25T23:28:00.000Z" agent="Antigravity" version="24.7.0" type="device">
+  <diagram id="lab3-nosql-modelos" name="Modelos NoSQL - Pedido PED000920">
+    <mxGraphModel dx="1420" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1050" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TÍTULO CENTRAL -->
+        <mxCell id="title" value="Lab 3 · Un mismo pedido (PED000920) modelado en los 4 motores NoSQL (Dataset: jjdiazr)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#0f172a;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1520" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- NODO FUENTE CENTRAL: PEDIDO ORIGINAL -->
+        <mxCell id="src_pedido" value="&lt;b&gt;Evento / Pedido Original (pedidos.json)&lt;/b&gt;&lt;hr/&gt;pedido_id: &quot;PED000920&quot; | fecha: &quot;2026-08-17T00:01:12&quot;&lt;br/&gt;cliente_id: &quot;C00283&quot; (Mariana Cardona, MEDELLÍN, premium)&lt;br/&gt;region: &quot;MEDELLÍN&quot; | canal: &quot;app_movil&quot; | total: 511,900&lt;br/&gt;items: [ {P0402, cant: 1, $293,700}, {P0247, cant: 1, $218,200} ]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontColor=#1e293b;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="490" y="90" width="620" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- 1. MONGODB (DOCUMENTO / AGREGADO) -->
+        <mxCell id="box_mongo" value="&lt;b&gt;1. MongoDB · Modelo de Documento (Colección: pedidos)&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Consulta Q1: Lectura completa por _id en 1 sola operación sin $lookup&lt;/i&gt;" style="swimlane;startSize=45;fillColor=#dcfce7;strokeColor=#16a34a;fontColor=#14532d;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="230" width="730" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_mongo" value="&lt;b&gt;Documento JSON (_id: &quot;PED000920&quot;)&lt;/b&gt;&lt;hr/&gt;&lt;pre style=&quot;margin:0;font-size:11px;text-align:left;&quot;&gt;{&#10;  &quot;_id&quot;: &quot;PED000920&quot;,&#10;  &quot;pedido_id&quot;: &quot;PED000920&quot;,&#10;  &quot;fecha&quot;: &quot;2026-08-17T00:01:12&quot;,&#10;  &quot;region&quot;: &quot;MEDELLÍN&quot;,&#10;  &quot;canal&quot;: &quot;app_movil&quot;,&#10;  &quot;cliente&quot;: {  // Subdocumento embebido (sin email ni region del cliente)&#10;    &quot;cliente_id&quot;: &quot;C00283&quot;,&#10;    &quot;nombre&quot;: &quot;Mariana Cardona&quot;,&#10;    &quot;segmento&quot;: &quot;premium&quot;&#10;  },&#10;  &quot;items&quot;: [    // Arreglo embebido con snapshot de precio_unit pagado&#10;    { &quot;producto_id&quot;: &quot;P0402&quot;, &quot;nombre&quot;: &quot;Cortina Lite 2024&quot;,&#10;      &quot;categoria&quot;: &quot;Hogar&quot;, &quot;cantidad&quot;: 1, &quot;precio_unit&quot;: 293700 },&#10;    { &quot;producto_id&quot;: &quot;P0247&quot;, &quot;nombre&quot;: &quot;Licuadora Básico 2025&quot;,&#10;      &quot;categoria&quot;: &quot;Hogar&quot;, &quot;cantidad&quot;: 1, &quot;precio_unit&quot;: 218200 }&#10;  ],&#10;  &quot;total&quot;: 511900&#10;}&lt;/pre&gt;&lt;hr/&gt;&lt;b&gt;Índices:&lt;/b&gt; _id_ (único), cliente.cliente_id_1 (Q4), items.producto_id_1 (multikey Q4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#16a34a;fontColor=#0f172a;align=left;spacingLeft=10;" vertex="1" parent="box_mongo">
+          <mxGeometry x="20" y="55" width="690" height="290" as="geometry" />
+        </mxCell>
+
+        <!-- 2. CASSANDRA (COLUMNAR ANCHO) -->
+        <mxCell id="box_cass" value="&lt;b&gt;2. Apache Cassandra · Modelo Columnar Ancho (Keyspace: lab3)&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Diseño guiado por consultas (1 tabla por consulta, desnormalización intencional)&lt;/i&gt;" style="swimlane;startSize=45;fillColor=#dbeafe;strokeColor=#2563eb;fontColor=#1e3a8a;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="230" width="730" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_cass1" value="&lt;b&gt;Tabla 1: ventas_por_region_dia (Sirve Q2a)&lt;/b&gt;&lt;br/&gt;PRIMARY KEY ((region, dia), fecha DESC, pedido_id DESC)&lt;hr/&gt;&lt;b&gt;Partition Key (region, dia):&lt;/b&gt; (&quot;MEDELLÍN&quot;, &quot;2026-08-17&quot;) &amp;rarr; Determina el nodo en el anillo&lt;br/&gt;&lt;b&gt;Clustering Columns:&lt;/b&gt; fecha = &quot;2026-08-17 00:01:12&quot;, pedido_id = &quot;PED000920&quot;&lt;br/&gt;&lt;b&gt;Columnas de valor:&lt;/b&gt; cliente_id = &quot;C00283&quot; | canal = &quot;app_movil&quot; | total = 511900" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2563eb;fontColor=#0f172a;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_cass">
+          <mxGeometry x="20" y="55" width="690" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_cass2" value="&lt;b&gt;Tabla 2: pedidos_por_cliente (Sirve Q2b)&lt;/b&gt;&lt;br/&gt;PRIMARY KEY (cliente_id, fecha DESC, pedido_id DESC)&lt;hr/&gt;&lt;b&gt;Partition Key (cliente_id):&lt;/b&gt; &quot;C00283&quot; &amp;rarr; Todos los pedidos del cliente en 1 partición&lt;br/&gt;&lt;b&gt;Clustering Columns:&lt;/b&gt; fecha = &quot;2026-08-17 00:01:12&quot;, pedido_id = &quot;PED000920&quot;&lt;br/&gt;&lt;b&gt;Columnas de valor:&lt;/b&gt; region = &quot;MEDELLÍN&quot; | canal = &quot;app_movil&quot; | total = 511900" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#2563eb;fontColor=#0f172a;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_cass">
+          <mxGeometry x="20" y="170" width="690" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tbl_cass3" value="&lt;b&gt;Tabla 3 (Parte 3 Stream): ventas_stream&lt;/b&gt; · PRIMARY KEY (producto_id, event_id) &amp;rarr; UPSERT idempotente por llave primaria" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e3a8a;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_cass">
+          <mxGeometry x="20" y="280" width="690" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- 3. REDIS (CLAVE-VALOR EN MEMORIA) -->
+        <mxCell id="box_redis" value="&lt;b&gt;3. Redis · Modelo Clave-Valor y Estructuras en Memoria&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Consulta Q3: Top-N productos más vendidos precalculado al escribir con ZINCRBY&lt;/i&gt;" style="swimlane;startSize=45;fillColor=#fee2e2;strokeColor=#dc2626;fontColor=#7f1d1d;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="630" width="730" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="redis_hashes" value="&lt;b&gt;Hashes de Catálogo (1 clave por producto · HSET)&lt;/b&gt;&lt;hr/&gt;&lt;b&gt;Clave:&lt;/b&gt; &quot;producto:P0402&quot; &amp;rarr; { nombre: &quot;Cortina Lite 2024&quot;, categoria: &quot;Hogar&quot;, precio: &quot;293700&quot; }&lt;br/&gt;&lt;b&gt;Clave:&lt;/b&gt; &quot;producto:P0247&quot; &amp;rarr; { nombre: &quot;Licuadora Básico 2025&quot;, categoria: &quot;Hogar&quot;, precio: &quot;218200&quot; }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dc2626;fontColor=#0f172a;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_redis">
+          <mxGeometry x="20" y="60" width="690" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="redis_zset" value="&lt;b&gt;Sorted Set de Ranking (Clave: &quot;ranking:unidades&quot; · ZINCRBY)&lt;/b&gt;&lt;hr/&gt;Al procesar PED000920 se ejecutan dos incrementos atómicos en pipeline:&lt;br/&gt;&amp;bull; &lt;code&gt;ZINCRBY ranking:unidades 1 &quot;P0402&quot;&lt;/code&gt; (acumula unidades históricas de P0402)&lt;br/&gt;&amp;bull; &lt;code&gt;ZINCRBY ranking:unidades 1 &quot;P0247&quot;&lt;/code&gt; (acumula unidades históricas de P0247)&lt;br/&gt;&lt;b&gt;Lectura Q3:&lt;/b&gt; &lt;code&gt;ZREVRANGE&lt;/code&gt; + &lt;code&gt;ZREVRANGEBYSCORE&lt;/code&gt; para desempatar por producto_id ASC en O(log N)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#dc2626;fontColor=#0f172a;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_redis">
+          <mxGeometry x="20" y="175" width="690" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="redis_stream" value="&lt;b&gt;Parte 3 (db=1):&lt;/b&gt; &lt;code&gt;SET stream:seen:&amp;lt;event_id&amp;gt; 1 NX EX 86400&lt;/code&gt; + &lt;code&gt;ZINCRBY stream:ranking&lt;/code&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontColor=#7f1d1d;align=left;spacingLeft=10;fontSize=11;" vertex="1" parent="box_redis">
+          <mxGeometry x="20" y="295" width="690" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- 4. NEO4J (GRAFO DE PROPIEDADES) -->
+        <mxCell id="box_neo4j" value="&lt;b&gt;4. Neo4j · Modelo de Grafo de Propiedades&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Consulta Q4: Recomendación colaborativa recorriendo relaciones [:COMPRO] a 2 saltos&lt;/i&gt;" style="swimlane;startSize=45;fillColor=#f3e8ff;strokeColor=#9333ea;fontColor=#581c87;fontSize=13;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="630" width="730" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="node_cli" value="&lt;b&gt;:Cliente&lt;/b&gt;&lt;hr/&gt;cliente_id: &quot;C00283&quot;&lt;br/&gt;nombre: &quot;Mariana Cardona&quot;&lt;br/&gt;region: &quot;MEDELLÍN&quot;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e9d5ff;strokeColor=#7e22ce;fontColor=#3b0764;fontSize=11;" vertex="1" parent="box_neo4j">
+          <mxGeometry x="40" y="110" width="190" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="node_p1" value="&lt;b&gt;:Producto&lt;/b&gt;&lt;hr/&gt;producto_id: &quot;P0402&quot;&lt;br/&gt;nombre: &quot;Cortina Lite 2024&quot;&lt;br/&gt;categoria: &quot;Hogar&quot;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9333ea;fontColor=#3b0764;fontSize=11;" vertex="1" parent="box_neo4j">
+          <mxGeometry x="470" y="60" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="node_p2" value="&lt;b&gt;:Producto&lt;/b&gt;&lt;hr/&gt;producto_id: &quot;P0247&quot;&lt;br/&gt;nombre: &quot;Licuadora Básico 2025&quot;&lt;br/&gt;categoria: &quot;Hogar&quot;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9333ea;fontColor=#3b0764;fontSize=11;" vertex="1" parent="box_neo4j">
+          <mxGeometry x="470" y="185" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_c_p1" value="[:COMPRO {unidades: ∑cant}]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7e22ce;strokeWidth=2;fontColor=#581c87;fontSize=11;fontStyle=1;" edge="1" parent="box_neo4j" source="node_cli" target="node_p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_c_p2" value="[:COMPRO {unidades: ∑cant}]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7e22ce;strokeWidth=2;fontColor=#581c87;fontSize=11;fontStyle=1;" edge="1" parent="box_neo4j" source="node_cli" target="node_p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="neo_note" value="&lt;b&gt;Nota:&lt;/b&gt; El pedido individual desaparece como entidad; sus ítems se agregan en una única arista &lt;code&gt;[:COMPRO {unidades}]&lt;/code&gt; por par (Cliente, Producto)." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#9333ea;fontColor=#581c87;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="box_neo4j">
+          <mxGeometry x="20" y="295" width="690" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- FLECHAS DESDE EL PEDIDO CENTRAL -->
+        <mxCell id="arr1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#16a34a;strokeWidth=2;" edge="1" parent="1" source="src_pedido" target="box_mongo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2563eb;strokeWidth=2;" edge="1" parent="1" source="src_pedido" target="box_cass">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

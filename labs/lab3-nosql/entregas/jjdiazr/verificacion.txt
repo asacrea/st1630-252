@@ -1,0 +1,34 @@
+
+MongoDB
+  ✓ Q1 PED004959
+  ✓ Q1 PED006437
+  ✓ Q1 PED013735
+  ✓ Q1 PED009849
+  ✓ Q1 PED000879
+  ✓ Q3 MongoDB
+  ✓ Q4 MongoDB C00146
+  ✓ Q4 MongoDB C00438
+  ✓ Q4 MongoDB C00363
+
+Cassandra
+  ✓ Q2a MEDELLÍN 2026-10-04
+  ✓ Q2a MEDELLÍN 2026-08-17
+  ✓ Q2a BARRANQUILLA 2026-10-03
+  ✓ Q2b C00745
+  ✓ Q2b C01129
+  ✓ Q2b C01434
+
+Redis
+  ✓ Q3 Redis
+
+Neo4j
+  ✓ Q4 Neo4j C00146
+  ✓ Q4 Neo4j C00438
+  ✓ Q4 Neo4j C00363
+
+Stream (corre antes stream_lab.py)
+  ✓ Stream Redis idempotente
+  ✓ Stream Cassandra idempotente
+
+21/21 verificaciones correctas · 0 con error · 0 pendientes
+Usuario: jjdiazr · partes: mongo, cassandra, redis, neo4j, stream · HUELLA: db92fe88da92
