@@ -1,0 +1,143 @@
+<mxfile host="app.diagrams.net" modified="2026-10-26T10:00:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="nosql_models" name="Modelos NoSQL - Pedido PED000913">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" background="#F8FAFC">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Header -->
+        <mxCell id="title" value="Comparativa de Modelos NoSQL para el Pedido PED000913 (Usuario: sarangoe3)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#0F172A;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="1100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Mismo dominio de negocio representado en cuatro paradigmas: Documento, Columnar Ancho, Clave-Valor y Grafo" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontColor=#64748B;" vertex="1" parent="1">
+          <mxGeometry x="250" y="60" width="1100" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- 1. MONGODB (DOCUMENTO) -->
+        <mxCell id="box_mongo" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#10B981;strokeWidth=2;shadow=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="50" y="110" width="720" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr_mongo" value="&lt;b&gt;1. MONGODB (Modelo de Documento)&lt;/b&gt; · Colección &lt;i&gt;pedidos&lt;/i&gt;" style="text;html=1;strokeColor=none;fillColor=#ECFDF5;align=left;verticalAlign=middle;spacingLeft=15;rounded=1;fontSize=15;fontColor=#065F46;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="110" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="content_mongo" value="&lt;pre style=&quot;font-family: Consolas, monospace; font-size: 12px; line-height: 1.4;&quot;&gt;&lt;b&gt;{&lt;/b&gt;
+  &lt;b&gt;&quot;_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;PED000913&quot;&lt;/span&gt;,               &lt;span style=&quot;color:#64748B;&quot;&gt;// Clave primaria con índice B-Tree único (Q1)&lt;/span&gt;
+  &lt;b&gt;&quot;pedido_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;PED000913&quot;&lt;/span&gt;,
+  &lt;b&gt;&quot;fecha&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;2026-08-27T21:45:17&quot;&lt;/span&gt;,
+  &lt;b&gt;&quot;cliente&quot;&lt;/b&gt;: {
+    &lt;b&gt;&quot;cliente_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#2563EB;&quot;&gt;&quot;C00833&quot;&lt;/span&gt;,          &lt;span style=&quot;color:#64748B;&quot;&gt;// Índice secundario para historial y Q4&lt;/span&gt;
+    &lt;b&gt;&quot;nombre&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;Juan Pérez&quot;&lt;/span&gt;             &lt;span style=&quot;color:#64748B;&quot;&gt;// Embebido para lectura única Q1 sin $lookup&lt;/span&gt;
+  },
+  &lt;b&gt;&quot;region&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;BOGOTÁ&quot;&lt;/span&gt;,
+  &lt;b&gt;&quot;canal&quot;&lt;/b&gt;: &lt;span style=&quot;color:#047857;&quot;&gt;&quot;web&quot;&lt;/span&gt;,
+  &lt;b&gt;&quot;items&quot;&lt;/b&gt;: [                                &lt;span style=&quot;color:#64748B;&quot;&gt;// Índice multikey en items.producto_id (Q3)&lt;/span&gt;
+    { &lt;b&gt;&quot;producto_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#B45309;&quot;&gt;&quot;P0294&quot;&lt;/span&gt;, &lt;b&gt;&quot;nombre&quot;&lt;/b&gt;: &quot;Cafetera Pro 2024&quot;, &lt;b&gt;&quot;cantidad&quot;&lt;/b&gt;: 1, &lt;b&gt;&quot;precio_unit&quot;&lt;/b&gt;: 603900 },
+    { &lt;b&gt;&quot;producto_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#B45309;&quot;&gt;&quot;P1106&quot;&lt;/span&gt;, &lt;b&gt;&quot;nombre&quot;&lt;/b&gt;: &quot;Pasta 1kg Básico 2024&quot;, &lt;b&gt;&quot;cantidad&quot;&lt;/b&gt;: 2, &lt;b&gt;&quot;precio_unit&quot;&lt;/b&gt;: 273500 },
+    { &lt;b&gt;&quot;producto_id&quot;&lt;/b&gt;: &lt;span style=&quot;color:#B45309;&quot;&gt;&quot;P1182&quot;&lt;/span&gt;, &lt;b&gt;&quot;nombre&quot;&lt;/b&gt;: &quot;Huevos x30 Lite 2024&quot;, &lt;b&gt;&quot;cantidad&quot;&lt;/b&gt;: 2, &lt;b&gt;&quot;precio_unit&quot;&lt;/b&gt;: 157500 }
+  ],
+  &lt;b&gt;&quot;total&quot;&lt;/b&gt;: &lt;span style=&quot;color:#DC2626;&quot;&gt;1465900&lt;/span&gt;
+&lt;b&gt;}&lt;/b&gt;&lt;/pre&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="160" width="720" height="360" as="geometry" />
+        </mxCell>
+
+        <!-- 2. CASSANDRA (COLUMNAR ANCHO) -->
+        <mxCell id="box_cas" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=2;shadow=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="810" y="110" width="740" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr_cas" value="&lt;b&gt;2. APACHE CASSANDRA (Columnar Ancho)&lt;/b&gt; · Modelado Guiado por Consultas (Duplicación)" style="text;html=1;strokeColor=none;fillColor=#EFF6FF;align=left;verticalAlign=middle;spacingLeft=15;rounded=1;fontSize=15;fontColor=#1E40AF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="110" width="740" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="content_cas" value="&lt;div style=&quot;font-family: Consolas, monospace; font-size: 11px;&quot;&gt;
+&lt;b style=&quot;color:#1E3A8A;&quot;&gt;TABLA 1: ventas_por_region_dia (Optimizada para Q2a)&lt;/b&gt;&lt;br/&gt;
+&lt;b&gt;PRIMARY KEY ((region, dia), fecha, pedido_id)&lt;/b&gt; WITH CLUSTERING ORDER BY (fecha DESC, pedido_id DESC)&lt;br/&gt;
+&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot; style=&quot;border-collapse:collapse; width:100%; margin-top:5px; border-color:#CBD5E1;&quot;&gt;
+  &lt;tr style=&quot;background:#DBEAFE;&quot;&gt;&lt;th&gt;Partition Key (region, dia)&lt;/th&gt;&lt;th&gt;fecha (Clustering)&lt;/th&gt;&lt;th&gt;pedido_id (Clustering)&lt;/th&gt;&lt;th&gt;total&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;(&lt;b&gt;&#39;BOGOTÁ&#39;, &#39;2026-08-27&#39;&lt;/b&gt;)&lt;/td&gt;&lt;td&gt;2026-08-27 21:45:17&lt;/td&gt;&lt;td&gt;&lt;b&gt;PED000913&lt;/b&gt;&lt;/td&gt;&lt;td&gt;1,465,900&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr style=&quot;color:#94A3B8;&quot;&gt;&lt;td&gt;(&#39;BOGOTÁ&#39;, &#39;2026-08-27&#39;)&lt;/td&gt;&lt;td&gt;2026-08-27 20:12:05&lt;/td&gt;&lt;td&gt;PED000845&lt;/td&gt;&lt;td&gt;320,000&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;span style=&quot;color:#475569; font-size:10px;&quot;&gt;✓ Q2a lee UNA sola partición de un nodo; filas ordenadas físicamente del más reciente al más antiguo sin ALLOW FILTERING.&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;
+
+&lt;b style=&quot;color:#1E3A8A;&quot;&gt;TABLA 2: pedidos_por_cliente (Optimizada para Q2b)&lt;/b&gt;&lt;br/&gt;
+&lt;b&gt;PRIMARY KEY (cliente_id, fecha, pedido_id)&lt;/b&gt; WITH CLUSTERING ORDER BY (fecha DESC, pedido_id DESC)&lt;br/&gt;
+&lt;table border=&quot;1&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot; style=&quot;border-collapse:collapse; width:100%; margin-top:5px; border-color:#CBD5E1;&quot;&gt;
+  &lt;tr style=&quot;background:#DBEAFE;&quot;&gt;&lt;th&gt;Partition Key (cliente_id)&lt;/th&gt;&lt;th&gt;fecha (Clustering)&lt;/th&gt;&lt;th&gt;pedido_id (Clustering)&lt;/th&gt;&lt;th&gt;total&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;&#39;C00833&#39;&lt;/b&gt; (Juan Pérez)&lt;/td&gt;&lt;td&gt;2026-08-27 21:45:17&lt;/td&gt;&lt;td&gt;&lt;b&gt;PED000913&lt;/b&gt;&lt;/td&gt;&lt;td&gt;1,465,900&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr style=&quot;color:#94A3B8;&quot;&gt;&lt;td&gt;&#39;C00833&#39;&lt;/td&gt;&lt;td&gt;2026-08-10 14:20:11&lt;/td&gt;&lt;td&gt;PED000102&lt;/td&gt;&lt;td&gt;780,000&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;span style=&quot;color:#475569; font-size:10px;&quot;&gt;✓ Q2b extrae los últimos pedidos en $O(1)$ sin scans de tabla.&lt;/span&gt;
+&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="810" y="160" width="740" height="360" as="geometry" />
+        </mxCell>
+
+        <!-- 3. REDIS (CLAVE-VALOR) -->
+        <mxCell id="box_redis" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#EF4444;strokeWidth=2;shadow=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="50" y="560" width="720" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr_redis" value="&lt;b&gt;3. REDIS (Clave-Valor / Estructuras en Memoria)&lt;/b&gt; · In-Memory Caching &amp; Live Ranking" style="text;html=1;strokeColor=none;fillColor=#FEF2F2;align=left;verticalAlign=middle;spacingLeft=15;rounded=1;fontSize=15;fontColor=#991B1B;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="560" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="content_redis" value="&lt;div style=&quot;font-family: Consolas, monospace; font-size: 11px;&quot;&gt;
+&lt;b style=&quot;color:#991B1B;&quot;&gt;A. Catálogo de Productos (Estructura Hash en Memoria):&lt;/b&gt;&lt;br/&gt;
+&lt;div style=&quot;background:#FFF5F5; padding:6px; border:1px solid #FECACA; border-radius:4px; margin-top:4px;&quot;&gt;
+  &lt;b&gt;HSET producto:P0294&lt;/b&gt; nombre &quot;Cafetera Pro 2024&quot; categoria &quot;Hogar&quot; precio &quot;603900&quot;&lt;br/&gt;
+  &lt;b&gt;HSET producto:P1106&lt;/b&gt; nombre &quot;Pasta 1kg Básico 2024&quot; categoria &quot;Mercado&quot; precio &quot;273500&quot;&lt;br/&gt;
+  &lt;b&gt;HSET producto:P1182&lt;/b&gt; nombre &quot;Huevos x30 Lite 2024&quot; categoria &quot;Mercado&quot; precio &quot;157500&quot;
+&lt;/div&gt;&lt;br/&gt;
+
+&lt;b style=&quot;color:#991B1B;&quot;&gt;B. Ranking de Unidades Vendidas Q3 (Sorted Set - SkipList + Hash):&lt;/b&gt;&lt;br/&gt;
+&lt;span style=&quot;font-size:10px; color:#475569;&quot;&gt;Al procesar PED000913 se ejecutan incrementos atómicos en tiempo de escritura O(log N):&lt;/span&gt;&lt;br/&gt;
+&lt;div style=&quot;background:#FFF5F5; padding:6px; border:1px solid #FECACA; border-radius:4px; margin-top:4px;&quot;&gt;
+  ZINCRBY ranking:unidades &lt;b&gt;1&lt;/b&gt; &quot;P0294&quot;  &lt;span style=&quot;color:#64748B;&quot;&gt;// Actualiza score del producto&lt;/span&gt;&lt;br/&gt;
+  ZINCRBY ranking:unidades &lt;b&gt;2&lt;/b&gt; &quot;P1106&quot;&lt;br/&gt;
+  ZINCRBY ranking:unidades &lt;b&gt;2&lt;/b&gt; &quot;P1182&quot;
+&lt;/div&gt;&lt;br/&gt;
+
+&lt;b style=&quot;color:#991B1B;&quot;&gt;C. Deduplicación Atómica de Stream (SET NX con TTL de 3600s):&lt;/b&gt;&lt;br/&gt;
+&lt;div style=&quot;background:#FFF5F5; padding:6px; border:1px solid #FECACA; border-radius:4px; margin-top:4px;&quot;&gt;
+  &lt;b&gt;SET visto:EVT000913 1 NX EX 3600&lt;/b&gt; &lt;span style=&quot;color:#047857;&quot;&gt;→ OK (1ra vez: incrementa ranking)&lt;/span&gt;&lt;br/&gt;
+  &lt;b&gt;SET visto:EVT000913 1 NX EX 3600&lt;/b&gt; &lt;span style=&quot;color:#DC2626;&quot;&gt;→ (nil) (Reentrega: se descarta)&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="610" width="720" height="430" as="geometry" />
+        </mxCell>
+
+        <!-- 4. NEO4J (GRAFO) -->
+        <mxCell id="box_neo" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#8B5CF6;strokeWidth=2;shadow=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="810" y="560" width="740" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr_neo" value="&lt;b&gt;4. NEO4J (Modelo de Grafo de Propiedades)&lt;/b&gt; · Index-Free Adjacency &amp; Recomendaciones Q4" style="text;html=1;strokeColor=none;fillColor=#F5F3FF;align=left;verticalAlign=middle;spacingLeft=15;rounded=1;fontSize=15;fontColor=#5B21B6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="560" width="740" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node_cli" value="&lt;b&gt;:Cliente&lt;/b&gt;&lt;br/&gt;id: &quot;C00833&quot;&lt;br/&gt;nombre: &quot;Juan Pérez&quot;&lt;br/&gt;region: &quot;BOGOTÁ&quot;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#3B82F6;strokeWidth=2;fontColor=#1E3A8A;" vertex="1" parent="1">
+          <mxGeometry x="840" y="720" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="node_p1" value="&lt;b&gt;:Producto&lt;/b&gt;&lt;br/&gt;id: &quot;P0294&quot;&lt;br/&gt;Cafetera Pro" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontColor=#92400E;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="630" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="node_p2" value="&lt;b&gt;:Producto&lt;/b&gt;&lt;br/&gt;id: &quot;P1106&quot;&lt;br/&gt;Pasta 1kg" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontColor=#92400E;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="730" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="node_p3" value="&lt;b&gt;:Producto&lt;/b&gt;&lt;br/&gt;id: &quot;P1182&quot;&lt;br/&gt;Huevos x30" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontColor=#92400E;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="830" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" value="-[:COMPRO {unidades: 1}]-&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#5B21B6;" edge="1" parent="1" source="node_cli" target="node_p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" value="-[:COMPRO {unidades: 2}]-&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#5B21B6;" edge="1" parent="1" source="node_cli" target="node_p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" value="-[:COMPRO {unidades: 2}]-&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8B5CF6;strokeWidth=2;fontColor=#5B21B6;" edge="1" parent="1" source="node_cli" target="node_p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_cypher" value="&lt;div style=&quot;font-family: Consolas, monospace; font-size: 10px; background:#F8FAFC; padding:6px; border:1px solid #E2E8F0; border-radius:4px;&quot;&gt;
+&lt;b style=&quot;color:#6D28D9;&quot;&gt;Traversal de Recomendación Q4 (2 saltos de grafo):&lt;/b&gt;&lt;br/&gt;
+MATCH (yo:Cliente {cliente_id: $c})-[:COMPRO]-&gt;(:Producto)&lt;-[:COMPRO]-(vecino:Cliente)&lt;br/&gt;
+MATCH (vecino)-[:COMPRO]-&gt;(candidato:Producto) WHERE NOT (yo)-[:COMPRO]-&gt;(candidato)&lt;br/&gt;
+RETURN candidato.producto_id, count(DISTINCT vecino) AS puntaje ORDER BY puntaje DESC LIMIT $n
+&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=bottom;spacingLeft=15;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="830" y="930" width="700" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
