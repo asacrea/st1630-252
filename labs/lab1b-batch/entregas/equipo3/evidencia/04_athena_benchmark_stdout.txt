@@ -1,0 +1,15 @@
+
+Ejecutando '5.1 Top 5 regiones (Gold Parquet, Z-ordered)'...
+  Tiempo motor Athena: 2051 ms  |  Tiempo total (wall): 3.19 s
+  Bytes escaneados: 34,535 (0.03 MB)
+
+Ejecutando '5.2 Misma query (CSV sin particionar)'...
+  Tiempo motor Athena: 1040 ms  |  Tiempo total (wall): 1.52 s
+  Bytes escaneados: 1,549,198 (1.48 MB)
+
+=== Ratio de bytes escaneados: CSV / Parquet = 44.86x ===
+
+Resultados guardados en: C:\Users\juang\OneDrive\Desktop\Universidad\OctavoSemestre\SistemasIntensivosDatos\Laboratorios\st1630-252\labs\lab1b-batch\entregas\jjgomezv2\benchmark_resultados.md
+
+Resultado query 5.1 (4bdfe970-cb18-4c73-8aa1-85958625766e):
+region	ventas	BOGOTÁ	2.5781302E9	MEDELLÍN	1.3290223E9	CALI	1.0287154E9	BARRANQUILLA	6.752878E8	BUCARAMANGA	6.323335E8

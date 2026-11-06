@@ -1,0 +1,18 @@
+Bronze escrito en: s3a://st1630-jjgomezv2-2026/bronze/pedidos
+
+=== Verificación Bronze (deben aparecer los problemas del raw) ===
+Filas totales: 101,500
+pedido_id nulos: 208 (debe ser > 0)
+total nulos: 2,571 (debe ser > 0)
+Duplicados exactos: 1,500 (debe ser > 0)
+
+=== Cómo inspeccionar el primer commit de _delta_log ===
+aws s3 cp s3a://st1630-jjgomezv2-2026/bronze/pedidos/_delta_log/00000000000000000000.json - | python3 -m json.tool | head -50
+
+Busca estas líneas dentro del JSON y anota en tu bitácora qué
+representa cada una:
+  - "commitInfo"  -> ¿quién hizo el commit? ¿cuándo? ¿con qué operación?
+  - "metaData"    -> ¿coincide el schema con tu BRONZE_SCHEMA + las 2
+                     columnas de auditoría del TODO 3?
+  - "add"         -> ¿cuántos archivos Parquet agregó este commit?
+

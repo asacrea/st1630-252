@@ -1,0 +1,18 @@
+Filas en Silver: 98,565
+4.1 KPI ventas por región/fecha: 3,484 filas
+4.2 KPI top 3 productos por categoría: 15 filas
+4.3 KPI cohortes: 20 filas
++---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|path                                                     |metrics                                                                                                                                                                                           |
++---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|s3a://st1630-jjgomezv2-2026/gold/kpis/ventas_region_fecha|{1, 1, {63194, 63194, 63194.0, 1, 63194}, {63194, 63194, 63194.0, 1, 63194}, 1, {all, {0, 0}, {1, 63194}, 0, {1, 63194}, 1, null}, 1, 1, 0, false, 0, 0, 1794000506336, 0, 4, 0, null, null, 7, 7}|
++---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+4.4 OPTIMIZE + ZORDER BY aplicado sobre ventas_region_fecha
+Traceback (most recent call last):
+  File "/mnt/tmp/spark-4ddc46c1-f546-4264-b78e-359b89ee0b7c/03_gold.py", line 177, in <module>
+    """)
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/sql/session.py", line 1440, in sql
+  File "/usr/lib/spark/python/lib/py4j-0.10.9.7-src.zip/py4j/java_gateway.py", line 1323, in __call__
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/errors/exceptions/captured.py", line 175, in deco
+pyspark.errors.exceptions.captured.IllegalArgumentException: Can not create a Path from an empty string
