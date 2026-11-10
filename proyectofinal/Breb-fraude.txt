@@ -1,0 +1,9 @@
+Integrantes:
+    - Samuel Arango
+    - Mateo Sanz Medina
+    - Nathalia Valentina Cardoza Azuaje
+    - Sebastian Andres Medina Cabezas
+
+Repositorio:
+    https://github.com/Sebaxdenc/breb-fraude
+    
