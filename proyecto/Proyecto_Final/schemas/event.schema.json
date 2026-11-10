@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evento logistico version 1",
+  "type": "object",
+  "required": ["schema_version", "event_id", "event_type", "event_time", "source", "vehicle_id", "route_id"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "event_id": {"type": "string", "format": "uuid"},
+    "event_type": {"enum": ["shipment_event", "vehicle_gps"]},
+    "event_time": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "source": {"type": "string", "minLength": 1},
+    "vehicle_id": {"type": "string", "minLength": 1},
+    "route_id": {"type": "string", "minLength": 1},
+    "scenario": {"enum": ["normal", "delay"]},
+    "shipment_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["received", "departed_center", "in_transit", "arrived_center", "out_for_delivery", "delivered"]},
+    "origin_city": {"type": "string", "minLength": 1},
+    "destination_city": {"type": "string", "minLength": 1},
+    "center_id": {"type": "string", "minLength": 1},
+    "promised_delivery": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+    "longitude": {"type": "number", "minimum": -180, "maximum": 180},
+    "speed_kmh": {"type": "number", "minimum": 0, "maximum": 200}
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {"if": {"properties": {"event_type": {"const": "shipment_event"}}},
+     "then": {"required": ["shipment_id", "status", "origin_city", "destination_city", "center_id", "promised_delivery"]}},
+    {"if": {"properties": {"event_type": {"const": "vehicle_gps"}}},
+     "then": {"required": ["latitude", "longitude", "speed_kmh"]}}
+  ]
+}

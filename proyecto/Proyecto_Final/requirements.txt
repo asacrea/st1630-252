@@ -1,0 +1,5 @@
+confluent-kafka==2.12.0
+jsonschema==4.25.1
+pymongo>=4.10,<5
+streamlit>=1.40,<2
+pandas>=2.2,<3
