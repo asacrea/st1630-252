@@ -1,0 +1,11 @@
+Entrega final FraudLens
+
+Integrantes:
+
+- Andrés Felipe Vélez Álvarez
+- Samuel Samper Cardona
+- Sebastián Salazar Henao
+- Hellen Yanes Doria
+
+Repositorio:
+https://github.com/AndresVelez31/FraudLens
