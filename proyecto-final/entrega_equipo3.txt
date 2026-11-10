@@ -1,0 +1,11 @@
+Entrega proyecto final
+
+Integrantes:
+
+* Mateo García
+* Juan José Gómez
+* Juan José Vargas
+* Luis Moreno
+
+
+Repositorio: https://github.com/mgarciac10/Entrega-2-FraudRadar
