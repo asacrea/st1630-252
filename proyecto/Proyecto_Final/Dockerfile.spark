@@ -1,0 +1,14 @@
+FROM python:3.11-slim-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends openjdk-17-jre-headless procps && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements-spark.txt .
+RUN pip install --no-cache-dir -r requirements-spark.txt
+COPY ingestion ingestion
+COPY schemas schemas
+COPY streaming streaming
+COPY config config
+COPY queries queries
+COPY tests tests
+ENV PYTHONPATH=/app PYSPARK_PYTHON=python SPARK_LOCAL_IP=127.0.0.1
+ENTRYPOINT ["spark-submit", "--master", "local[2]", "--driver-memory", "1g", "--packages", "io.delta:delta-spark_2.12:3.2.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.6", "--conf", "spark.jars.ivy=/data/ivy"]
+CMD ["streaming/job.py"]

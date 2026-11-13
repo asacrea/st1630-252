@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "event_id", "event_type", "event_time", "shipment_id", "vehicle_id", "route_id", "status", "promised_delivery", "active_alert", "risk_level", "possible_delay_reason", "shipment_event_id"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "event_id": {"type": "string", "format": "uuid"},
+    "event_type": {"const": "operational_update"},
+    "event_time": {"type": "string", "format": "date-time"},
+    "shipment_id": {"type": "string", "minLength": 1},
+    "vehicle_id": {"type": "string", "minLength": 1},
+    "route_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["received", "departed_center", "in_transit", "arrived_center", "out_for_delivery", "delivered"]},
+    "promised_delivery": {"type": "string", "format": "date-time"},
+    "active_alert": {"type": "boolean"},
+    "risk_level": {"enum": ["low", "medium", "high"]},
+    "possible_delay_reason": {"type": "string"},
+    "shipment_event_id": {"type": "string", "format": "uuid"},
+    "gps_event_id": {"type": ["string", "null"], "format": "uuid"},
+    "distance_km": {"type": ["number", "null"]},
+    "estimated_minutes": {"type": ["number", "null"]},
+    "inactive_minutes": {"type": "number"}
+  }
+}
